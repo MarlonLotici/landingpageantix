@@ -545,6 +545,15 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
   body { cursor:auto; }
   .cur,.cur-ring { display:none; }
   .hero-stats { gap:28px; flex-wrap:wrap; }
+
+  /* Testimonials — stack on mobile */
+  .depo-grid { grid-template-columns:1fr !important; }
+
+  /* Social proof bar — wrap nicely */
+  .nicho-bar { gap:24px !important; padding:40px 24px !important; }
+
+  /* Urgency strip — column on mobile */
+  .urgency-strip { flex-direction:column !important; gap:12px !important; padding:20px 24px !important; text-align:center; }
 }
 
 </style>
@@ -720,7 +729,7 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
   <div style="text-align:center;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-bottom:32px;">
     Funcionando em múltiplos nichos
   </div>
-  <div style="display:flex;justify-content:center;align-items:center;gap:48px;flex-wrap:wrap;">
+  <div class="nicho-bar" style="display:flex;justify-content:center;align-items:center;gap:48px;flex-wrap:wrap;">
     <div style="display:flex;align-items:center;gap:10px;opacity:.55;transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.55">
       <span style="font-size:22px">⚡</span>
       <span style="font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;color:var(--w)">Energia</span>
@@ -979,7 +988,7 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
   <div class="sec-tag">O que dizem</div>
   <h2 class="sec-title reveal">Resultados reais<br>de quem já usa.</h2>
 
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:60px;">
+  <div class="depo-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:60px;">
     <div class="reveal" style="background:var(--bg2);border:1px solid var(--bdr);border-radius:12px;padding:32px;position:relative;overflow:hidden;">
       <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--v),var(--cy))"></div>
       <div style="font-size:24px;margin-bottom:16px;color:var(--am)">★★★★★</div>
@@ -1020,7 +1029,7 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
 </section>
 
 <!-- URGÊNCIA -->
-<div style="background:linear-gradient(135deg,rgba(124,58,237,.15),rgba(34,211,238,.08));border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);padding:20px 60px;display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;">
+<div class="urgency-strip" style="background:linear-gradient(135deg,rgba(124,58,237,.15),rgba(34,211,238,.08));border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);padding:20px 60px;display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;">
   <div style="display:flex;align-items:center;gap:8px;">
     <div style="width:8px;height:8px;border-radius:50%;background:var(--gr);animation:blink .8s infinite;"></div>
     <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gr);letter-spacing:1px;">3 VAGAS ABERTAS ESTE MÊS</span>

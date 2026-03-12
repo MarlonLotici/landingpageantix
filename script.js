@@ -36,12 +36,19 @@ function initHeroCanvas() {
   let W, H;
 
   function resize() {
-    W = canvas.width  = canvas.offsetWidth;
-    H = canvas.height = canvas.offsetHeight;
+    // Use parent's clientWidth/Height to avoid layout-triggering reflow
+    const parent = canvas.parentElement;
+    W = canvas.width  = parent.clientWidth;
+    H = canvas.height = parent.clientHeight;
   }
   resize();
-  const ro = new ResizeObserver(resize);
-  ro.observe(canvas.parentElement);
+
+  // Debounced resize — prevents rapid reflow on mobile keyboard/orientation
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(resize, 200);
+  }, { passive: true });
 
   // Palette
   const C = {
@@ -177,11 +184,16 @@ function initCtaCanvas() {
   let W, H;
 
   function resize() {
-    W = canvas.width  = canvas.offsetWidth;
-    H = canvas.height = canvas.offsetHeight;
+    const parent = canvas.parentElement;
+    W = canvas.width  = parent.clientWidth;
+    H = canvas.height = parent.clientHeight;
   }
   resize();
-  new ResizeObserver(resize).observe(canvas.parentElement);
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(resize, 200);
+  }, { passive: true });
 
   const particles = Array.from({ length: 40 }, () => ({
     x: rand(0, W), y: rand(0, H),
@@ -754,9 +766,8 @@ function initExitToast() {
 // ─── INIT ─────────────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Prevent browser from restoring scroll position (causes jump on load)
+  // Prevent browser from auto-restoring scroll position
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-  window.scrollTo(0, 0);
 
   initHeroCanvas();
   initCtaCanvas();
