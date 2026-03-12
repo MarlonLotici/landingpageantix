@@ -557,12 +557,30 @@ function initChat() {
   const addTimeout = (fn, ms) => timeouts.push(setTimeout(fn, ms));
   const clearAll   = ()       => { timeouts.forEach(clearTimeout); timeouts = []; };
 
+  // Scroll suave DENTRO do chat — nunca afeta a página
+  function scrollChat(delay = 0) {
+    setTimeout(() => {
+      chatArea.scrollTo({
+        top: chatArea.scrollHeight,
+        behavior: 'smooth'
+      });
+    }, delay);
+  }
+
+  // Tempo de leitura estimado: ~150 palavras/min, mínimo 800ms
+  function readTime(text) {
+    const words = text.replace(/<[^>]+>/g, '').split(/\s+/).length;
+    return Math.max(800, Math.round((words / 150) * 60000));
+  }
+
   function showEl(el) {
     requestAnimationFrame(() => {
       el.style.transition = 'opacity .35s ease, transform .35s ease';
       el.style.opacity    = '1';
       el.style.transform  = 'translateY(0)';
     });
+    // Scroll após a transição de entrada terminar (350ms)
+    scrollChat(400);
   }
 
   function makeTyping() {
