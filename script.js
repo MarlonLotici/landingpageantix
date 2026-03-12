@@ -316,10 +316,12 @@ function initSmoothScroll() {
   const OFFSET = 72;
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
-      const target = document.querySelector(a.getAttribute('href'));
+      const href = a.getAttribute('href');
+      if (!href || href === '#') return; // skip empty anchors
+      const target = document.querySelector(href);
       if (!target) return;
       e.preventDefault();
-      window.scrollTo({ top: target.offsetTop - OFFSET, behavior: 'smooth' });
+      window.scrollTo({ top: Math.max(0, target.offsetTop - OFFSET), behavior: 'smooth' });
     });
   });
 }
@@ -752,6 +754,10 @@ function initExitToast() {
 // ─── INIT ─────────────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Prevent browser from restoring scroll position (causes jump on load)
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
+
   initHeroCanvas();
   initCtaCanvas();
   initCursor();
