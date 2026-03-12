@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulse IA — SDR Neural para Energia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600;700;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+
+/* ─── TOKENS ───────────────────────────────────────────────── */
+:root {
+  --bg:    #03030D;
+  --bg2:   #07071C;
+  --bg3:   #0D0D28;
+  --v:     #7C3AED;
+  --vl:    #A78BFA;
+  --cy:    #22D3EE;
+  --am:    #F59E0B;
+  --gr:    #34D399;
+  --w:     #EEF2FF;
+  --gray:  #6B7280;
+  --g2:    #1A1A36;
+  --bdr:   rgba(124,58,237,0.18);
+  --bdrc:  rgba(34,211,238,0.15);
+  --glow:  rgba(124,58,237,0.10);
+}
+
+/* ─── RESET ─────────────────────────────────────────────────── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--bg);
+  color: var(--w);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  overflow-x: hidden;
+  cursor: none;
+}
+img, svg { display:block; }
+
+/* ─── CURSOR ─────────────────────────────────────────────────── */
+.cur { position:fixed; width:10px; height:10px; border-radius:50%; background:var(--vl);
+  pointer-events:none; z-index:9999; transition:transform .15s,background .2s; mix-blend-mode:screen; }
+.cur-ring { position:fixed; width:34px; height:34px;
+  border:1.5px solid rgba(167,139,250,0.45); border-radius:50%;
+  pointer-events:none; z-index:9998;
+  transition:width .25s,height .25s,border-color .25s; }
+
+/* ─── NAV ─────────────────────────────────────────────────────── */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:200;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 60px; height:68px;
+  background:rgba(3,3,13,0.8); backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--bdr);
+  transition:box-shadow .3s;
+}
+#nav-progress {
+  position:absolute; bottom:-1px; left:0; height:1px; width:0%;
+  background:linear-gradient(90deg, var(--v), var(--cy));
+  transition:width .08s linear;
+}
+.nav-logo {
+  font-family:'Unbounded',sans-serif; font-size:18px; font-weight:700;
+  letter-spacing:-0.5px;
+}
+.nav-logo span { background:linear-gradient(90deg,var(--vl),var(--cy)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.nav-links { display:flex; gap:36px; }
+.nav-links a { font-size:13px; color:var(--gray); text-decoration:none; letter-spacing:.3px; transition:color .2s; }
+.nav-links a:hover { color:var(--w); }
+.nav-cta {
+  background:var(--v); color:var(--w);
+  font-family:'Unbounded',sans-serif; font-size:11px; font-weight:600; letter-spacing:.5px;
+  padding:10px 22px; border-radius:6px; text-decoration:none;
+  transition:all .2s; border:1px solid var(--v);
+}
+.nav-cta:hover { background:transparent; color:var(--vl); border-color:var(--vl); }
+
+/* ─── HERO ───────────────────────────────────────────────────── */
+.hero {
+  min-height:100vh; padding:120px 60px 80px;
+  display:grid; grid-template-columns:1fr 460px;
+  gap:60px; align-items:center;
+  position:relative; overflow:hidden;
+}
+#hero-canvas {
+  position:absolute; inset:0; width:100%; height:100%;
+  pointer-events:none; z-index:0;
+}
+.hero-content { position:relative; z-index:1; }
+.hero-badge {
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(124,58,237,0.1); border:1px solid var(--bdr);
+  padding:6px 14px; border-radius:100px; margin-bottom:28px;
+  font-family:'DM Mono',monospace; font-size:11px; letter-spacing:1px;
+  text-transform:uppercase; color:var(--vl);
+  animation:fadeUp .7s ease both;
+}
+.bdot { width:6px; height:6px; border-radius:50%; background:var(--gr); animation:blink 1.4s ease-in-out infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+
+.hero h1 {
+  font-family:'Unbounded',sans-serif;
+  font-size:clamp(46px,5.5vw,82px); font-weight:900;
+  line-height:.98; letter-spacing:-3px;
+  margin-bottom:28px;
+  animation:fadeUp .7s .1s ease both;
+}
+.h1-line1 { display:block; color:var(--w); }
+.h1-line2 {
+  display:block;
+  background:linear-gradient(120deg, var(--vl) 0%, var(--cy) 60%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.h1-line3 { display:block; color:var(--w); }
+
+.hero-sub {
+  font-size:17px; line-height:1.65; color:rgba(238,242,255,0.55);
+  max-width:520px; font-weight:300; margin-bottom:44px;
+  animation:fadeUp .7s .18s ease both;
+}
+.hero-actions {
+  display:flex; gap:14px; flex-wrap:wrap;
+  animation:fadeUp .7s .26s ease both;
+}
+.btn-primary {
+  background:linear-gradient(135deg, var(--v), #5B21B6);
+  color:var(--w); font-family:'Unbounded',sans-serif; font-weight:600;
+  font-size:12px; letter-spacing:.5px; padding:15px 32px; border-radius:6px;
+  text-decoration:none; transition:all .25s;
+  border:1px solid transparent; display:inline-flex; align-items:center; gap:8px;
+  position:relative; overflow:hidden;
+}
+.btn-primary::before {
+  content:''; position:absolute; inset:0; opacity:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.12),transparent);
+  transition:opacity .2s;
+}
+.btn-primary:hover::before { opacity:1; }
+.btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 40px rgba(124,58,237,.4); }
+
+.btn-ghost {
+  background:transparent; color:var(--w);
+  font-family:'Unbounded',sans-serif; font-weight:600; font-size:12px; letter-spacing:.5px;
+  padding:15px 32px; border-radius:6px; text-decoration:none;
+  border:1px solid rgba(238,242,255,.12); transition:all .25s;
+  display:inline-flex; align-items:center; gap:8px;
+}
+.btn-ghost:hover { border-color:var(--vl); color:var(--vl); }
+
+.hero-stats {
+  display:flex; gap:48px; margin-top:56px; padding-top:40px;
+  border-top:1px solid rgba(238,242,255,.06);
+  animation:fadeUp .7s .34s ease both;
+}
+.stat-n {
+  font-family:'DM Mono',monospace; font-size:36px; font-weight:500;
+  color:var(--cy); letter-spacing:-2px; line-height:1;
+}
+.stat-l { font-size:12px; color:var(--gray); margin-top:5px; font-weight:300; }
+
+/* TERMINAL WIDGET */
+.terminal {
+  position:relative; z-index:1;
+  background:rgba(8,8,30,0.85); border:1px solid var(--bdr);
+  border-radius:12px; overflow:hidden;
+  box-shadow:0 0 0 1px rgba(124,58,237,.04), 0 40px 80px rgba(0,0,0,.6),
+             inset 0 1px 0 rgba(167,139,250,.08);
+  animation:fadeUp .7s .3s ease both;
+  backdrop-filter:blur(20px);
+}
+.term-bar {
+  background:rgba(13,13,40,.9); border-bottom:1px solid var(--bdr);
+  padding:12px 16px; display:flex; align-items:center; gap:8px;
+}
+.term-dots span {
+  display:inline-block; width:10px; height:10px; border-radius:50%;
+}
+.term-dots span:nth-child(1){background:#FF5F57}
+.term-dots span:nth-child(2){background:#FEBC2E}
+.term-dots span:nth-child(3){background:#28C840}
+.term-title {
+  font-family:'DM Mono',monospace; font-size:11px; color:var(--gray);
+  letter-spacing:.5px; margin-left:4px; flex:1; text-align:center;
+}
+.term-live {
+  display:flex; align-items:center; gap:5px;
+  font-family:'DM Mono',monospace; font-size:10px; color:var(--gr); letter-spacing:.8px;
+}
+.term-live-dot { width:5px; height:5px; border-radius:50%; background:var(--gr); animation:blink .8s infinite; }
+
+.term-body { padding:20px; display:flex; flex-direction:column; gap:0; }
+.term-rows { display:grid; grid-template-columns:1fr 1fr; gap:1px; margin-bottom:16px; }
+.term-row {
+  background:rgba(13,13,40,.6); padding:14px 16px;
+}
+.term-row:nth-child(1){ border-radius:6px 0 0 0; }
+.term-row:nth-child(2){ border-radius:0 6px 0 0; }
+.term-row:nth-child(3){ border-radius:0 0 0 6px; }
+.term-row:nth-child(4){ border-radius:0 0 6px 0; }
+.term-row-label { font-family:'DM Mono',monospace; font-size:9px; color:var(--gray); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px; }
+.term-row-val { font-family:'DM Mono',monospace; font-size:22px; font-weight:500; color:var(--w); letter-spacing:-1px; }
+.term-row-val.cyan  { color:var(--cy); }
+.term-row-val.violet{ color:var(--vl); }
+.term-row-val.green { color:var(--gr); }
+.term-row-val.amber { color:var(--am); }
+
+.term-divider { height:1px; background:var(--bdr); margin:0 0 16px; }
+.term-timer-row {
+  display:flex; justify-content:space-between; align-items:center;
+  font-family:'DM Mono',monospace; font-size:11px;
+  color:var(--gray); padding:0 2px; margin-bottom:14px;
+}
+.term-timer-val { color:var(--vl); font-size:13px; }
+
+.term-feed { display:flex; flex-direction:column; gap:0; overflow:hidden; }
+.feed-item {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:7px 2px; border-bottom:1px solid rgba(124,58,237,0.06);
+  transition:all .3s;
+}
+.feed-item:last-child { border-bottom:none; }
+.feed-name { font-family:'DM Mono',monospace; font-size:10px; color:rgba(238,242,255,.5); }
+.feed-status { font-family:'DM Mono',monospace; font-size:10px; }
+.feed-status.c { color:var(--cy); }
+.feed-status.g { color:var(--gr); }
+.feed-status.v { color:var(--vl); }
+.feed-status.x { color:var(--gray); }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+
+/* ─── TICKER ─────────────────────────────────────────────────── */
+.ticker-wrap {
+  background:var(--bg2); border-top:1px solid var(--bdr); border-bottom:1px solid var(--bdr);
+  padding:14px 0; overflow:hidden;
+}
+.ticker-track { display:flex; animation:ticker 35s linear infinite; white-space:nowrap; }
+.ticker-item {
+  font-family:'DM Mono',monospace; font-size:11px; font-weight:400; letter-spacing:1.5px;
+  text-transform:uppercase; padding:0 32px; color:rgba(167,139,250,.5);
+}
+.ticker-item.hi { color:var(--vl); }
+@keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ─── SECTION BASE ───────────────────────────────────────────── */
+section { padding:120px 60px; }
+.sec-tag {
+  font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; text-transform:uppercase;
+  color:var(--vl); margin-bottom:18px; display:flex; align-items:center; gap:10px;
+}
+.sec-tag::before { content:''; display:block; width:24px; height:1px; background:var(--v); }
+.sec-title {
+  font-family:'Unbounded',sans-serif;
+  font-size:clamp(32px,3.8vw,52px); font-weight:800; letter-spacing:-2px;
+  line-height:1.05; margin-bottom:20px;
+}
+.sec-sub { font-size:16px; color:rgba(238,242,255,.5); max-width:540px; line-height:1.7; font-weight:300; }
+
+/* ─── DESAFIO ────────────────────────────────────────────────── */
+.desafio { background:var(--bg2); }
+.desafio-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; margin-top:64px; }
+.pain-list { display:flex; flex-direction:column; gap:2px; }
+.pain-item {
+  display:flex; gap:18px; align-items:flex-start; padding:22px 20px;
+  border-radius:8px; border:1px solid transparent;
+  transition:all .3s; cursor:default;
+}
+.pain-item:hover { background:var(--g2); border-color:var(--bdr); transform:translateX(6px); }
+.pain-num {
+  font-family:'DM Mono',monospace; font-size:11px; color:var(--v);
+  min-width:24px; padding-top:2px; letter-spacing:.5px;
+}
+.pain-text h4 { font-family:'Unbounded',sans-serif; font-size:13px; font-weight:600; margin-bottom:5px; letter-spacing:-.3px; }
+.pain-text p { font-size:13px; color:var(--gray); line-height:1.6; }
+
+.desafio-card {
+  background:var(--bg3); border:1px solid var(--bdr); border-radius:12px; padding:32px;
+  position:relative; overflow:hidden;
+}
+.desafio-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg, var(--v), var(--cy));
+}
+.dc-label { font-family:'DM Mono',monospace; font-size:10px; color:var(--gray); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:8px; }
+.dc-val { font-family:'DM Mono',monospace; font-size:56px; font-weight:500; color:var(--cy); letter-spacing:-3px; line-height:1; margin-bottom:4px; }
+.dc-sub { font-size:13px; color:var(--gray); margin-bottom:28px; }
+.dc-bar { height:4px; background:var(--g2); border-radius:2px; margin-bottom:24px; }
+.dc-fill { height:100%; border-radius:2px; background:linear-gradient(90deg,var(--v),var(--cy)); width:0%; transition:width 1.5s 1s ease; }
+.dc-rows { display:flex; flex-direction:column; gap:10px; }
+.dc-row { display:flex; justify-content:space-between; font-size:12px; }
+.dc-row span:last-child { color:var(--cy); font-family:'DM Mono',monospace; }
+.desafio-badge {
+  position:absolute; bottom:-10px; right:-10px;
+  background:linear-gradient(135deg,var(--v),#5B21B6); border-radius:8px; padding:18px 22px;
+  color:var(--w);
+}
+.db-n { font-family:'Unbounded',sans-serif; font-size:28px; font-weight:800; letter-spacing:-1px; }
+.db-l { font-size:11px; opacity:.7; margin-top:2px; }
+
+/* ─── COMO FUNCIONA ─────────────────────────────────────────── */
+.como { background:var(--bg); }
+.steps-line { margin-top:64px; display:grid; grid-template-columns:repeat(4,1fr); position:relative; }
+.steps-line::before {
+  content:''; position:absolute; top:32px; left:10%; right:10%; height:1px;
+  background:linear-gradient(90deg, transparent, var(--bdr) 20%, var(--bdr) 80%, transparent);
+  z-index:0;
+}
+.step {
+  padding:0 28px 40px; text-align:center; position:relative; z-index:1;
+  transition:all .3s;
+}
+.step:hover { transform:translateY(-6px); }
+.step-circle {
+  width:64px; height:64px; border-radius:50%; margin:0 auto 24px;
+  background:var(--bg2); border:1px solid var(--bdr);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'DM Mono',monospace; font-size:16px; font-weight:500; color:var(--vl);
+  transition:all .3s; position:relative;
+}
+.step:hover .step-circle {
+  background:rgba(124,58,237,.1); border-color:var(--v);
+  box-shadow:0 0 0 8px rgba(124,58,237,.06);
+}
+.step-ico { font-size:22px; margin-bottom:12px; }
+.step h3 { font-family:'Unbounded',sans-serif; font-size:13px; font-weight:700; letter-spacing:-.3px; margin-bottom:10px; }
+.step p { font-size:12px; color:var(--gray); line-height:1.7; }
+
+/* ─── RESULTADOS ─────────────────────────────────────────────── */
+.resultados { background:var(--bg2); }
+.metricas { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-top:64px; }
+.metrica {
+  background:var(--bg3); padding:44px 36px;
+  position:relative; overflow:hidden; transition:all .3s;
+}
+.metricas .metrica:first-child { border-radius:12px 0 0 12px; }
+.metricas .metrica:last-child  { border-radius:0 12px 12px 0; }
+.metrica::after {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,var(--v),var(--cy));
+  transform:scaleX(0); transform-origin:left; transition:transform .4s;
+}
+.metrica:hover::after { transform:scaleX(1); }
+.metrica:hover { border-color:var(--bdr); }
+.m-n {
+  font-family:'DM Mono',monospace; font-size:64px; font-weight:500;
+  letter-spacing:-4px; line-height:1; margin-bottom:12px;
+  background:linear-gradient(135deg,var(--w) 30%,var(--vl));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.m-n sup { font-size:32px; letter-spacing:0; }
+.m-label strong { font-family:'Unbounded',sans-serif; font-size:14px; font-weight:700; display:block; margin-bottom:6px; color:var(--w); }
+.m-label { font-size:12px; color:var(--gray); line-height:1.6; }
+
+/* ─── DEMO ───────────────────────────────────────────────────── */
+.demo { background:var(--bg); }
+.demo-grid { display:grid; grid-template-columns:380px 1fr; gap:80px; align-items:start; margin-top:64px; }
+
+.phone {
+  background:var(--bg2); border:1px solid var(--bdr); border-radius:28px;
+  padding:20px 18px; box-shadow:0 40px 80px rgba(0,0,0,.5), 0 0 0 1px rgba(124,58,237,.06);
+}
+.phone-bar {
+  background:rgba(18,140,126,.9); border-radius:14px; padding:10px 14px;
+  display:flex; align-items:center; gap:10px; margin-bottom:14px;
+}
+.ph-av {
+  width:34px; height:34px; border-radius:50%;
+  background:linear-gradient(135deg,var(--v),var(--cy));
+  display:flex; align-items:center; justify-content:center; font-size:15px;
+}
+.ph-name { font-family:'Unbounded',sans-serif; font-size:13px; font-weight:600; }
+.ph-status { font-size:10px; color:rgba(255,255,255,.65); }
+.chat-area { display:flex; flex-direction:column; gap:8px; min-height:280px; }
+.bubble {
+  max-width:88%; padding:9px 13px; border-radius:12px;
+  font-size:12px; line-height:1.55; opacity:0; transform:translateY(8px);
+}
+.bubble-in {
+  background:var(--bg3); border:1px solid var(--bdr); color:var(--w);
+  align-self:flex-start; border-radius:12px 12px 12px 4px;
+}
+.bubble-out {
+  background:#dcf8c6; color:#111;
+  align-self:flex-end; border-radius:12px 12px 4px 12px;
+}
+
+.demo-points { display:flex; flex-direction:column; gap:24px; padding-top:10px; }
+.dp {
+  display:flex; gap:16px; align-items:flex-start; padding:22px 20px;
+  border-radius:8px; border:1px solid transparent; transition:all .3s;
+}
+.dp:hover { background:var(--g2); border-color:var(--bdr); }
+.dp-ico {
+  width:40px; height:40px; min-width:40px; border-radius:8px;
+  background:rgba(124,58,237,.1); border:1px solid var(--bdr);
+  display:flex; align-items:center; justify-content:center; font-size:18px;
+}
+.dp h4 { font-family:'Unbounded',sans-serif; font-size:13px; font-weight:700; margin-bottom:5px; letter-spacing:-.3px; }
+.dp p { font-size:12px; color:var(--gray); line-height:1.6; }
+
+/* ─── COMPARATIVO ───────────────────────────────────────────── */
+.comp { background:var(--bg2); }
+.comp-table {
+  margin-top:64px; border:1px solid var(--bdr); border-radius:12px; overflow:hidden;
+}
+.comp-head {
+  display:grid; grid-template-columns:1fr 1fr 1fr;
+  background:var(--bg3); border-bottom:1px solid var(--bdr);
+}
+.comp-head-cell {
+  padding:20px 28px; font-family:'Unbounded',sans-serif; font-size:11px; font-weight:700;
+  letter-spacing:.5px; text-transform:uppercase;
+}
+.comp-head-cell:not(:last-child) { border-right:1px solid var(--bdr); }
+.comp-head-cell.active {
+  background:rgba(124,58,237,.08);
+  color:var(--vl); position:relative;
+}
+.comp-head-cell.active::after {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,var(--v),var(--cy));
+}
+
+.comp-row {
+  display:grid; grid-template-columns:1fr 1fr 1fr;
+  border-bottom:1px solid rgba(124,58,237,.06); transition:background .2s;
+}
+.comp-row:last-child { border-bottom:none; }
+.comp-row:hover { background:rgba(124,58,237,.03); }
+.comp-cell {
+  padding:18px 28px; font-size:13px;
+  display:flex; align-items:center;
+}
+.comp-cell:not(:last-child) { border-right:1px solid rgba(124,58,237,.06); }
+.comp-cell.metric { font-family:'DM Mono',monospace; font-size:11px; color:var(--gray); letter-spacing:.5px; }
+.comp-cell.old { color:rgba(238,242,255,.4); }
+.comp-cell.new { color:var(--gr); font-weight:500; }
+.comp-cell.new.cy { color:var(--cy); }
+
+/* ─── PLANOS ─────────────────────────────────────────────────── */
+.planos { background:var(--bg); }
+.planos-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:64px; }
+.plano {
+  border-radius:12px; padding:36px 30px; border:1px solid var(--bdr);
+  background:var(--bg2); transition:all .3s; position:relative; overflow:hidden;
+}
+.plano:hover { transform:translateY(-6px); box-shadow:0 20px 60px rgba(0,0,0,.4); }
+.plano.feat {
+  background:var(--bg3); border-color:var(--v);
+  box-shadow:0 0 0 1px var(--v), 0 30px 80px rgba(124,58,237,.2);
+}
+.plano.feat::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,var(--v),var(--cy));
+}
+.plano-badge {
+  position:absolute; top:18px; right:18px;
+  background:linear-gradient(135deg,var(--v),#5B21B6);
+  font-family:'DM Mono',monospace; font-size:9px; font-weight:500; letter-spacing:1px;
+  text-transform:uppercase; color:var(--w); padding:4px 10px; border-radius:100px;
+}
+.plano-name { font-family:'Unbounded',sans-serif; font-size:16px; font-weight:700; margin-bottom:6px; }
+.plano-desc { font-size:12px; color:var(--gray); margin-bottom:28px; line-height:1.65; }
+.plano-price { margin-bottom:28px; padding-bottom:28px; border-bottom:1px solid rgba(124,58,237,.1); }
+.plano-val { font-family:'DM Mono',monospace; font-size:44px; font-weight:500; letter-spacing:-3px; line-height:1; }
+.plano-val .rs { font-size:18px; vertical-align:super; letter-spacing:0; }
+.plano-per { font-size:12px; color:var(--gray); margin-top:5px; }
+.plano-feats { display:flex; flex-direction:column; gap:10px; margin-bottom:28px; }
+.pf { display:flex; gap:9px; align-items:flex-start; font-size:12px; line-height:1.5; }
+.pf-ck { color:var(--vl); min-width:14px; font-size:14px; }
+
+.btn-plano {
+  display:block; text-align:center; text-decoration:none; padding:13px;
+  border-radius:6px; font-family:'Unbounded',sans-serif; font-weight:700; font-size:11px;
+  letter-spacing:.5px; transition:all .25s;
+  border:1px solid var(--bdr); color:var(--gray);
+}
+.btn-plano:hover { border-color:var(--vl); color:var(--vl); }
+.plano.feat .btn-plano {
+  background:linear-gradient(135deg,var(--v),#5B21B6);
+  border-color:transparent; color:var(--w);
+}
+.plano.feat .btn-plano:hover { box-shadow:0 8px 30px rgba(124,58,237,.5); transform:translateY(-1px); }
+
+/* ─── CTA FINAL ─────────────────────────────────────────────── */
+.cta-final {
+  background:var(--bg2); text-align:center; padding:140px 60px;
+  position:relative; overflow:hidden;
+}
+#cta-canvas { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; opacity:.4; }
+.cta-final > * { position:relative; z-index:1; }
+.cta-final h2 {
+  font-family:'Unbounded',sans-serif;
+  font-size:clamp(36px,4.5vw,64px); font-weight:900; letter-spacing:-2px;
+  line-height:1.05; margin-bottom:20px;
+}
+.cta-final h2 span {
+  background:linear-gradient(120deg,var(--vl),var(--cy));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.cta-final p { font-size:17px; color:rgba(238,242,255,.5); max-width:480px; margin:0 auto 44px; line-height:1.7; font-weight:300; }
+.cta-actions { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+/* ─── FOOTER ─────────────────────────────────────────────────── */
+footer {
+  background:var(--bg); border-top:1px solid var(--bdr);
+  padding:36px 60px; display:flex; justify-content:space-between; align-items:center;
+}
+.foot-logo { font-family:'Unbounded',sans-serif; font-size:16px; font-weight:700; }
+.foot-logo span { background:linear-gradient(90deg,var(--vl),var(--cy)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
+
+/* ─── REVEAL ─────────────────────────────────────────────────── */
+.reveal { opacity:0; transform:translateY(36px); transition:all .8s cubic-bezier(.16,1,.3,1); }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+/* ─── RESPONSIVE ─────────────────────────────────────────────── */
+@media(max-width:1024px) {
+  .hero { grid-template-columns:1fr; padding:120px 40px 80px; }
+  .terminal { display:none; }
+  .desafio-grid { grid-template-columns:1fr; }
+  .demo-grid { grid-template-columns:1fr; }
+  .planos-grid { grid-template-columns:1fr; }
+}
+@media(max-width:768px) {
+  nav { padding:0 24px; }
+  .nav-links { display:none; }
+  section { padding:80px 24px; }
+  .hero { padding:100px 24px 60px; }
+  .steps-line { grid-template-columns:1fr 1fr; }
+  .metricas { grid-template-columns:1fr; }
+  .metricas .metrica:first-child { border-radius:12px 12px 0 0; }
+  .metricas .metrica:last-child { border-radius:0 0 12px 12px; }
+  .comp-head,.comp-row { grid-template-columns:1fr 1fr; }
+  .comp-head-cell:first-child,.comp-cell:first-child { display:none; }
+  footer { flex-direction:column; gap:12px; text-align:center; }
+  body { cursor:auto; }
+  .cur,.cur-ring { display:none; }
+  .hero-stats { gap:28px; flex-wrap:wrap; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="cur" id="cursor"></div>
+<div class="cur-ring" id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav>
+  <div id="nav-progress"></div>
+  <div class="nav-logo">Pulse<span>IA</span></div>
+  <div class="nav-links">
+    <a href="#como">Como funciona</a>
+    <a href="#demo">Demo</a>
+    <a href="#planos">Planos</a>
+  </div>
+  <a href="#agendar" class="nav-cta">Agendar Demo →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="hero-canvas"></canvas>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="bdot"></div>
+      SDR Neural v2 &nbsp;·&nbsp; operando agora
+    </div>
+
+    <h1>
+      <span class="h1-line1">Prospecção</span>
+      <span class="h1-line2">de energia</span>
+      <span class="h1-line3">automatizada.</span>
+    </h1>
+
+    <p class="hero-sub">
+      IA que identifica leads, conduz o SPIN Selling via WhatsApp e agenda consultorias — operando 17 horas por dia sem custo variável.
+    </p>
+
+    <div class="hero-actions">
+      <a href="https://calendly.com/marlonlotici6/30min" target="_blank" class="btn-primary magnetic">
+        Agendar demo gratuita →
+      </a>
+      <a href="#demo" class="btn-ghost magnetic">
+        ▶ Ver conversa ao vivo
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div>
+        <div class="stat-n" data-target="429" data-suffix="+">429+</div>
+        <div class="stat-l">disparos no primeiro mês</div>
+      </div>
+      <div>
+        <div class="stat-n" data-target="17" data-suffix="h">17h</div>
+        <div class="stat-l">cobertura diária</div>
+      </div>
+      <div>
+        <div class="stat-n" data-target="997" data-prefix="R$">R$997</div>
+        <div class="stat-l">custo mensal fixo</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TERMINAL WIDGET -->
+  <div class="terminal">
+    <div class="term-bar">
+      <div class="term-dots">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="term-title">pulse-sdr — live dashboard</div>
+      <div class="term-live">
+        <div class="term-live-dot"></div>
+        LIVE
+      </div>
+    </div>
+    <div class="term-body">
+      <div class="term-rows">
+        <div class="term-row">
+          <div class="term-row-label">Chips Online</div>
+          <div class="term-row-val cyan">2 / 2</div>
+        </div>
+        <div class="term-row">
+          <div class="term-row-label">Disparos hoje</div>
+          <div class="term-row-val violet" id="term-dispatches">94</div>
+        </div>
+        <div class="term-row">
+          <div class="term-row-label">Responderam</div>
+          <div class="term-row-val green" id="term-resp">17</div>
+        </div>
+        <div class="term-row">
+          <div class="term-row-label">Agendados</div>
+          <div class="term-row-val amber" id="term-sched">4</div>
+        </div>
+      </div>
+      <div class="term-divider"></div>
+      <div class="term-timer-row">
+        <span>próximo disparo em</span>
+        <span class="term-timer-val" id="term-timer">02:14</span>
+      </div>
+      <div class="term-feed" id="term-feed">
+        <div class="feed-item">
+          <span class="feed-name">Bar do Gugu</span>
+          <span class="feed-status c">respondeu ↩</span>
+        </div>
+        <div class="feed-item">
+          <span class="feed-name">Auto Peças Lima</span>
+          <span class="feed-status v">novo lead ◎</span>
+        </div>
+        <div class="feed-item">
+          <span class="feed-name">Padaria Bela Vista</span>
+          <span class="feed-status g">agendou ✓</span>
+        </div>
+        <div class="feed-item">
+          <span class="feed-name">Clínica São Luís</span>
+          <span class="feed-status x">sem resposta —</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span class="ticker-item hi">Pulse IA</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">SDR Neural</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item hi">Llama 3.3 70B</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">Multi-Chip WhatsApp</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item hi">SPIN Selling IA</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">Anti-ban Ativo</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item hi">Lei 14.300</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">Zero Obras</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item hi">17h / Dia</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">Supabase CRM</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item hi">Pulse IA</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">SDR Neural</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item hi">Llama 3.3 70B</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">Multi-Chip WhatsApp</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item hi">SPIN Selling IA</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">Anti-ban Ativo</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item hi">Lei 14.300</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">Zero Obras</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item hi">17h / Dia</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">Supabase CRM</span>
+    <span class="ticker-item">·</span>
+  </div>
+</div>
+
+<!-- DESAFIO -->
+<section class="desafio" id="desafio">
+  <div class="sec-tag">O desafio</div>
+  <h2 class="sec-title reveal">Crescer sem<br>escalar o custo.</h2>
+  <p class="sec-sub reveal">Contratar mais pessoas pra prospectar funciona — mas o custo cresce junto. Existe um caminho diferente.</p>
+
+  <div class="desafio-grid">
+    <div class="pain-list reveal">
+      <div class="pain-item">
+        <div class="pain-num">01</div>
+        <div class="pain-text">
+          <h4>Leads respondem fora do horário</h4>
+          <p>A maioria das respostas chega à noite ou no fim de semana. Sem cobertura, o lead esfria.</p>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-num">02</div>
+        <div class="pain-text">
+          <h4>Volume limitado por operador</h4>
+          <p>Um time de prospecção tem teto natural. Dobrar o volume significa dobrar o custo fixo.</p>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-num">03</div>
+        <div class="pain-text">
+          <h4>Personalização impossível em escala</h4>
+          <p>O mesmo script pra padaria e pra indústria. Cada lead pede uma abordagem diferente.</p>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-num">04</div>
+        <div class="pain-text">
+          <h4>Custo fixo cresce antes da receita</h4>
+          <p>Contratar antes de converter é o gargalo mais comum de quem vende energia por assinatura.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal" style="position:relative">
+      <div class="desafio-card">
+        <div class="dc-label">Custo para prospectar 110 leads/dia</div>
+        <div class="dc-val">997</div>
+        <div class="dc-sub">R$ por mês, fixo</div>
+        <div class="dc-bar"><div class="dc-fill" id="dc-fill"></div></div>
+        <div class="dc-rows">
+          <div class="dc-row">
+            <span>SDR Neural — 2 chips</span>
+            <span>R$997</span>
+          </div>
+          <div class="dc-row">
+            <span>Ferramentas inclusas</span>
+            <span>R$0</span>
+          </div>
+          <div class="dc-row">
+            <span>Custo por lead</span>
+            <span>R$9,06</span>
+          </div>
+        </div>
+      </div>
+      <div class="desafio-badge">
+        <div class="db-n">11x</div>
+        <div class="db-l">mais leads/dia</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section class="como" id="como">
+  <div class="sec-tag">Fluxo</div>
+  <h2 class="sec-title reveal">Do radar ao<br>agendamento.</h2>
+  <p class="sec-sub reveal">Quatro etapas automatizadas. Você entra só pra fechar.</p>
+
+  <div class="steps-line">
+    <div class="step reveal">
+      <div class="step-circle">01</div>
+      <div class="step-ico">🎯</div>
+      <h3>Radar de Leads</h3>
+      <p>Scraping de empresas na cidade-alvo com CNPJ, porte, bairro e contato do dono.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-circle">02</div>
+      <div class="step-ico">💬</div>
+      <h3>Disparo Neural</h3>
+      <p>Abordagem personalizada por chip com jitter humano — zero risco de ban.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-circle">03</div>
+      <div class="step-ico">🧠</div>
+      <h3>SPIN com IA</h3>
+      <p>IA conduz o SPIN Selling adaptando tom ao perfil do lead em tempo real.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-circle">04</div>
+      <div class="step-ico">📅</div>
+      <h3>Agendamento</h3>
+      <p>Calendly enviado no timing certo. Simulador de economia pronto para a call.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTADOS -->
+<section class="resultados">
+  <div class="sec-tag">Métricas reais</div>
+  <h2 class="sec-title reveal">Números que<br>a operação confirma.</h2>
+
+  <div class="metricas">
+    <div class="metrica reveal">
+      <div class="m-n" data-target="110" data-suffix="+">110<sup>+</sup></div>
+      <div class="m-label">
+        <strong>Leads por dia</strong>
+        Cadência humanizada com jitter de 2–4 min entre disparos.
+      </div>
+    </div>
+    <div class="metrica reveal">
+      <div class="m-n" data-target="17" data-suffix="h">17<sup>h</sup></div>
+      <div class="m-label">
+        <strong>Cobertura diária</strong>
+        Das 5h30 às 22h45. Toda resposta retorna em minutos.
+      </div>
+    </div>
+    <div class="metrica reveal">
+      <div class="m-n" data-prefix="R$" data-target="9">R$<sup>9</sup></div>
+      <div class="m-label">
+        <strong>Custo por lead</strong>
+        Fixo, previsível e sem surpresas no final do mês.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO -->
+<section class="demo" id="demo">
+  <div class="sec-tag">Demo ao vivo</div>
+  <h2 class="sec-title reveal">Veja a IA<br>vendendo energia.</h2>
+
+  <div class="demo-grid">
+    <div class="reveal">
+      <div class="phone">
+        <div class="phone-bar">
+          <div class="ph-av">⚡</div>
+          <div>
+            <div class="ph-name">Marlon — Enerzee</div>
+            <div class="ph-status">online agora</div>
+          </div>
+        </div>
+        <div class="chat-area" id="chat-area">
+          <!-- Bolhas injetadas via JS -->
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-points reveal">
+      <div class="dp">
+        <div class="dp-ico">🎯</div>
+        <div>
+          <h4>Isca que qualifica antes de vender</h4>
+          <p>A primeira pergunta detecta se o lead tem o problema. Nenhuma apresentação antes do diagnóstico.</p>
+        </div>
+      </div>
+      <div class="dp">
+        <div class="dp-ico">🧮</div>
+        <div>
+          <h4>Cálculo de perda personalizado</h4>
+          <p>A IA usa o valor que o lead informou para mostrar a perda exata — não uma estimativa genérica.</p>
+        </div>
+      </div>
+      <div class="dp">
+        <div class="dp-ico">⏱️</div>
+        <div>
+          <h4>Timing cirúrgico do Calendly</h4>
+          <p>O link de agendamento só aparece quando o lead demonstra interesse real. Nunca cedo demais.</p>
+        </div>
+      </div>
+      <div class="dp">
+        <div class="dp-ico">🎤</div>
+        <div>
+          <h4>Áudios para objeções críticas</h4>
+          <p>"É seguro?", "tem obra?", "como funciona?" — a IA responde com PTT humanizado.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARATIVO -->
+<section class="comp" id="comparativo">
+  <div class="sec-tag">Comparativo</div>
+  <h2 class="sec-title reveal">O que muda<br>com escala via IA.</h2>
+
+  <div class="comp-table reveal">
+    <div class="comp-head">
+      <div class="comp-head-cell">Métrica</div>
+      <div class="comp-head-cell">Operação tradicional</div>
+      <div class="comp-head-cell active">Pulse IA SDR Neural</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell metric">Leads / dia</div>
+      <div class="comp-cell old">40 leads</div>
+      <div class="comp-cell new cy">110+ leads</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell metric">Cobertura diária</div>
+      <div class="comp-cell old">8h / dia</div>
+      <div class="comp-cell new cy">17h15 / dia</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell metric">Custo mensal</div>
+      <div class="comp-cell old">R$4.900+</div>
+      <div class="comp-cell new">R$997 fixo</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell metric">Personalização</div>
+      <div class="comp-cell old">Manual, lenta</div>
+      <div class="comp-cell new">Automática por lead</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell metric">Para dobrar o volume</div>
+      <div class="comp-cell old">Dobra o time e o custo</div>
+      <div class="comp-cell new cy">Adiciona um chip</div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANOS -->
+<section class="planos" id="planos">
+  <div class="sec-tag">Planos</div>
+  <h2 class="sec-title reveal">Escolha o módulo<br>certo para agora.</h2>
+
+  <div class="planos-grid">
+    <div class="plano reveal">
+      <div class="plano-name">ChatSAC IA</div>
+      <div class="plano-desc">IA de atendimento para WhatsApp. Responde, qualifica e encaminha sem operador humano.</div>
+      <div class="plano-price">
+        <div class="plano-val"><span class="rs">R$</span>397</div>
+        <div class="plano-per">por mês</div>
+      </div>
+      <div class="plano-feats">
+        <div class="pf"><span class="pf-ck">✓</span>Atendimento 24h no WhatsApp</div>
+        <div class="pf"><span class="pf-ck">✓</span>Qualificação automática</div>
+        <div class="pf"><span class="pf-ck">✓</span>Transferência inteligente</div>
+        <div class="pf"><span class="pf-ck">✓</span>CRM e histórico integrado</div>
+        <div class="pf"><span class="pf-ck">✓</span>Dashboard de métricas</div>
+      </div>
+      <a href="#agendar" class="btn-plano">Começar com ChatSAC →</a>
+    </div>
+
+    <div class="plano feat reveal">
+      <div class="plano-badge">Mais vendido</div>
+      <div class="plano-name">SDR Neural</div>
+      <div class="plano-desc">Motor completo de prospecção ativa. Radar, disparo, SPIN Selling e agendamento automático.</div>
+      <div class="plano-price">
+        <div class="plano-val"><span class="rs">R$</span>997</div>
+        <div class="plano-per">por mês</div>
+      </div>
+      <div class="plano-feats">
+        <div class="pf"><span class="pf-ck">✓</span>Radar de leads por cidade e nicho</div>
+        <div class="pf"><span class="pf-ck">✓</span>Disparo multi-chip humanizado</div>
+        <div class="pf"><span class="pf-ck">✓</span>SPIN Selling com Llama 70B</div>
+        <div class="pf"><span class="pf-ck">✓</span>Áudios para objeções críticas</div>
+        <div class="pf"><span class="pf-ck">✓</span>Anti-ban ativo</div>
+        <div class="pf"><span class="pf-ck">✓</span>Agendamento via Calendly</div>
+      </div>
+      <a href="#agendar" class="btn-plano">Começar com SDR Neural →</a>
+    </div>
+
+    <div class="plano reveal">
+      <div class="plano-name">Suite Total</div>
+      <div class="plano-desc">ChatSAC + SDR Neural + Farm IA. Prospecção, atendimento e expansão em um só sistema.</div>
+      <div class="plano-price">
+        <div class="plano-val"><span class="rs">R$</span>1.797</div>
+        <div class="plano-per">por mês · economia de R$197</div>
+      </div>
+      <div class="plano-feats">
+        <div class="pf"><span class="pf-ck">✓</span>Tudo do ChatSAC IA</div>
+        <div class="pf"><span class="pf-ck">✓</span>Tudo do SDR Neural</div>
+        <div class="pf"><span class="pf-ck">✓</span>Farm IA — retenção e upsell</div>
+        <div class="pf"><span class="pf-ck">✓</span>Onboarding dedicado</div>
+        <div class="pf"><span class="pf-ck">✓</span>Suporte prioritário</div>
+      </div>
+      <a href="#agendar" class="btn-plano">Começar com Suite Total →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final" id="agendar">
+  <canvas id="cta-canvas"></canvas>
+  <div class="sec-tag" style="justify-content:center">Próximo passo</div>
+  <h2>Sua operação pronta<br>para <span>escalar</span>.</h2>
+  <p>Consultoria gratuita de 20 minutos. Abrimos o simulador com os dados da sua operação em tempo real.</p>
+  <div class="cta-actions">
+    <a href="https://calendly.com/marlonlotici6/30min" target="_blank" class="btn-primary magnetic" style="font-size:13px;padding:17px 36px">
+      Agendar consultoria gratuita →
+    </a>
+    <a href="https://wa.me/5567999999999" target="_blank" class="btn-ghost magnetic" style="font-size:13px;padding:17px 36px">
+      💬 WhatsApp direto
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-logo">Pulse<span>IA</span></div>
+  <p>© 2026 Pulse IA — Powered by Enerzee · Lei 14.300</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
