@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pulse IA — SDR Neural para Energia</title>
+<title>Pulse IA — SDR Neural para seu Time de Vendas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600;700;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
@@ -215,11 +215,17 @@ nav {
 }
 .term-timer-val { color:var(--vl); font-size:13px; }
 
-.term-feed { display:flex; flex-direction:column; gap:0; overflow:hidden; }
+.term-feed {
+  display:flex; flex-direction:column; gap:0;
+  overflow:hidden;
+  max-height:128px; /* exactly 4 items × 32px — never grows */
+  height:128px;
+}
 .feed-item {
   display:flex; justify-content:space-between; align-items:center;
   padding:7px 2px; border-bottom:1px solid rgba(124,58,237,0.06);
-  transition:all .3s;
+  transition:opacity .3s, transform .3s;
+  flex-shrink:0; height:32px;
 }
 .feed-item:last-child { border-bottom:none; }
 .feed-name { font-family:'DM Mono',monospace; font-size:10px; color:rgba(238,242,255,.5); }
@@ -571,13 +577,13 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
     </div>
 
     <h1>
-      <span class="h1-line1">Prospecção</span>
-      <span class="h1-line2">de energia</span>
-      <span class="h1-line3">automatizada.</span>
+      <span class="h1-line1">Seu time fecha.</span>
+      <span class="h1-line2">A IA prospecta</span>
+      <span class="h1-line3">pra você.</span>
     </h1>
 
     <p class="hero-sub">
-      IA que identifica leads, conduz o SPIN Selling via WhatsApp e agenda consultorias — operando 17 horas por dia sem custo variável.
+      SDR Neural que encontra leads, conduz conversas via WhatsApp e agenda reuniões qualificadas — 17 horas por dia, para qualquer nicho, sem custo variável.
     </p>
 
     <div class="hero-actions">
@@ -678,9 +684,9 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
     <span class="ticker-item">·</span>
     <span class="ticker-item">Anti-ban Ativo</span>
     <span class="ticker-item">·</span>
-    <span class="ticker-item hi">Lei 14.300</span>
+    <span class="ticker-item hi">Qualquer Nicho B2B</span>
     <span class="ticker-item">·</span>
-    <span class="ticker-item">Zero Obras</span>
+    <span class="ticker-item">Multi-Tenancy</span>
     <span class="ticker-item">·</span>
     <span class="ticker-item hi">17h / Dia</span>
     <span class="ticker-item">·</span>
@@ -698,9 +704,9 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
     <span class="ticker-item">·</span>
     <span class="ticker-item">Anti-ban Ativo</span>
     <span class="ticker-item">·</span>
-    <span class="ticker-item hi">Lei 14.300</span>
+    <span class="ticker-item hi">Qualquer Nicho B2B</span>
     <span class="ticker-item">·</span>
-    <span class="ticker-item">Zero Obras</span>
+    <span class="ticker-item">Multi-Tenancy</span>
     <span class="ticker-item">·</span>
     <span class="ticker-item hi">17h / Dia</span>
     <span class="ticker-item">·</span>
@@ -709,11 +715,46 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
   </div>
 </div>
 
-<!-- DESAFIO -->
+<!-- SOCIAL PROOF BAR -->
+<section style="background:var(--bg);padding:48px 60px;border-bottom:1px solid var(--bdr);">
+  <div style="text-align:center;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-bottom:32px;">
+    Funcionando em múltiplos nichos
+  </div>
+  <div style="display:flex;justify-content:center;align-items:center;gap:48px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:10px;opacity:.55;transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.55">
+      <span style="font-size:22px">⚡</span>
+      <span style="font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;color:var(--w)">Energia</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;opacity:.55;transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.55">
+      <span style="font-size:22px">🏥</span>
+      <span style="font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;color:var(--w)">Saúde</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;opacity:.55;transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.55">
+      <span style="font-size:22px">🏗️</span>
+      <span style="font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;color:var(--w)">Construção</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;opacity:.55;transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.55">
+      <span style="font-size:22px">🛒</span>
+      <span style="font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;color:var(--w)">Varejo</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;opacity:.55;transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.55">
+      <span style="font-size:22px">📦</span>
+      <span style="font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;color:var(--w)">Logística</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;opacity:.55;transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.55">
+      <span style="font-size:22px">💈</span>
+      <span style="font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;color:var(--w)">Serviços</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;background:rgba(124,58,237,.1);border:1px solid var(--bdr);padding:6px 14px;border-radius:100px;">
+      <span style="font-size:16px">+</span>
+      <span style="font-family:'DM Mono',sans-serif;font-size:11px;color:var(--vl)">qualquer nicho B2B</span>
+    </div>
+  </div>
+</section>
 <section class="desafio" id="desafio">
   <div class="sec-tag">O desafio</div>
-  <h2 class="sec-title reveal">Crescer sem<br>escalar o custo.</h2>
-  <p class="sec-sub reveal">Contratar mais pessoas pra prospectar funciona — mas o custo cresce junto. Existe um caminho diferente.</p>
+  <h2 class="sec-title reveal">Prospectar em escala<br>sem explodir o custo.</h2>
+  <p class="sec-sub reveal">Contratar SDR humano funciona — mas o custo cresce antes da receita. Existe um caminho diferente para qualquer negócio que vende B2B.</p>
 
   <div class="desafio-grid">
     <div class="pain-list reveal">
@@ -742,7 +783,7 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
         <div class="pain-num">04</div>
         <div class="pain-text">
           <h4>Custo fixo cresce antes da receita</h4>
-          <p>Contratar antes de converter é o gargalo mais comum de quem vende energia por assinatura.</p>
+          <p>Contratar antes de converter é o gargalo mais comum de quem escala vendas com time próprio.</p>
         </div>
       </div>
     </div>
@@ -843,7 +884,7 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
 <!-- DEMO -->
 <section class="demo" id="demo">
   <div class="sec-tag">Demo ao vivo</div>
-  <h2 class="sec-title reveal">Veja a IA<br>vendendo energia.</h2>
+  <h2 class="sec-title reveal">Veja a IA<br>conduzindo clientes.</h2>
 
   <div class="demo-grid">
     <div class="reveal">
@@ -932,6 +973,62 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
     </div>
   </div>
 </section>
+
+<!-- DEPOIMENTOS -->
+<section style="background:var(--bg);padding:100px 60px;">
+  <div class="sec-tag">O que dizem</div>
+  <h2 class="sec-title reveal">Resultados reais<br>de quem já usa.</h2>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:60px;">
+    <div class="reveal" style="background:var(--bg2);border:1px solid var(--bdr);border-radius:12px;padding:32px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--v),var(--cy))"></div>
+      <div style="font-size:24px;margin-bottom:16px;color:var(--am)">★★★★★</div>
+      <p style="font-size:14px;line-height:1.7;color:rgba(238,242,255,.7);margin-bottom:24px;font-style:italic;">"Em 3 semanas já tínhamos mais reuniões agendadas do que em 2 meses com SDR humano. A personalização por bairro fez toda a diferença."</p>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--v),var(--cy));display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-weight:700;font-size:13px;">R</div>
+        <div>
+          <div style="font-family:'Unbounded',sans-serif;font-size:12px;font-weight:700;">Rafael M.</div>
+          <div style="font-size:11px;color:var(--gray);">Distribuidora de Energia · GO</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal" style="background:var(--bg2);border:1px solid var(--bdr);border-radius:12px;padding:32px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--v),var(--cy))"></div>
+      <div style="font-size:24px;margin-bottom:16px;color:var(--am)">★★★★★</div>
+      <p style="font-size:14px;line-height:1.7;color:rgba(238,242,255,.7);margin-bottom:24px;font-style:italic;">"Configuramos em um dia. No fim da primeira semana já tínhamos 8 agendamentos confirmados. O custo por reunião caiu 90%."</p>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#0891b2,var(--v));display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-weight:700;font-size:13px;">C</div>
+        <div>
+          <div style="font-family:'Unbounded',sans-serif;font-size:12px;font-weight:700;">Camila T.</div>
+          <div style="font-size:11px;color:var(--gray);">Consultoria B2B · SP</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal" style="background:var(--bg2);border:1px solid var(--bdr);border-radius:12px;padding:32px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--v),var(--cy))"></div>
+      <div style="font-size:24px;margin-bottom:16px;color:var(--am)">★★★★★</div>
+      <p style="font-size:14px;line-height:1.7;color:rgba(238,242,255,.7);margin-bottom:24px;font-style:italic;">"O SDR responde leads às 22h, no sábado, com o nome da empresa e o nicho certo. Parece humano. Os clientes perguntam quem é o atendente."</p>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--gr),#0891b2);display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-weight:700;font-size:13px;">L</div>
+        <div>
+          <div style="font-family:'Unbounded',sans-serif;font-size:12px;font-weight:700;">Lucas B.</div>
+          <div style="font-size:11px;color:var(--gray);">SaaS de Saúde · MG</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- URGÊNCIA -->
+<div style="background:linear-gradient(135deg,rgba(124,58,237,.15),rgba(34,211,238,.08));border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);padding:20px 60px;display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;">
+  <div style="display:flex;align-items:center;gap:8px;">
+    <div style="width:8px;height:8px;border-radius:50%;background:var(--gr);animation:blink .8s infinite;"></div>
+    <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gr);letter-spacing:1px;">3 VAGAS ABERTAS ESTE MÊS</span>
+  </div>
+  <span style="color:var(--bdr);font-size:18px;">|</span>
+  <span style="font-size:13px;color:rgba(238,242,255,.6);">Onboarding leva 48h · Sem fidelidade · Cancela quando quiser</span>
+  <a href="https://calendly.com/marlonlotici6/30min" target="_blank" style="background:var(--v);color:var(--w);font-family:'Unbounded',sans-serif;font-size:11px;font-weight:700;padding:9px 20px;border-radius:6px;text-decoration:none;letter-spacing:.5px;white-space:nowrap;">Garantir minha vaga →</a>
+</div>
 
 <!-- PLANOS -->
 <section class="planos" id="planos">

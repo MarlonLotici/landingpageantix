@@ -149,8 +149,11 @@ function initHeroCanvas() {
     }
   }
 
+  // Pause when tab not visible (saves CPU)
   let raf;
+  let paused = false;
   function frame() {
+    if (paused) return;
     ctx.clearRect(0, 0, W, H);
     nodes.forEach(n => n.update(mx, my));
     drawEdges();
@@ -159,10 +162,9 @@ function initHeroCanvas() {
   }
   frame();
 
-  // Pause when not visible
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) cancelAnimationFrame(raf);
-    else frame();
+    paused = document.hidden;
+    if (!paused) frame();
   });
 }
 
@@ -446,7 +448,8 @@ function initTerminal() {
 
   // Countdown timer loops 0–179 (3 min max)
   let secs = 134;
-  setInterval(() => {
+  const timerInterval = setInterval(() => {
+    if (document.hidden) return;
     secs = (secs - 1 + 180) % 180;
     const m = String(Math.floor(secs / 60)).padStart(2, '0');
     const s = String(secs % 60).padStart(2, '0');
@@ -456,6 +459,7 @@ function initTerminal() {
   // Gently increment dispatch counter
   let dispatches = 94, resp = 17, sched = 4;
   const incInterval = setInterval(() => {
+    if (document.hidden) return;
     if (dispatches < 114) {
       dispatches++;
       dispEl.textContent = dispatches;
@@ -492,6 +496,11 @@ function initTerminal() {
     const [name, status, cls] = activities[feedIdx % activities.length];
     feedIdx++;
 
+    // Remove excess BEFORE adding (synchronous — no setTimeout race)
+    while (feedEl.children.length >= 4) {
+      feedEl.removeChild(feedEl.lastChild);
+    }
+
     const item = document.createElement('div');
     item.className = 'feed-item';
     item.style.cssText = 'opacity:0; transform:translateX(-6px); transition:all .3s ease;';
@@ -502,16 +511,12 @@ function initTerminal() {
       item.style.opacity   = '1';
       item.style.transform = 'translateX(0)';
     });
-
-    // Keep max 4 items
-    while (feedEl.children.length > 4) {
-      const last = feedEl.lastChild;
-      last.style.opacity = '0';
-      setTimeout(() => last.remove(), 300);
-    }
   }
 
-  setInterval(addFeedItem, 3200);
+  setInterval(() => {
+    if (document.hidden) return;
+    addFeedItem();
+  }, 3200);
 }
 
 // ─── 10. WHATSAPP CHAT LOOP ───────────────────────────────────
