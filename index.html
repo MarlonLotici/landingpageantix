@@ -604,7 +604,7 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
     </h1>
 
     <p class="hero-sub">
-      SDR Neural que encontra leads, conduz conversas via WhatsApp e agenda reuniões qualificadas — 17 horas por dia, para qualquer nicho, sem custo variável.
+      SDR Neural que prospecta, qualifica e agenda via WhatsApp — 17h por dia, para qualquer nicho. Quer mais volume? Adiciona um chip. Simples assim.
     </p>
 
     <div class="hero-actions">
@@ -618,16 +618,16 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
 
     <div class="hero-stats">
       <div>
-        <div class="stat-n" data-target="429" data-suffix="+">429+</div>
-        <div class="stat-l">disparos no primeiro mês</div>
+        <div class="stat-n" data-target="55" data-suffix="+">55+</div>
+        <div class="stat-l">disparos por chip/dia</div>
       </div>
       <div>
         <div class="stat-n" data-target="17" data-suffix="h">17h</div>
         <div class="stat-l">cobertura diária</div>
       </div>
       <div>
-        <div class="stat-n" data-target="997" data-prefix="R$">R$997</div>
-        <div class="stat-l">custo mensal fixo</div>
+        <div class="stat-n">∞</div>
+        <div class="stat-l">chips simultâneos</div>
       </div>
     </div>
   </div>
@@ -875,30 +875,73 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
 <!-- RESULTADOS -->
 <section class="resultados">
   <div class="sec-tag">Métricas reais</div>
-  <h2 class="sec-title reveal">Números que<br>a operação confirma.</h2>
+  <h2 class="sec-title reveal">Escala linear.<br>Custo fixo.</h2>
+  <p class="sec-sub reveal" style="margin-bottom:48px;">Cada chip novo adiciona 55+ disparos diários ao pipeline. Sem contratar, sem treinar, sem esperar.</p>
 
   <div class="metricas">
     <div class="metrica reveal">
-      <div class="m-n" data-target="110" data-suffix="+">110<sup>+</sup></div>
+      <div class="m-n" data-target="55" data-suffix="+">55<sup>+</sup></div>
       <div class="m-label">
-        <strong>Leads por dia</strong>
-        Cadência humanizada com jitter de 2–4 min entre disparos.
+        <strong>Disparos por chip/dia</strong>
+        Cadência com jitter de 2–4 min. 2 chips = 110+, 5 chips = 275+ — sem ban.
       </div>
     </div>
     <div class="metrica reveal">
       <div class="m-n" data-target="17" data-suffix="h">17<sup>h</sup></div>
       <div class="m-label">
         <strong>Cobertura diária</strong>
-        Das 5h30 às 22h45. Toda resposta retorna em minutos.
+        Das 5h30 às 22h45. Nenhuma resposta esfria esperando atendimento.
       </div>
     </div>
     <div class="metrica reveal">
       <div class="m-n" data-prefix="R$" data-target="9">R$<sup>9</sup></div>
       <div class="m-label">
         <strong>Custo por lead</strong>
-        Fixo, previsível e sem surpresas no final do mês.
+        Quanto mais chips, menor o custo unitário. Escala que não pune.
       </div>
     </div>
+  </div>
+
+  <!-- CHIP SCALER VISUAL -->
+  <div id="chip-scaler" style="margin-top:64px;background:var(--bg3);border:1px solid var(--bdr);border-radius:12px;padding:40px;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--v),var(--cy));"></div>
+
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;margin-bottom:36px;">
+      <div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gray);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Simulador de escala</div>
+        <div style="font-family:'Unbounded',sans-serif;font-size:20px;font-weight:800;letter-spacing:-1px;">Quantos chips você quer rodar?</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;">
+        <button id="chip-minus" style="width:40px;height:40px;border-radius:8px;background:var(--g2);border:1px solid var(--bdr);color:var(--w);font-size:20px;cursor:pointer;font-family:'Unbounded',sans-serif;transition:all .2s;" onmouseover="this.style.borderColor='var(--vl)'" onmouseout="this.style.borderColor='var(--bdr)'">−</button>
+        <div id="chip-count" style="font-family:'DM Mono',monospace;font-size:48px;font-weight:500;color:var(--cy);letter-spacing:-3px;min-width:60px;text-align:center;">2</div>
+        <button id="chip-plus" style="width:40px;height:40px;border-radius:8px;background:var(--g2);border:1px solid var(--bdr);color:var(--w);font-size:20px;cursor:pointer;font-family:'Unbounded',sans-serif;transition:all .2s;" onmouseover="this.style.borderColor='var(--vl)'" onmouseout="this.style.borderColor='var(--bdr)'">+</button>
+      </div>
+    </div>
+
+    <!-- Chip icons row -->
+    <div id="chip-icons" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px;"></div>
+
+    <!-- Result cards -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2px;border-radius:8px;overflow:hidden;">
+      <div style="background:rgba(13,13,40,.7);padding:20px 18px;">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--gray);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;">Disparos/dia</div>
+        <div id="sc-disparos" style="font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--cy);letter-spacing:-2px;">110+</div>
+      </div>
+      <div style="background:rgba(13,13,40,.7);padding:20px 18px;">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--gray);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;">Disparos/mês</div>
+        <div id="sc-mes" style="font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--vl);letter-spacing:-2px;">3.300+</div>
+      </div>
+      <div style="background:rgba(13,13,40,.7);padding:20px 18px;">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--gray);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;">Custo/chip</div>
+        <div id="sc-custo" style="font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--gr);letter-spacing:-2px;">R$997</div>
+      </div>
+      <div style="background:rgba(124,58,237,.08);padding:20px 18px;border:1px solid var(--bdr);">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--vl);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;">Custo/lead</div>
+        <div id="sc-lead" style="font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--w);letter-spacing:-2px;">R$9,06</div>
+      </div>
+    </div>
+
+    <div id="sc-msg" style="margin-top:20px;font-size:13px;color:rgba(238,242,255,.5);font-style:italic;padding:0 2px;"></div>
   </div>
 </section>
 
@@ -989,8 +1032,8 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
     </div>
     <div class="comp-row">
       <div class="comp-cell metric">Para dobrar o volume</div>
-      <div class="comp-cell old">Dobra o time e o custo</div>
-      <div class="comp-cell new cy">Adiciona um chip</div>
+      <div class="comp-cell old">Contrata, treina, espera 30 dias</div>
+      <div class="comp-cell new cy">Adiciona um chip — ativo em 24h</div>
     </div>
   </div>
 </section>

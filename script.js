@@ -557,13 +557,16 @@ function initChat() {
   const addTimeout = (fn, ms) => timeouts.push(setTimeout(fn, ms));
   const clearAll   = ()       => { timeouts.forEach(clearTimeout); timeouts = []; };
 
-  // Scroll suave DENTRO do chat — nunca afeta a página
+  // Scroll suave DENTRO do chat — só quando o conteúdo transbordar
   function scrollChat(delay = 0) {
     setTimeout(() => {
-      chatArea.scrollTo({
-        top: chatArea.scrollHeight,
-        behavior: 'smooth'
-      });
+      // Só rola se houver conteúdo além da altura visível
+      if (chatArea.scrollHeight > chatArea.clientHeight + 10) {
+        chatArea.scrollTo({
+          top: chatArea.scrollHeight,
+          behavior: 'smooth'
+        });
+      }
     }, delay);
   }
 
@@ -605,6 +608,7 @@ function initChat() {
 
   function play() {
     chatArea.innerHTML = '';
+    chatArea.scrollTop = 0; // sempre começa do topo
 
     messages.forEach(msg => {
       if (msg.type === 'out') {
