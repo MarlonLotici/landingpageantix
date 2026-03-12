@@ -803,4 +803,46 @@ document.addEventListener('DOMContentLoaded', () => {
   initMagnetic();
   initDcFill();
   initExitToast();
+  initChipScaler();
 });
+
+// ─── 14. SIMULADOR DE ESCALA ─────────────────────────────────
+function initChipScaler() {
+  const btnMinus = document.getElementById('chip-minus');
+  const btnPlus = document.getElementById('chip-plus');
+  const countEl = document.getElementById('chip-count');
+  const dispDia = document.getElementById('sc-disparos');
+  const dispMes = document.getElementById('sc-mes');
+  const leadCusto = document.getElementById('sc-lead');
+
+  if (!btnMinus || !btnPlus) return;
+
+  let chips = 2;
+  const custoFixo = 997; // Custo base do software
+
+  function update() {
+    countEl.textContent = chips;
+    dispDia.textContent = (chips * 55) + '+';
+    dispMes.textContent = (chips * 1650).toLocaleString('pt-BR') + '+';
+    
+    // Matemática da escala: Custo fixo / (leads diários)
+    const custoPorLead = custoFixo / (chips * 55);
+    leadCusto.textContent = 'R$' + custoPorLead.toFixed(2).replace('.', ',');
+  }
+
+  btnMinus.addEventListener('click', () => {
+    if (chips > 1) {
+      chips--;
+      update();
+    }
+  });
+
+  btnPlus.addEventListener('click', () => {
+    if (chips < 50) { // Limite de segurança do simulador
+      chips++;
+      update();
+    }
+
+    
+  });
+}

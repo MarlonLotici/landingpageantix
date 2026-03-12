@@ -568,6 +568,20 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
   .urgency-strip { flex-direction:column !important; gap:12px !important; padding:20px 24px !important; text-align:center; }
 }
 
+/* ─── CORREÇÃO RESPONSIVA DO SIMULADOR ──────────────────────── */
+#sc-disparos, #sc-mes, #sc-custo, #sc-lead {
+  font-size: clamp(16px, 3vw, 28px) !important; /* A fonte se adapta à tela */
+  letter-spacing: -1px !important;
+  word-break: keep-all;
+}
+
+@media(max-width: 768px) {
+  #chip-scaler > div:nth-child(3) { 
+    /* Quebra as 4 caixas em 2 linhas (2 em cima, 2 embaixo) no celular */
+    grid-template-columns: repeat(2, 1fr) !important; 
+    gap: 4px !important;
+  }
+}
 </style>
 </head>
 <body>
