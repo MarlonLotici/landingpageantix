@@ -67,6 +67,30 @@ nav {
   letter-spacing:-0.5px;
 }
 .nav-logo span { background:linear-gradient(90deg,var(--vl),var(--cy)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+/* ─── NOVA IDENTIDADE ANTIX ─────────────────────────────────── */
+.nav-logo {
+  font-family:'Unbounded',sans-serif; 
+  font-size: 20px; 
+  letter-spacing: -0.5px;
+}
+.logo-ant {
+  font-weight: 900;
+  color: #FF4500; /* Laranja agressivo da sua imagem base */
+  text-transform: uppercase;
+}
+.logo-ix {
+  font-family: 'DM Mono', monospace;
+  font-weight: 300;
+  color: var(--w);
+  margin-left: 1px;
+}
+.logo-ia {
+  font-weight: 700;
+  background: linear-gradient(90deg, #FF4500, #FF8C00);
+  -webkit-background-clip: text; 
+  -webkit-text-fill-color: transparent;
+  margin-left: 4px;
+}
 .nav-links { display:flex; gap:36px; }
 .nav-links a { font-size:13px; color:var(--gray); text-decoration:none; letter-spacing:.3px; transition:color .2s; }
 .nav-links a:hover { color:var(--w); }
@@ -592,15 +616,19 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
 <!-- NAV -->
 <nav>
   <div id="nav-progress"></div>
-  <div class="nav-logo">Pulse<span>IA</span></div>
+  
+  <div class="nav-logo" style="display:flex; align-items:center;">
+    <span class="logo-ant">ANT</span><span class="logo-ix">ix</span> <span class="logo-ia">IA</span>
+  </div>
+  
   <div class="nav-links">
     <a href="#como">Como funciona</a>
     <a href="#demo">Demo</a>
     <a href="#planos">Planos</a>
   </div>
+  
   <a href="#agendar" class="nav-cta">Agendar Demo →</a>
 </nav>
-
 <!-- HERO -->
 <section class="hero">
   <canvas id="hero-canvas"></canvas>
