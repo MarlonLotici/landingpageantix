@@ -29,6 +29,8 @@ function rand(lo, hi) { return lo + Math.random() * (hi - lo); }
 
 // ─── 2. HERO CANVAS — PARTICLE NEURAL NETWORK ────────────────
 
+// ─── 2. HERO CANVAS — ENXAME NEURAL (ANTix) ────────────────
+
 function initHeroCanvas() {
   const canvas = document.getElementById('hero-canvas');
   if (!canvas) return;
@@ -36,93 +38,114 @@ function initHeroCanvas() {
   let W, H;
 
   function resize() {
-    // Use parent's clientWidth/Height to avoid layout-triggering reflow
     const parent = canvas.parentElement;
     W = canvas.width  = parent.clientWidth;
     H = canvas.height = parent.clientHeight;
   }
   resize();
 
-  // Debounced resize — prevents rapid reflow on mobile keyboard/orientation
   let resizeTimer;
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(resize, 200);
   }, { passive: true });
 
-  // Palette
+  // Paleta de Cores Laranja/Âmbar da Antix
   const C = {
-    violet: [124, 58, 237],
-    cyan:   [34, 211, 238],
-    white:  [238, 242, 255],
+    orange: [255, 69, 0],  // Laranja Agressivo
+    amber:  [245, 158, 11] // Âmbar Premium
   };
 
-  class Node {
+  class Ant {
     constructor() { this.reset(true); }
 
     reset(initial) {
-      this.x  = rand(0, W);
-      this.y  = initial ? rand(0, H) : rand(0, H);
-      this.vx = rand(-0.25, 0.25);
-      this.vy = rand(-0.18, 0.18);
-      this.r  = rand(1, 2.2);
-      this.pulse = rand(0, Math.PI * 2);
-      this.pulseSpeed = rand(0.012, 0.028);
-      this.type = Math.random() > 0.8 ? 'cyan' : 'violet';
+      this.x = rand(0, W);
+      this.y = initial ? rand(0, H) : rand(0, H);
+      this.angle = rand(0, Math.PI * 2);
+      this.speed = rand(0.5, 1.0); // Passeio calmo
+      this.wander = 0;
+      this.type = Math.random() > 0.7 ? 'amber' : 'orange';
     }
 
     update(mx, my) {
-      this.x += this.vx;
-      this.y += this.vy;
-      this.pulse += this.pulseSpeed;
+      this.wander += rand(-0.15, 0.15); // Viradas suaves
+      this.angle += this.wander * 0.05;
+      this.wander *= 0.92;
 
-      // Wrap around edges
-      if (this.x < -50) this.x = W + 50;
-      if (this.x > W + 50) this.x = -50;
-      if (this.y < -50) this.y = H + 50;
-      if (this.y > H + 50) this.y = -50;
-
-      // Soft mouse repulsion
-      const dx   = this.x - mx;
-      const dy   = this.y - my;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 120 && dist > 0) {
-        const force = (1 - dist / 120) * 0.6;
-        this.vx += (dx / dist) * force;
-        this.vy += (dy / dist) * force;
+      const dx = mx - this.x;
+      const dy = my - this.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      
+      // Curiosidade tecnológica (interação mais calma)
+      if(dist < 180 && dist > 0) {
+        const targetAngle = Math.atan2(dy, dx);
+        const diff = targetAngle - this.angle;
+        this.angle += Math.sin(diff) * 0.02; // Virada elegante
+        this.speed = lerp(this.speed, 1.4, 0.015); // Aceleração suave
+      } else {
+        this.speed = lerp(this.speed, 0.7, 0.015); // Velocidade de cruzeiro
       }
 
-      // Speed cap + drag
-      const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
-      if (speed > 1.2) { this.vx *= 0.96; this.vy *= 0.96; }
+      this.x += Math.cos(this.angle) * this.speed;
+      this.y += Math.sin(this.angle) * this.speed;
+
+      if(this.x < -20) this.x = W+20;
+      if(this.x > W+20) this.x = -20;
+      if(this.y < -20) this.y = H+20;
+      if(this.y > H+20) this.y = -20;
     }
 
     draw(ctx) {
-      const energy = (Math.sin(this.pulse) + 1) / 2;
-      const [r, g, b] = this.type === 'cyan' ? C.cyan : C.violet;
-      const alpha = 0.3 + energy * 0.55;
-      const radius = this.r * (1 + energy * 0.4);
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.rotate(this.angle);
+      
+      const [r, g, b] = this.type === 'orange' ? C.orange : C.amber;
+      const alpha = this.speed > 1.0 ? 0.9 : 0.5;
 
-      // Glow halo when energized
-      if (energy > 0.65) {
-        const grd = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, radius * 8);
-        grd.addColorStop(0, `rgba(${r},${g},${b},${alpha * 0.25})`);
-        grd.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, radius * 8, 0, Math.PI * 2);
-        ctx.fillStyle = grd;
-        ctx.fill();
-      }
+      ctx.fillStyle = `rgba(${r},${g},${b}, ${alpha})`;
+      ctx.strokeStyle = `rgba(${r},${g},${b}, ${alpha * 0.7})`;
+      ctx.lineWidth = 1.2; // Pernas mais grossas e visíveis
+      
+      // 1. Abdômen (segmento traseiro maior)
+      ctx.beginPath(); ctx.ellipse(-9, 0, 7.5, 5.7, 0, 0, Math.PI*2); ctx.fill(); 
 
+      // 2. Tórax (segmento central onde saem as patas)
+      ctx.beginPath(); ctx.ellipse(0, 0, 4.5, 3.7, 0, 0, Math.PI*2); ctx.fill();
+
+      // 3. Cabeça (segmento dianteiro)
+      ctx.beginPath(); ctx.ellipse(7.5, 0, 4.5, 4.8, 0, 0, Math.PI*2); ctx.fill(); 
+
+      // 4. As Pernas Táticas (6 patas articuladas)
       ctx.beginPath();
-      ctx.arc(this.x, this.y, radius, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${r},${g},${b},${alpha})`;
-      ctx.fill();
+      // Patas direitas
+      ctx.moveTo(0, 0); ctx.lineTo(-6, 9);  ctx.lineTo(-9, 13.5);
+      ctx.moveTo(0, 0); ctx.lineTo(0, 10.5); ctx.lineTo(-1.5, 15);
+      ctx.moveTo(0, 0); ctx.lineTo(6, 9);   ctx.lineTo(9, 12);
+      // Patas esquerdas
+      ctx.moveTo(0, 0); ctx.lineTo(-6, -9); ctx.lineTo(-9, -13.5);
+      ctx.moveTo(0, 0); ctx.lineTo(0, -10.5); ctx.lineTo(-1.5, -15);
+      ctx.moveTo(0, 0); ctx.lineTo(6, -9);  ctx.lineTo(9, -12);
+      ctx.stroke();
+
+      // 5. As Antenas (visíveis e imponentes)
+      ctx.beginPath();
+      ctx.lineWidth = 0.9;
+      ctx.strokeStyle = `rgba(${r},${g},${b}, ${alpha * 0.9})`;
+      // Esquerda
+      ctx.moveTo(9, -2.2); ctx.quadraticCurveTo(16.5, -7.5, 24, -4.5);
+      // Direita
+      ctx.moveTo(9, 2.2);  ctx.quadraticCurveTo(16.5, 7.5, 24, 4.5);
+      ctx.stroke();
+
+      ctx.restore();
     }
   }
 
-  const COUNT = Math.min(70, Math.floor((W * H) / 14000));
-  const nodes = Array.from({ length: COUNT }, () => new Node());
+  // Quantidade de formigas proporcional à tela
+  const COUNT = Math.min(100, Math.floor((W * H) / 9000));
+  const ants = Array.from({ length: COUNT }, () => new Ant());
   let mx = -999, my = -999;
 
   document.addEventListener('mousemove', e => {
@@ -131,40 +154,15 @@ function initHeroCanvas() {
     my = e.clientY - rect.top;
   });
 
-  function drawEdges() {
-    const MAX = 170;
-    for (let i = 0; i < nodes.length; i++) {
-      for (let j = i + 1; j < nodes.length; j++) {
-        const dx   = nodes[i].x - nodes[j].x;
-        const dy   = nodes[i].y - nodes[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < MAX) {
-          const t      = 1 - dist / MAX;
-          const energy = (nodes[i].pulse + nodes[j].pulse) / 2;
-          const bright = Math.sin(energy) > 0.6;
-          const alpha  = t * (bright ? 0.35 : 0.12);
-          ctx.beginPath();
-          ctx.moveTo(nodes[i].x, nodes[i].y);
-          ctx.lineTo(nodes[j].x, nodes[j].y);
-          ctx.strokeStyle = bright
-            ? `rgba(167,139,250,${alpha})`
-            : `rgba(124,58,237,${alpha})`;
-          ctx.lineWidth = bright ? 0.8 : 0.5;
-          ctx.stroke();
-        }
-      }
-    }
-  }
-
-  // Pause when tab not visible (saves CPU)
   let raf;
   let paused = false;
   function frame() {
     if (paused) return;
     ctx.clearRect(0, 0, W, H);
-    nodes.forEach(n => n.update(mx, my));
-    drawEdges();
-    nodes.forEach(n => n.draw(ctx));
+    ants.forEach(a => {
+      a.update(mx, my);
+      a.draw(ctx);
+    });
     raf = requestAnimationFrame(frame);
   }
   frame();
@@ -489,20 +487,19 @@ function initTerminal() {
     if (dispatches >= 114) clearInterval(incInterval);
   }, 800);
 
-  // Activity feed
+  
+  // Activity feed - Linguagem de Operação Antix
   const activities = [
-    ['Bar do Gugu',        'respondeu ↩',   'c'],
-    ['Auto Peças Lima',    'novo lead ◎',   'v'],
-    ['Padaria Bela Vista', 'agendou ✓',     'g'],
-    ['Clínica São Luís',   'sem resposta —','x'],
-    ['Academia FitBody',   'agendou ✓',     'g'],
-    ['Restaurante Dom',    'respondeu ↩',   'c'],
-    ['Farmácia Saúde+',    'novo lead ◎',   'v'],
-    ['Supermercado Rex',   'respondeu ↩',   'c'],
-    ['Loja Roupas M',      'sem resposta —','x'],
-    ['Oficina Master',     'agendou ✓',     'g'],
-    ['Açaí Tropical',      'novo lead ◎',   'v'],
-    ['Pet Shop Amigo',     'respondeu ↩',   'c'],
+    ['Bar do Gugu',        'alvo localizado ◎', 'v'],
+    ['Auto Peças Lima',    'incursão enviada ↗', 'c'],
+    ['Padaria Bela Vista', 'agendamento ✓',   'g'],
+    ['Clínica São Luís',   'sem resposta —',  'x'],
+    ['Academia FitBody',   'SPIN ativado ⚡', 'am'], // Nova cor (ambar)
+    ['Restaurante Dom',    'objeção superada ↩', 'c'],
+    ['Farmácia Saúde+',    'alvo localizado ◎', 'v'],
+    ['Supermercado Rex',   'incursão enviada ↗', 'c'],
+    ['Loja Roupas M',      'lead descartado —', 'x'],
+    ['Oficina Master',     'agendamento ✓',   'g'],
   ];
   let feedIdx = activities.length; // Start at end so we don't repeat initial items
 
@@ -806,28 +803,28 @@ document.addEventListener('DOMContentLoaded', () => {
   initChipScaler();
 });
 
-// ─── 14. SIMULADOR DE ESCALA ─────────────────────────────────
+// ─── 14. SIMULADOR DE FORÇA OPERACIONAL ──────────────────────
 function initChipScaler() {
   const btnMinus = document.getElementById('chip-minus');
   const btnPlus = document.getElementById('chip-plus');
   const countEl = document.getElementById('chip-count');
+  
   const dispDia = document.getElementById('sc-disparos');
   const dispMes = document.getElementById('sc-mes');
-  const leadCusto = document.getElementById('sc-lead');
+  const horasCont = document.getElementById('sc-horas'); // Novo ID que colocamos no HTML
 
   if (!btnMinus || !btnPlus) return;
 
   let chips = 2;
-  const custoFixo = 997; // Custo base do software
+  const disparosPorChip = 80; // A sua meta de alta performance
 
   function update() {
     countEl.textContent = chips;
-    dispDia.textContent = (chips * 55) + '+';
-    dispMes.textContent = (chips * 1650).toLocaleString('pt-BR') + '+';
-    
-    // Matemática da escala: Custo fixo / (leads diários)
-    const custoPorLead = custoFixo / (chips * 55);
-    leadCusto.textContent = 'R$' + custoPorLead.toFixed(2).replace('.', ',');
+    dispDia.textContent = (chips * disparosPorChip) + '+';
+    // 30 dias no mês
+    dispMes.textContent = (chips * disparosPorChip * 30).toLocaleString('pt-BR') + '+';
+    // Cada chip equivale a 17h de trabalho de um SDR humano
+    if(horasCont) horasCont.textContent = (chips * 17) + 'h/dia';
   }
 
   btnMinus.addEventListener('click', () => {
@@ -842,7 +839,5 @@ function initChipScaler() {
       chips++;
       update();
     }
-
-    
   });
 }

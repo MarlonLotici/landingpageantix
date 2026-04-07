@@ -9,35 +9,71 @@
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600;700;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 
-/* ─── TOKENS ───────────────────────────────────────────────── */
+
+/* ─── TOKENS ANTIX (OBSIDIAN GLASS VERDADEIRO) ────────────────── */
 :root {
-  --bg:    #03030D;
-  --bg2:   #07071C;
-  --bg3:   #0D0D28;
-  --v:     #7C3AED;
-  --vl:    #A78BFA;
-  --cy:    #22D3EE;
-  --am:    #F59E0B;
-  --gr:    #34D399;
-  --w:     #EEF2FF;
-  --gray:  #6B7280;
-  --g2:    #1A1A36;
-  --bdr:   rgba(124,58,237,0.18);
-  --bdrc:  rgba(34,211,238,0.15);
-  --glow:  rgba(124,58,237,0.10);
+  --bg:    #030303; /* Preto absoluto no fundo */
+  --bg3:   rgba(20, 20, 20, 0.55); /* Placas de vidro fumê */
+  --v:     #FF4500; /* Laranja Agressivo */
+  --vl:    #FF8C00; /* Âmbar / Laranja Claro */
+  --cy:    #F59E0B; /* Dourado */
+  --am:    #F59E0B; /* Âmbar aviso */
+  --gr:    #10B981; /* Verde sucesso */
+  --w:     #FFFFFF; /* Branco puro para máximo contraste do texto */
+  --gray:  #D1D5DB; /* Cinza bem mais claro, legibilidade perfeita */
+  --g2:    #292929; /* Hover */
+  --bdr:   rgba(255, 140, 0, 0.15); /* Borda sutil */
 }
 
 /* ─── RESET ─────────────────────────────────────────────────── */
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { }
+
 body {
-  background: var(--bg);
+  background-color: var(--bg);
   color: var(--w);
   font-family: 'DM Sans', sans-serif;
   font-weight: 400;
   overflow-x: hidden;
   cursor: none;
+  position: relative;
 }
+
+/* O SEGREDO DO VIDRO: Luzes flutuantes no fundo da página */
+body::before, body::after {
+  content: '';
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(140px);
+  z-index: -1;
+  opacity: 0.12; /* Brilho neon sutil por trás de tudo */
+  pointer-events: none;
+}
+body::before {
+  width: 700px; height: 700px;
+  background: var(--v);
+  top: -150px; left: -150px;
+}
+body::after {
+  width: 600px; height: 600px;
+  background: var(--vl);
+  bottom: -100px; right: -100px;
+}
+
+/* Aplicando o Frosted Glass nos elementos principais */
+nav {
+  background: rgba(3, 3, 3, 0.6) !important; 
+  backdrop-filter: blur(16px) saturate(120%);
+  border-bottom: 1px solid rgba(255, 140, 0, 0.1) !important;
+}
+
+.terminal, .desafio-card, .metrica, .phone, .plano, #chip-scaler {
+  background: var(--bg3);
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+}
+
 img, svg { display:block; }
 
 /* ─── CURSOR ─────────────────────────────────────────────────── */
@@ -150,7 +186,7 @@ nav {
   animation:fadeUp .7s .26s ease both;
 }
 .btn-primary {
-  background:linear-gradient(135deg, var(--v), #5B21B6);
+  background:linear-gradient(135deg, var(--v), #A32800);
   color:var(--w); font-family:'Unbounded',sans-serif; font-weight:600;
   font-size:12px; letter-spacing:.5px; padding:15px 32px; border-radius:6px;
   text-decoration:none; transition:all .25s;
@@ -323,7 +359,8 @@ section { padding:120px 60px; }
 .dc-row span:last-child { color:var(--cy); font-family:'DM Mono',monospace; }
 .desafio-badge {
   position:absolute; bottom:-10px; right:-10px;
-  background:linear-gradient(135deg,var(--v),#5B21B6); border-radius:8px; padding:18px 22px;
+  background:linear-gradient(135deg, var(--v), #A32800);
+  border-radius:8px; padding:18px 22px;
   color:var(--w);
 }
 .db-n { font-family:'Unbounded',sans-serif; font-size:28px; font-weight:800; letter-spacing:-1px; }
@@ -499,11 +536,19 @@ section { padding:120px 60px; }
 }
 .plano-badge {
   position:absolute; top:18px; right:18px;
-  background:linear-gradient(135deg,var(--v),#5B21B6);
+  background:linear-gradient(135deg, var(--v), #A32800);
   font-family:'DM Mono',monospace; font-size:9px; font-weight:500; letter-spacing:1px;
   text-transform:uppercase; color:var(--w); padding:4px 10px; border-radius:100px;
 }
-.plano-name { font-family:'Unbounded',sans-serif; font-size:16px; font-weight:700; margin-bottom:6px; }
+.plano-name { 
+  font-family: 'Unbounded', sans-serif; 
+  font-size: 24px; /* Maior e mais imponente */
+  font-weight: 900; 
+  margin-bottom: 8px; 
+  background: linear-gradient(120deg, var(--vl), var(--cy));
+  -webkit-background-clip: text; 
+  -webkit-text-fill-color: transparent;
+}
 .plano-desc { font-size:12px; color:var(--gray); margin-bottom:28px; line-height:1.65; }
 .plano-price { margin-bottom:28px; padding-bottom:28px; border-bottom:1px solid rgba(124,58,237,.1); }
 .plano-val { font-family:'DM Mono',monospace; font-size:44px; font-weight:500; letter-spacing:-3px; line-height:1; }
@@ -617,119 +662,104 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
 <nav>
   <div id="nav-progress"></div>
   
-  <div class="nav-logo" style="display:flex; align-items:center;">
+  <div class="nav-logo">
     <span class="logo-ant">ANT</span><span class="logo-ix">ix</span> <span class="logo-ia">IA</span>
   </div>
   
   <div class="nav-links">
-    <a href="#como">Como funciona</a>
-    <a href="#demo">Demo</a>
-    <a href="#planos">Planos</a>
+    <a href="#como">Operação Enxame</a>
+    <a href="#demo">Visão Neural</a>
+    <a href="#planos">Níveis de Colônia</a>
   </div>
   
-  <a href="#agendar" class="nav-cta">Agendar Demo →</a>
+  <a href="#agendar" class="nav-cta">Convocar Enxame →</a>
 </nav>
-<!-- HERO -->
+
 <section class="hero">
   <canvas id="hero-canvas"></canvas>
 
   <div class="hero-content">
     <div class="hero-badge">
       <div class="bdot"></div>
-      SDR Neural v2 &nbsp;·&nbsp; operando agora
+      Enxame Ativo &nbsp;·&nbsp; Escaneando Leads
     </div>
 
     <h1>
-      <span class="h1-line1">Seu time fecha.</span>
-      <span class="h1-line2">A IA prospecta</span>
-      <span class="h1-line3">pra você.</span>
+      <span class="h1-line1">Seu time fecha vendas</span>
+      <span class="h1-line2">enquanto uma colônia toda</span>
+      <span class="h1-line3">trabalha pra você.</span>
     </h1>
 
     <p class="hero-sub">
-      SDR Neural que prospecta, qualifica e agenda via WhatsApp — 17h por dia, para qualquer nicho. Quer mais volume? Adiciona um chip. Simples assim.
+      SDR IA que prospecta, qualifica e agenda via wpp 17 hr por dia pra qualquer nicho. Quer mais volume? Adiciona um chip, simples assim!
     </p>
 
     <div class="hero-actions">
       <a href="https://calendly.com/marlonlotici6/30min" target="_blank" class="btn-primary magnetic">
-        Agendar demo gratuita →
+        Agendar Reunião Estratégica →
       </a>
       <a href="#demo" class="btn-ghost magnetic">
-        ▶ Ver conversa ao vivo
+        ▶ Ver Enxame em Ação
       </a>
     </div>
 
     <div class="hero-stats">
       <div>
-        <div class="stat-n" data-target="55" data-suffix="+">55+</div>
-        <div class="stat-l">disparos por chip/dia</div>
+        <div class="stat-n" data-target="80" data-suffix="+">80+</div>
+        <div class="stat-l">disparos/chip (Alta Performance)</div>
       </div>
       <div>
         <div class="stat-n" data-target="17" data-suffix="h">17h</div>
-        <div class="stat-l">cobertura diária</div>
+        <div class="stat-l">operação diária</div>
       </div>
       <div>
         <div class="stat-n">∞</div>
-        <div class="stat-l">chips simultâneos</div>
+        <div class="stat-l">chips em enxame</div>
       </div>
     </div>
   </div>
 
-  <!-- TERMINAL WIDGET -->
   <div class="terminal">
     <div class="term-bar">
       <div class="term-dots">
         <span></span><span></span><span></span>
       </div>
-      <div class="term-title">pulse-sdr — live dashboard</div>
+      <div class="term-title">antix-sdr — hive control</div>
       <div class="term-live">
         <div class="term-live-dot"></div>
-        LIVE
+        HIVE LIVE
       </div>
     </div>
     <div class="term-body">
       <div class="term-rows">
         <div class="term-row">
-          <div class="term-row-label">Chips Online</div>
-          <div class="term-row-val cyan">2 / 2</div>
+          <div class="term-row-label">Unidades Ativas</div>
+          <div class="term-row-val orange">46 / 48</div>
         </div>
         <div class="term-row">
-          <div class="term-row-label">Disparos hoje</div>
-          <div class="term-row-val violet" id="term-dispatches">94</div>
+          <div class="term-row-label">Ataques Hoje</div>
+          <div class="term-row-val orange" id="term-dispatches">1.240</div>
         </div>
         <div class="term-row">
-          <div class="term-row-label">Responderam</div>
-          <div class="term-row-val green" id="term-resp">17</div>
+          <div class="term-row-label">Capturas</div>
+          <div class="term-row-val orange" id="term-resp">214</div>
         </div>
         <div class="term-row">
-          <div class="term-row-label">Agendados</div>
-          <div class="term-row-val amber" id="term-sched">4</div>
+          <div class="term-row-label">Agendamentos</div>
+          <div class="term-row-val orange" id="term-sched">12</div>
         </div>
       </div>
       <div class="term-divider"></div>
       <div class="term-timer-row">
-        <span>próximo disparo em</span>
-        <span class="term-timer-val" id="term-timer">02:14</span>
+        <span>próxima incursão em</span>
+        <span class="term-timer-val" id="term-timer">01:45</span>
       </div>
       <div class="term-feed" id="term-feed">
-        <div class="feed-item">
-          <span class="feed-name">Bar do Gugu</span>
-          <span class="feed-status c">respondeu ↩</span>
         </div>
-        <div class="feed-item">
-          <span class="feed-name">Auto Peças Lima</span>
-          <span class="feed-status v">novo lead ◎</span>
-        </div>
-        <div class="feed-item">
-          <span class="feed-name">Padaria Bela Vista</span>
-          <span class="feed-status g">agendou ✓</span>
-        </div>
-        <div class="feed-item">
-          <span class="feed-name">Clínica São Luís</span>
-          <span class="feed-status x">sem resposta —</span>
-        </div>
-      </div>
     </div>
   </div>
+</section>
+  
 </section>
 
 <!-- TICKER -->
@@ -852,27 +882,26 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
     </div>
 
     <div class="reveal" style="position:relative">
-      <div class="desafio-card">
-        <div class="dc-label">Custo para prospectar 110 leads/dia</div>
-        <div class="dc-val">997</div>
-        <div class="dc-sub">R$ por mês, fixo</div>
+   <div class="desafio-card">
+        <div class="dc-label">Teto de Prospecção SDR Humano</div>
+        <div class="dc-val">40</div>
+        <div class="dc-sub">Leads trabalhados por dia com qualidade</div>
         <div class="dc-bar"><div class="dc-fill" id="dc-fill"></div></div>
         <div class="dc-rows">
           <div class="dc-row">
-            <span>SDR Neural — 2 chips</span>
-            <span>R$997</span>
+            <span>Enxame SDR — 2 chips</span>
+            <span style="color: var(--vl)">160+ leads/dia</span>
           </div>
           <div class="dc-row">
-            <span>Ferramentas inclusas</span>
-            <span>R$0</span>
+            <span>Taxa de Esquecimento (Follow-up)</span>
+            <span style="color: var(--gr)">0%</span>
           </div>
           <div class="dc-row">
-            <span>Custo por lead</span>
-            <span>R$9,06</span>
+            <span>Custo Marginal por Nova Abordagem</span>
+            <span style="color: var(--gr)">R$ 0,00</span>
           </div>
         </div>
-      </div>
-      <div class="desafio-badge">
+      </div>   <div class="desafio-badge">
         <div class="db-n">11x</div>
         <div class="db-l">mais leads/dia</div>
       </div>
@@ -916,42 +945,41 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
 
 <!-- RESULTADOS -->
 <section class="resultados">
-  <div class="sec-tag">Métricas reais</div>
+  <div class="sec-tag">Métricas de Enxame</div>
   <h2 class="sec-title reveal">Escala linear.<br>Custo fixo.</h2>
-  <p class="sec-sub reveal" style="margin-bottom:48px;">Cada chip novo adiciona 55+ disparos diários ao pipeline. Sem contratar, sem treinar, sem esperar.</p>
+  <p class="sec-sub reveal" style="margin-bottom:48px;">Cada soldado novo adiciona dezenas de incursões diárias ao pipeline. Sem contratar, sem treinar, sem esperar.</p>
 
   <div class="metricas">
     <div class="metrica reveal">
-      <div class="m-n" data-target="55" data-suffix="+">55<sup>+</sup></div>
+      <div class="m-n" data-target="80" data-suffix="+">80<sup>+</sup></div>
       <div class="m-label">
-        <strong>Disparos por chip/dia</strong>
-        Cadência com jitter de 2–4 min. 2 chips = 110+, 5 chips = 275+ — sem ban.
+        <strong>Incursões por chip/dia</strong>
+        Cadência com jitter humano. 2 chips = 160+, 5 chips = 400+ — segurança total contra ban.
       </div>
     </div>
     <div class="metrica reveal">
       <div class="m-n" data-target="17" data-suffix="h">17<sup>h</sup></div>
       <div class="m-label">
         <strong>Cobertura diária</strong>
-        Das 5h30 às 22h45. Nenhuma resposta esfria esperando atendimento.
+        Das 5h30 às 22h45. Seu enxame trabalha enquanto a concorrência dorme.
       </div>
     </div>
     <div class="metrica reveal">
-      <div class="m-n" data-prefix="R$" data-target="9">R$<sup>9</sup></div>
+      <div class="m-n" data-prefix="" data-target="0">0</div>
       <div class="m-label">
-        <strong>Custo por lead</strong>
-        Quanto mais chips, menor o custo unitário. Escala que não pune.
+        <strong>Custo Marginal por Escala</strong>
+        O volume cresce, a força da colônia cresce, mas seu custo base permanece travado.
       </div>
     </div>
   </div>
 
-  <!-- CHIP SCALER VISUAL -->
   <div id="chip-scaler" style="margin-top:64px;background:var(--bg3);border:1px solid var(--bdr);border-radius:12px;padding:40px;position:relative;overflow:hidden;">
     <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--v),var(--cy));"></div>
 
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;margin-bottom:36px;">
       <div>
-        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gray);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Simulador de escala</div>
-        <div style="font-family:'Unbounded',sans-serif;font-size:20px;font-weight:800;letter-spacing:-1px;">Quantos chips você quer rodar?</div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gray);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Simulador de Força Operacional</div>
+        <div style="font-family:'Unbounded',sans-serif;font-size:20px;font-weight:800;letter-spacing:-1px;">Qual o tamanho do seu enxame?</div>
       </div>
       <div style="display:flex;align-items:center;gap:16px;">
         <button id="chip-minus" style="width:40px;height:40px;border-radius:8px;background:var(--g2);border:1px solid var(--bdr);color:var(--w);font-size:20px;cursor:pointer;font-family:'Unbounded',sans-serif;transition:all .2s;" onmouseover="this.style.borderColor='var(--vl)'" onmouseout="this.style.borderColor='var(--bdr)'">−</button>
@@ -960,30 +988,26 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
       </div>
     </div>
 
-    <!-- Chip icons row -->
-    <div id="chip-icons" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px;"></div>
-
-    <!-- Result cards -->
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2px;border-radius:8px;overflow:hidden;">
       <div style="background:rgba(13,13,40,.7);padding:20px 18px;">
-        <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--gray);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;">Disparos/dia</div>
-        <div id="sc-disparos" style="font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--cy);letter-spacing:-2px;">110+</div>
+        <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--gray);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;">Incursões/dia</div>
+        <div id="sc-disparos" style="font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--cy);letter-spacing:-2px;">160+</div>
       </div>
       <div style="background:rgba(13,13,40,.7);padding:20px 18px;">
-        <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--gray);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;">Disparos/mês</div>
-        <div id="sc-mes" style="font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--vl);letter-spacing:-2px;">3.300+</div>
+        <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--gray);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;">Incursões/mês</div>
+        <div id="sc-mes" style="font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--vl);letter-spacing:-2px;">4.800+</div>
       </div>
       <div style="background:rgba(13,13,40,.7);padding:20px 18px;">
-        <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--gray);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;">Custo/chip</div>
-        <div id="sc-custo" style="font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--gr);letter-spacing:-2px;">R$997</div>
+        <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--gray);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;">Esforço Contínuo</div>
+        <div id="sc-horas" style="font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--gr);letter-spacing:-2px;">34h/dia</div>
       </div>
       <div style="background:rgba(124,58,237,.08);padding:20px 18px;border:1px solid var(--bdr);">
-        <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--vl);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;">Custo/lead</div>
-        <div id="sc-lead" style="font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--w);letter-spacing:-2px;">R$9,06</div>
+        <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--vl);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;">Novas Contratações</div>
+        <div id="sc-lead" style="font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--w);letter-spacing:-2px;">ZERO</div>
       </div>
     </div>
 
-    <div id="sc-msg" style="margin-top:20px;font-size:13px;color:rgba(238,242,255,.5);font-style:italic;padding:0 2px;"></div>
+    <div id="sc-msg" style="margin-top:20px;font-size:13px;color:rgba(238,242,255,.5);font-style:italic;padding:0 2px;">O crescimento operacional não exige recrutamento. A IA herda as habilidades no instante da ativação.</div>
   </div>
 </section>
 
@@ -1063,9 +1087,9 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
       <div class="comp-cell new cy">17h15 / dia</div>
     </div>
     <div class="comp-row">
-      <div class="comp-cell metric">Custo mensal</div>
-      <div class="comp-cell old">R$4.900+</div>
-      <div class="comp-cell new">R$997 fixo</div>
+      <div class="comp-cell metric">Custo base da operação</div>
+      <div class="comp-cell old">Sobe a cada contratação</div>
+      <div class="comp-cell new">Travado (Independente do volume)</div>
     </div>
     <div class="comp-row">
       <div class="comp-cell metric">Personalização</div>
@@ -1138,61 +1162,58 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
 
 <!-- PLANOS -->
 <section class="planos" id="planos">
-  <div class="sec-tag">Planos</div>
-  <h2 class="sec-title reveal">Escolha o módulo<br>certo para agora.</h2>
+  <div class="sec-tag">Níveis de Operação</div>
+  <h2 class="sec-title reveal">Escolha a força<br>do seu enxame.</h2>
 
   <div class="planos-grid">
     <div class="plano reveal">
-      <div class="plano-name">ChatSAC IA</div>
-      <div class="plano-desc">IA de atendimento para WhatsApp. Responde, qualifica e encaminha sem operador humano.</div>
+      <div class="plano-name">Formiga Operária</div>
+      <div class="plano-desc">IA de atendimento receptivo para WhatsApp. Recebe, qualifica e encaminha os leads que chegam até você.</div>
       <div class="plano-price">
-        <div class="plano-val"><span class="rs">R$</span>397</div>
-        <div class="plano-per">por mês</div>
+        <div class="plano-val">Receptivo</div>
+        <div class="plano-per">Foco em triagem e suporte</div>
       </div>
       <div class="plano-feats">
         <div class="pf"><span class="pf-ck">✓</span>Atendimento 24h no WhatsApp</div>
-        <div class="pf"><span class="pf-ck">✓</span>Qualificação automática</div>
-        <div class="pf"><span class="pf-ck">✓</span>Transferência inteligente</div>
+        <div class="pf"><span class="pf-ck">✓</span>Qualificação automática de inbound</div>
+        <div class="pf"><span class="pf-ck">✓</span>Transferência inteligente para humanos</div>
         <div class="pf"><span class="pf-ck">✓</span>CRM e histórico integrado</div>
-        <div class="pf"><span class="pf-ck">✓</span>Dashboard de métricas</div>
       </div>
-      <a href="#agendar" class="btn-plano">Começar com ChatSAC →</a>
+      <a href="https://calendly.com/marlonlotici6/30min" target="_blank" class="btn-plano">Avaliar Adequação →</a>
     </div>
 
     <div class="plano feat reveal">
-      <div class="plano-badge">Mais vendido</div>
-      <div class="plano-name">SDR Neural</div>
-      <div class="plano-desc">Motor completo de prospecção ativa. Radar, disparo, SPIN Selling e agendamento automático.</div>
+      <div class="plano-badge">Motor Principal</div>
+      <div class="plano-name">Formiga Soldado</div>
+      <div class="plano-desc">SDR Neural de prospecção ativa. Radar de contatos, disparo estratégico, SPIN Selling e agendamento automático.</div>
       <div class="plano-price">
-        <div class="plano-val"><span class="rs">R$</span>997</div>
-        <div class="plano-per">por mês</div>
+        <div class="plano-val">Ativo</div>
+        <div class="plano-per">Foco em caça e agendamento</div>
       </div>
       <div class="plano-feats">
         <div class="pf"><span class="pf-ck">✓</span>Radar de leads por cidade e nicho</div>
-        <div class="pf"><span class="pf-ck">✓</span>Disparo multi-chip humanizado</div>
-        <div class="pf"><span class="pf-ck">✓</span>SPIN Selling com Llama 70B</div>
-        <div class="pf"><span class="pf-ck">✓</span>Áudios para objeções críticas</div>
-        <div class="pf"><span class="pf-ck">✓</span>Anti-ban ativo</div>
-        <div class="pf"><span class="pf-ck">✓</span>Agendamento via Calendly</div>
+        <div class="pf"><span class="pf-ck">✓</span>Disparo multi-chip com Jitter humano</div>
+        <div class="pf"><span class="pf-ck">✓</span>SPIN Selling com IA de Elite</div>
+        <div class="pf"><span class="pf-ck">✓</span>Áudios gerados para objeções críticas</div>
+        <div class="pf"><span class="pf-ck">✓</span>Anti-ban e aquecimento integrados</div>
       </div>
-      <a href="#agendar" class="btn-plano">Começar com SDR Neural →</a>
+      <a href="https://calendly.com/marlonlotici6/30min" target="_blank" class="btn-plano">Agendar Reunião Estratégica →</a>
     </div>
 
     <div class="plano reveal">
-      <div class="plano-name">Suite Total</div>
-      <div class="plano-desc">ChatSAC + SDR Neural + Farm IA. Prospecção, atendimento e expansão em um só sistema.</div>
+      <div class="plano-name">Formiga-Rainha</div>
+      <div class="plano-desc">Operação Absoluta. Prospecção, atendimento e controle central de todo o ecossistema de vendas da empresa.</div>
       <div class="plano-price">
-        <div class="plano-val"><span class="rs">R$</span>1.797</div>
-        <div class="plano-per">por mês · economia de R$197</div>
+        <div class="plano-val">Ecossistema</div>
+        <div class="plano-per">Comando central da operação</div>
       </div>
       <div class="plano-feats">
-        <div class="pf"><span class="pf-ck">✓</span>Tudo do ChatSAC IA</div>
-        <div class="pf"><span class="pf-ck">✓</span>Tudo do SDR Neural</div>
-        <div class="pf"><span class="pf-ck">✓</span>Farm IA — retenção e upsell</div>
-        <div class="pf"><span class="pf-ck">✓</span>Onboarding dedicado</div>
-        <div class="pf"><span class="pf-ck">✓</span>Suporte prioritário</div>
+        <div class="pf"><span class="pf-ck">✓</span>Operária + Soldado trabalhando juntos</div>
+        <div class="pf"><span class="pf-ck">✓</span>Farm IA — retenção e upsell da base</div>
+        <div class="pf"><span class="pf-ck">✓</span>Onboarding técnico dedicado</div>
+        <div class="pf"><span class="pf-ck">✓</span>Acompanhamento de métricas avançado</div>
       </div>
-      <a href="#agendar" class="btn-plano">Começar com Suite Total →</a>
+      <a href="https://calendly.com/marlonlotici6/30min" target="_blank" class="btn-plano">Avaliar Implementação →</a>
     </div>
   </div>
 </section>
@@ -1215,9 +1236,12 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
 
 <!-- FOOTER -->
 <footer>
-  <div class="foot-logo">Pulse<span>IA</span></div>
-  <p>© 2026 Pulse IA — Automação de Vendas B2B</p>
+  <div class="nav-logo" style="display:flex; align-items:center;">
+    <span class="logo-ant">ANT</span><span class="logo-ix">ix</span> <span class="logo-ia">IA</span>
+  </div>
+  <p>© 2026 Antix IA — Automação de Vendas B2B</p>
 </footer>
+
 
 <script src="script.js"></script>
 </body>
