@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect width="100" height="100" rx="18" fill="#030303"/>
+  <!-- Antennae -->
+  <line x1="43" y1="12" x2="28" y2="3" stroke="#FF4500" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="26" cy="2" r="4" fill="#FF8C00"/>
+  <line x1="57" y1="12" x2="72" y2="3" stroke="#FF4500" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="74" cy="2" r="4" fill="#FF8C00"/>
+  <!-- Head -->
+  <circle cx="50" cy="23" r="13" fill="#FF4500"/>
+  <!-- Eyes -->
+  <circle cx="44" cy="21" r="2.5" fill="#000"/>
+  <circle cx="56" cy="21" r="2.5" fill="#000"/>
+  <!-- Thorax -->
+  <circle cx="50" cy="46" r="10" fill="#FF4500"/>
+  <!-- Legs left -->
+  <line x1="41" y1="41" x2="21" y2="34" stroke="#FF6000" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="40" y1="47" x2="18" y2="47" stroke="#FF6000" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="41" y1="53" x2="21" y2="62" stroke="#FF6000" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- Legs right -->
+  <line x1="59" y1="41" x2="79" y2="34" stroke="#FF6000" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="60" y1="47" x2="82" y2="47" stroke="#FF6000" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="59" y1="53" x2="79" y2="62" stroke="#FF6000" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- Abdomen -->
+  <ellipse cx="50" cy="73" rx="13" ry="18" fill="#FF4500"/>
+</svg>

@@ -605,30 +605,40 @@ function initChat() {
 
   function play() {
     chatArea.innerHTML = '';
-    chatArea.scrollTop = 0; // sempre começa do topo
+    chatArea.scrollTop = 0;
 
     messages.forEach(msg => {
       if (msg.type === 'out') {
-        const b = document.createElement('div');
-        b.className = 'bubble bubble-out';
-        b.style.cssText = 'opacity:0;transform:translateY(8px);';
-        b.innerHTML = msg.text;
-        chatArea.appendChild(b);
-        addTimeout(() => showEl(b), msg.delay);
-      } else {
-        const typing = makeTyping();
-        const bubble = document.createElement('div');
-        bubble.className = 'bubble bubble-in';
-        bubble.style.cssText = 'opacity:0;transform:translateY(8px);';
-        bubble.innerHTML = msg.text;
-        chatArea.appendChild(typing);
-        chatArea.appendChild(bubble);
-
-        addTimeout(() => showEl(typing), msg.delay);
         addTimeout(() => {
-          typing.style.transition = 'opacity .25s';
-          typing.style.opacity    = '0';
-          setTimeout(() => { typing.remove(); showEl(bubble); }, 280);
+          const b = document.createElement('div');
+          b.className = 'bubble bubble-out';
+          b.style.cssText = 'opacity:0;transform:translateY(8px);';
+          b.innerHTML = msg.text;
+          chatArea.appendChild(b);
+          showEl(b);
+        }, msg.delay);
+      } else {
+        let typingEl = null;
+
+        addTimeout(() => {
+          typingEl = makeTyping();
+          chatArea.appendChild(typingEl);
+          showEl(typingEl);
+        }, msg.delay);
+
+        addTimeout(() => {
+          if (!typingEl) return;
+          typingEl.style.transition = 'opacity .25s';
+          typingEl.style.opacity    = '0';
+          const bubble = document.createElement('div');
+          bubble.className = 'bubble bubble-in';
+          bubble.style.cssText = 'opacity:0;transform:translateY(8px);';
+          bubble.innerHTML = msg.text;
+          setTimeout(() => {
+            if (typingEl && typingEl.parentNode) typingEl.remove();
+            chatArea.appendChild(bubble);
+            showEl(bubble);
+          }, 280);
         }, msg.delay + TYPING_MS);
       }
     });
