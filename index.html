@@ -3,7 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ANTIX SDR</title>
+<title>Antix IA — SDR autônomo que prospecta, qualifica e agenda no WhatsApp</title>
+<meta name="description" content="A Antix é um SDR de IA que prospecta, qualifica e agenda reuniões pelo WhatsApp 17h por dia, para qualquer nicho B2B. Conversa humanizada, anti-ban e agendamento automático.">
+
+<!-- Open Graph / compartilhamento em WhatsApp e LinkedIn -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Antix IA">
+<meta property="og:title" content="Antix IA — SDR autônomo de prospecção B2B no WhatsApp">
+<meta property="og:description" content="Prospecta, qualifica e agenda reuniões pelo WhatsApp 17h por dia. Conversa humanizada com IA, anti-ban ativo e agendamento no timing certo.">
+<meta property="og:url" content="https://antix-ia.com/">
+<meta property="og:image" content="https://antix-ia.com/og-cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Antix IA — SDR autônomo de prospecção B2B no WhatsApp">
+<meta name="twitter:description" content="Prospecta, qualifica e agenda reuniões pelo WhatsApp 17h por dia. IA humanizada, anti-ban e agendamento automático.">
+<meta name="twitter:image" content="https://antix-ia.com/og-cover.png">
+
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,7 +49,6 @@ body {
   font-family: 'DM Sans', sans-serif;
   font-weight: 400;
   overflow-x: hidden;
-  cursor: none;
   position: relative;
 }
 
@@ -395,6 +408,27 @@ section { padding:120px 60px; }
 .step h3 { font-family:'Unbounded',sans-serif; font-size:13px; font-weight:700; letter-spacing:-.3px; margin-bottom:10px; }
 .step p { font-size:12px; color:var(--gray); line-height:1.7; }
 
+/* ─── DIFERENCIAL TÉCNICO ─────────────────────────────────── */
+.tech-diff {
+  margin-top:72px; padding:40px;
+  background:var(--bg3); border:1px solid var(--bdr); border-radius:12px;
+  backdrop-filter:blur(16px) saturate(120%);
+}
+.td-tag {
+  font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px;
+  text-transform:uppercase; color:var(--vl); margin-bottom:28px;
+  display:flex; align-items:center; gap:10px;
+}
+.td-tag::before { content:''; display:block; width:24px; height:1px; background:var(--v); }
+.td-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:2px; }
+.td-item {
+  background:rgba(13,13,40,.4); padding:24px 22px;
+  transition:background .3s;
+}
+.td-item:hover { background:rgba(255,140,0,.05); }
+.td-item h4 { font-family:'Unbounded',sans-serif; font-size:14px; font-weight:700; margin-bottom:8px; letter-spacing:-.3px; }
+.td-item p { font-size:13px; color:var(--gray); line-height:1.65; }
+
 /* ─── RESULTADOS ─────────────────────────────────────────────── */
 .resultados { background:var(--bg2); }
 .metricas { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-top:64px; }
@@ -595,10 +629,37 @@ section { padding:120px 60px; }
 footer {
   background:var(--bg); border-top:1px solid var(--bdr);
   padding:36px 60px; display:flex; justify-content:space-between; align-items:center;
+  gap:20px; flex-wrap:wrap;
 }
+.foot-links { display:flex; gap:24px; }
+.foot-links a {
+  font-family:'DM Mono',monospace; font-size:12px; color:var(--gray);
+  text-decoration:none; letter-spacing:.3px; transition:color .2s;
+}
+.foot-links a:hover { color:var(--vl); }
 .foot-logo { font-family:'Unbounded',sans-serif; font-size:16px; font-weight:700; }
 .foot-logo span { background:linear-gradient(90deg,var(--vl),var(--cy)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
 footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
+
+/* ─── BARRA DE CONFIANÇA ──────────────────────────────────── */
+.trust-strip {
+  border-top:1px solid var(--bdr); border-bottom:1px solid var(--bdr);
+  background:var(--bg2);
+  padding:20px 60px;
+  display:flex; align-items:center; justify-content:center;
+  gap:18px; flex-wrap:wrap;
+}
+.trust-item {
+  display:flex; align-items:center; gap:8px;
+  font-family:'DM Mono',monospace; font-size:12px; letter-spacing:.3px;
+  color:var(--gray);
+}
+.trust-ico { font-size:15px; }
+.trust-sep { color:var(--bdr); font-size:16px; }
+@media(max-width:768px){
+  .trust-strip { flex-direction:column; gap:12px; padding:24px; }
+  .trust-sep { display:none; }
+}
 
 /* ─── REVEAL ─────────────────────────────────────────────────── */
 .reveal { opacity:0; transform:translateY(36px); transition:all .8s cubic-bezier(.16,1,.3,1); }
@@ -607,7 +668,7 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
 /* ─── RESPONSIVE ─────────────────────────────────────────────── */
 @media(max-width:1024px) {
   .hero { grid-template-columns:1fr; padding:120px 40px 80px; }
-  .terminal { display:none; }
+  .terminal { margin-top:16px; max-width:520px; }
   .desafio-grid { grid-template-columns:1fr; }
   .demo-grid { grid-template-columns:1fr; }
   .planos-grid { grid-template-columns:1fr; }
@@ -656,9 +717,6 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
 </head>
 <body>
 
-<div class="cur" id="cursor"></div>
-<div class="cur-ring" id="cursor-ring"></div>
-
 <!-- NAV -->
 <nav>
   <div id="nav-progress"></div>
@@ -691,7 +749,7 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
     </h1>
 
     <p class="hero-sub">
-      SDR IA que prospecta, qualifica e agenda via wpp 17 hr por dia pra qualquer nicho. Quer mais volume? Adiciona um chip, simples assim!
+      SDR de IA que prospecta, qualifica e agenda reuniões pelo WhatsApp 17h por dia, para qualquer nicho B2B. Precisa de mais volume? Adiciona um chip.
     </p>
 
     <div class="hero-actions">
@@ -847,7 +905,7 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
 <section class="desafio" id="desafio">
   <div class="sec-tag">O desafio</div>
   <h2 class="sec-title reveal">Prospectar em escala<br>sem explodir o custo.</h2>
-  <p class="sec-sub reveal">Contratar SDR humano funciona — mas o custo cresce antes da receita. Existe um caminho diferente para qualquer negócio que vende B2B.</p>
+  <p class="sec-sub reveal">Todo mês você paga o custo visível: o salário. Poucos fazem a conta real — encargos, benefícios, ferramentas e o lead que chegou fora do horário e não foi respondido. A Antix não substitui seu time: assume o trabalho repetitivo que ele não deveria estar fazendo.</p>
 
   <div class="desafio-grid">
     <div class="pain-list reveal">
@@ -902,8 +960,8 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
           </div>
         </div>
       </div>   <div class="desafio-badge">
-        <div class="db-n">11x</div>
-        <div class="db-l">mais leads/dia</div>
+        <div class="db-n">4x</div>
+        <div class="db-l">mais leads/dia<br>com 2 chips</div>
       </div>
     </div>
   </div>
@@ -919,26 +977,49 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
     <div class="step reveal">
       <div class="step-circle">01</div>
       <div class="step-ico">🎯</div>
-      <h3>Radar de Leads</h3>
-      <p>Scraping de empresas na cidade-alvo com CNPJ, porte, bairro e contato do dono.</p>
+      <h3>Radar de leads</h3>
+      <p>Coleta empresas no Google Maps por região e nicho — nome, telefone e endereço de cada negócio.</p>
     </div>
     <div class="step reveal">
       <div class="step-circle">02</div>
-      <div class="step-ico">💬</div>
-      <h3>Disparo Neural</h3>
-      <p>Abordagem personalizada por chip com jitter humano — zero risco de ban.</p>
+      <div class="step-ico">🧹</div>
+      <h3>Enriquecimento</h3>
+      <p>Limpeza e validação dos dados: números normalizados e conferidos antes do primeiro contato.</p>
     </div>
     <div class="step reveal">
       <div class="step-circle">03</div>
-      <div class="step-ico">🧠</div>
-      <h3>SPIN com IA</h3>
-      <p>IA conduz o SPIN Selling adaptando tom ao perfil do lead em tempo real.</p>
+      <div class="step-ico">💬</div>
+      <h3>Conversa humanizada</h3>
+      <p>A IA (Llama 3.3 70B) conduz a prospecção com "ouvido paciente": espera o lead terminar de escrever e responde com ritmo humano — raramente corta no meio de uma frase.</p>
     </div>
     <div class="step reveal">
       <div class="step-circle">04</div>
       <div class="step-ico">📅</div>
       <h3>Agendamento</h3>
-      <p>Calendly enviado no timing certo. Simulador de economia pronto para a call.</p>
+      <p>Quando o interesse é real, o link de agendamento vai no timing certo — nunca cedo demais.</p>
+    </div>
+  </div>
+
+  <!-- Diferencial técnico: por que não é "só mais um bot" -->
+  <div class="tech-diff reveal">
+    <div class="td-tag">Por que não é só mais um bot</div>
+    <div class="td-grid">
+      <div class="td-item">
+        <h4>🗄️ Ouvido paciente</h4>
+        <p>Se o lead manda três mensagens seguidas, a IA espera e responde a todas de uma vez — não atropela a conversa como um chatbot comum.</p>
+      </div>
+      <div class="td-item">
+        <h4>⏱️ Jitter em camadas</h4>
+        <p>Tempo de "digitação" proporcional ao texto, pausas de cold-start e intervalos de 3 a 6 minutos entre follow-ups. Nada acontece em ritmo robótico.</p>
+      </div>
+      <div class="td-item">
+        <h4>🛡️ Anti-ban ativo</h4>
+        <p>Prioridade tática entre chips, micro-pausas programadas e descarte de números inexistentes sem penalizar a operação.</p>
+      </div>
+      <div class="td-item">
+        <h4>🎙️ Áudio humanizado</h4>
+        <p>Para objeções críticas ("é seguro?", "como funciona?"), a IA responde com áudio em voz natural quando faz sentido.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -998,10 +1079,10 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
         <div id="sc-mes" style="font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--vl);letter-spacing:-2px;">4.800+</div>
       </div>
       <div style="background:rgba(13,13,40,.7);padding:20px 18px;">
-        <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--gray);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;">Esforço Contínuo</div>
-        <div id="sc-horas" style="font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--gr);letter-spacing:-2px;">34h/dia</div>
+        <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--gray);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;">Horas-chip / dia</div>
+        <div id="sc-horas" style="font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--gr);letter-spacing:-2px;">34h</div>
       </div>
-      <div style="background:rgba(124,58,237,.08);padding:20px 18px;border:1px solid var(--bdr);">
+      <div style="background:rgba(255,140,0,.08);padding:20px 18px;border:1px solid var(--bdr);">
         <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--vl);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;">Novas Contratações</div>
         <div id="sc-lead" style="font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--w);letter-spacing:-2px;">ZERO</div>
       </div>
@@ -1013,8 +1094,9 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
 
 <!-- DEMO -->
 <section class="demo" id="demo">
-  <div class="sec-tag">Demo ao vivo</div>
-  <h2 class="sec-title reveal">Veja a IA<br>conduzindo clientes.</h2>
+  <div class="sec-tag">Exemplo de conversa</div>
+  <h2 class="sec-title reveal">Veja a IA<br>conduzindo o lead.</h2>
+  <p class="sec-sub reveal">Simulação baseada em conversas reais de prospecção. Repare no ritmo: a IA lê, espera e responde como gente.</p>
 
   <div class="demo-grid">
     <div class="reveal">
@@ -1022,8 +1104,8 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
         <div class="phone-bar">
           <div class="ph-av">⚡</div>
           <div>
-            <div class="ph-name">Marlon — Enerzee</div>
-            <div class="ph-status">online agora</div>
+            <div class="ph-name">Antix · Assistente</div>
+            <div class="ph-status">exemplo ilustrativo</div>
           </div>
         </div>
         <div class="chat-area" id="chat-area">
@@ -1079,12 +1161,12 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
     <div class="comp-row">
       <div class="comp-cell metric">Leads / dia</div>
       <div class="comp-cell old">40 leads</div>
-      <div class="comp-cell new cy">110+ leads</div>
+      <div class="comp-cell new cy">160+ leads (2 chips)</div>
     </div>
     <div class="comp-row">
       <div class="comp-cell metric">Cobertura diária</div>
       <div class="comp-cell old">8h / dia</div>
-      <div class="comp-cell new cy">17h15 / dia</div>
+      <div class="comp-cell new cy">17h / dia</div>
     </div>
     <div class="comp-row">
       <div class="comp-cell metric">Custo base da operação</div>
@@ -1104,60 +1186,15 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
   </div>
 </section>
 
-<!-- DEPOIMENTOS -->
-<section style="background:var(--bg);padding:100px 60px;">
-  <div class="sec-tag">O que dizem</div>
-  <h2 class="sec-title reveal">Resultados reais<br>de quem já usa.</h2>
-
-  <div class="depo-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:60px;">
-    <div class="reveal" style="background:var(--bg2);border:1px solid var(--bdr);border-radius:12px;padding:32px;position:relative;overflow:hidden;">
-      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--v),var(--cy))"></div>
-      <div style="font-size:24px;margin-bottom:16px;color:var(--am)">★★★★★</div>
-      <p style="font-size:14px;line-height:1.7;color:rgba(238,242,255,.7);margin-bottom:24px;font-style:italic;">"Em 3 semanas já tínhamos mais reuniões agendadas do que em 2 meses com SDR humano. A personalização por bairro fez toda a diferença."</p>
-      <div style="display:flex;align-items:center;gap:12px;">
-        <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--v),var(--cy));display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-weight:700;font-size:13px;">R</div>
-        <div>
-          <div style="font-family:'Unbounded',sans-serif;font-size:12px;font-weight:700;">Rafael M.</div>
-          <div style="font-size:11px;color:var(--gray);">Distribuidora de Energia · GO</div>
-        </div>
-      </div>
-    </div>
-    <div class="reveal" style="background:var(--bg2);border:1px solid var(--bdr);border-radius:12px;padding:32px;position:relative;overflow:hidden;">
-      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--v),var(--cy))"></div>
-      <div style="font-size:24px;margin-bottom:16px;color:var(--am)">★★★★★</div>
-      <p style="font-size:14px;line-height:1.7;color:rgba(238,242,255,.7);margin-bottom:24px;font-style:italic;">"Configuramos em um dia. No fim da primeira semana já tínhamos 8 agendamentos confirmados. O custo por reunião caiu 90%."</p>
-      <div style="display:flex;align-items:center;gap:12px;">
-        <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#0891b2,var(--v));display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-weight:700;font-size:13px;">C</div>
-        <div>
-          <div style="font-family:'Unbounded',sans-serif;font-size:12px;font-weight:700;">Camila T.</div>
-          <div style="font-size:11px;color:var(--gray);">Consultoria B2B · SP</div>
-        </div>
-      </div>
-    </div>
-    <div class="reveal" style="background:var(--bg2);border:1px solid var(--bdr);border-radius:12px;padding:32px;position:relative;overflow:hidden;">
-      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--v),var(--cy))"></div>
-      <div style="font-size:24px;margin-bottom:16px;color:var(--am)">★★★★★</div>
-      <p style="font-size:14px;line-height:1.7;color:rgba(238,242,255,.7);margin-bottom:24px;font-style:italic;">"O SDR responde leads às 22h, no sábado, com o nome da empresa e o nicho certo. Parece humano. Os clientes perguntam quem é o atendente."</p>
-      <div style="display:flex;align-items:center;gap:12px;">
-        <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--gr),#0891b2);display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-weight:700;font-size:13px;">L</div>
-        <div>
-          <div style="font-family:'Unbounded',sans-serif;font-size:12px;font-weight:700;">Lucas B.</div>
-          <div style="font-size:11px;color:var(--gray);">SaaS de Saúde · MG</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- URGÊNCIA -->
-<div class="urgency-strip" style="background:linear-gradient(135deg,rgba(124,58,237,.15),rgba(34,211,238,.08));border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);padding:20px 60px;display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;">
-  <div style="display:flex;align-items:center;gap:8px;">
-    <div style="width:8px;height:8px;border-radius:50%;background:var(--gr);animation:blink .8s infinite;"></div>
-    <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gr);letter-spacing:1px;">3 VAGAS ABERTAS ESTE MÊS</span>
-  </div>
-  <span style="color:var(--bdr);font-size:18px;">|</span>
-  <span style="font-size:13px;color:rgba(238,242,255,.6);">Onboarding leva 48h · Sem fidelidade · Cancela quando quiser</span>
-  <a href="https://calendly.com/marlonlotici6/30min" target="_blank" style="background:var(--v);color:var(--w);font-family:'Unbounded',sans-serif;font-size:11px;font-weight:700;padding:9px 20px;border-radius:6px;text-decoration:none;letter-spacing:.5px;white-space:nowrap;">Garantir minha vaga →</a>
+<!-- BARRA DE CONFIANÇA (substitui a antiga faixa de urgência falsa) -->
+<div class="trust-strip">
+  <div class="trust-item"><span class="trust-ico">⚙️</span> Onboarding em 48h</div>
+  <span class="trust-sep">·</span>
+  <div class="trust-item"><span class="trust-ico">🔓</span> Sem fidelidade</div>
+  <span class="trust-sep">·</span>
+  <div class="trust-item"><span class="trust-ico">✋</span> Cancela quando quiser</div>
+  <span class="trust-sep">·</span>
+  <div class="trust-item"><span class="trust-ico">🛡️</span> Dados tratados conforme a LGPD</div>
 </div>
 
 <!-- PLANOS -->
@@ -1220,7 +1257,6 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
 
 <!-- CTA FINAL -->
 <section class="cta-final" id="agendar">
-  <canvas id="cta-canvas"></canvas>
   <div class="sec-tag" style="justify-content:center">Próximo passo</div>
   <h2>Sua operação pronta<br>para <span>escalar</span>.</h2>
   <p>Consultoria gratuita de 20 minutos. Abrimos o simulador com os dados da sua operação em tempo real.</p>
@@ -1238,6 +1274,11 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
 <footer>
   <div class="nav-logo" style="display:flex; align-items:center;">
     <span class="logo-ant">ANT</span><span class="logo-ix">ix</span> <span class="logo-ia">IA</span>
+  </div>
+  <div class="foot-links">
+    <a href="https://www.instagram.com/antix_ia" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://wa.me/5546999201690" target="_blank" rel="noopener">WhatsApp</a>
+    <a href="privacidade.html">Privacidade</a>
   </div>
   <p>© 2026 Antix IA — Automação de Vendas B2B</p>
 </footer>

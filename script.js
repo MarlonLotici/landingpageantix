@@ -728,66 +728,89 @@ function initDcFill() {
 // ─── 13. EXIT INTENT TOAST ───────────────────────────────────
 
 function initExitToast() {
-  let shown = false;
+  // Não incomoda de novo se a pessoa já fechou nesta sessão
+  if (sessionStorage.getItem('antix-toast-dismissed')) return;
+
+  let shown = false, dismissed = false;
 
   const toast = document.createElement('div');
   toast.style.cssText = `
-    position:fixed; bottom:28px; left:50%; z-index:600;
-    transform:translateX(-50%) translateY(100px);
-    background:#0D0D28; border:1px solid rgba(124,58,237,.4);
-    border-radius:12px; padding:18px 24px;
+    position:fixed; bottom:24px; left:50%; z-index:600;
+    transform:translateX(-50%) translateY(140px);
+    background:rgba(10,10,10,.92); backdrop-filter:blur(20px) saturate(140%);
+    border:1px solid rgba(255,140,0,.28);
+    border-radius:14px; padding:20px 22px;
     display:flex; align-items:center; gap:18px;
-    transition:transform .5s cubic-bezier(.16,1,.3,1), opacity .5s;
-    opacity:0; box-shadow:0 20px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(124,58,237,.1);
-    max-width:460px; width:92%;
+    transition:transform .55s cubic-bezier(.16,1,.3,1), opacity .45s;
+    opacity:0; box-shadow:0 24px 70px rgba(0,0,0,.7), 0 0 0 1px rgba(255,69,0,.06);
+    max-width:480px; width:92%; overflow:hidden;
   `;
   toast.innerHTML = `
-    <span style="font-size:26px">⚡</span>
+    <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#FF4500,#F59E0B)"></div>
+    <div style="width:40px;height:40px;min-width:40px;border-radius:10px;background:rgba(255,69,0,.12);border:1px solid rgba(255,140,0,.25);display:flex;align-items:center;justify-content:center;font-size:20px">🎯</div>
     <div style="flex:1">
-      <div style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:13px;margin-bottom:3px">
-        Antes de sair — 20 min podem mudar sua operação
+      <div style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:13px;margin-bottom:4px;color:#fff;line-height:1.35">
+        A colônia não para. E a sua operação?
       </div>
-      <div style="font-size:12px;color:#6B7280;line-height:1.5">
-        Consultoria gratuita. Sem compromisso.
+      <div style="font-size:12px;color:#9CA3AF;line-height:1.5">
+        20 min: montamos o simulador com os números do seu negócio, ao vivo.
       </div>
     </div>
     <a href="https://calendly.com/marlonlotici6/30min" target="_blank"
-       style="background:linear-gradient(135deg,#7C3AED,#5B21B6);color:#EEF2FF;
+       style="background:linear-gradient(135deg,#FF4500,#A32800);color:#fff;
               font-family:'Unbounded',sans-serif;font-weight:700;font-size:11px;
-              padding:10px 16px;border-radius:6px;text-decoration:none;
-              white-space:nowrap;flex-shrink:0;letter-spacing:.5px;">
+              padding:11px 18px;border-radius:7px;text-decoration:none;
+              white-space:nowrap;flex-shrink:0;letter-spacing:.5px;transition:transform .2s;">
       Agendar →
     </a>
-    <button id="toast-x" style="background:none;border:none;color:#6B7280;font-size:16px;
-      cursor:none;padding:0 2px;line-height:1;flex-shrink:0;">✕</button>
+    <button id="toast-x" aria-label="Fechar" style="background:none;border:none;color:#6B7280;font-size:17px;
+      cursor:pointer;padding:0 2px;line-height:1;flex-shrink:0;transition:color .2s;">✕</button>
   `;
   document.body.appendChild(toast);
 
+  const btn = toast.querySelector('a');
+  btn.addEventListener('mouseenter', () => btn.style.transform = 'translateY(-2px)');
+  btn.addEventListener('mouseleave', () => btn.style.transform = '');
+  const x = toast.querySelector('#toast-x');
+  x.addEventListener('mouseenter', () => x.style.color = '#fff');
+  x.addEventListener('mouseleave', () => x.style.color = '#6B7280');
+
   const show = () => {
-    if (shown) return;
+    if (shown || dismissed) return;
     shown = true;
     toast.style.opacity   = '1';
     toast.style.transform = 'translateX(-50%) translateY(0)';
-    setTimeout(hide, 9000);
+    autoHide = setTimeout(() => hide(false), 11000);
   };
 
-  const hide = () => {
+  let autoHide;
+  const hide = (permanent) => {
+    clearTimeout(autoHide);
     toast.style.opacity   = '0';
-    toast.style.transform = 'translateX(-50%) translateY(100px)';
+    toast.style.transform = 'translateX(-50%) translateY(140px)';
+    if (permanent) {
+      dismissed = true;
+      sessionStorage.setItem('antix-toast-dismissed', '1');
+    } else {
+      // permite reaparecer se a pessoa tentar sair de novo
+      shown = false;
+    }
   };
 
-  document.getElementById('toast-x')?.addEventListener('click', hide);
-  toast.querySelector('a')?.addEventListener('click', hide);
+  x.addEventListener('click', () => hide(true));
+  btn.addEventListener('click', () => hide(true));
 
+  // Exit-intent (desktop): mouse sobe pra fora do topo
   document.addEventListener('mouseleave', e => {
-    if (e.clientY < 8) setTimeout(show, 250);
+    if (e.clientY < 8) setTimeout(show, 200);
   });
 
-  let idle = setTimeout(show, 50000);
-  ['mousemove','keydown','scroll','click'].forEach(ev => {
+  // Fallback por inatividade (cobre mobile, onde não há exit-intent)
+  let idle = setTimeout(show, 45000);
+  ['mousemove','keydown','scroll','click','touchstart'].forEach(ev => {
     document.addEventListener(ev, () => {
       clearTimeout(idle);
-      idle = setTimeout(show, 50000);
+      if (!shown && !dismissed) idle = setTimeout(show, 45000);
     }, { passive: true });
   });
 }
@@ -798,9 +821,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Prevent browser from auto-restoring scroll position
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
-  initHeroCanvas();
-  initCtaCanvas();
-  initCursor();
+  initHeroCanvas();      // enxame de formigas — a animação que É a marca
   initNav();
   initSmoothScroll();
   initReveal();
@@ -809,8 +830,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initChat();
   initMagnetic();
   initDcFill();
-  initExitToast();
   initChipScaler();
+  initExitToast();
 });
 
 // ─── 14. SIMULADOR DE FORÇA OPERACIONAL ──────────────────────
@@ -833,8 +854,8 @@ function initChipScaler() {
     dispDia.textContent = (chips * disparosPorChip) + '+';
     // 30 dias no mês
     dispMes.textContent = (chips * disparosPorChip * 30).toLocaleString('pt-BR') + '+';
-    // Cada chip equivale a 17h de trabalho de um SDR humano
-    if(horasCont) horasCont.textContent = (chips * 17) + 'h/dia';
+    // Cada chip equivale a 17h de trabalho de um SDR humano (horas-chip)
+    if(horasCont) horasCont.textContent = (chips * 17) + 'h';
   }
 
   btnMinus.addEventListener('click', () => {
