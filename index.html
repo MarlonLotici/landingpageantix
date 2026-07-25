@@ -156,8 +156,7 @@ nav {
 .hero-wrap { position:relative; }
 .hero {
   min-height:100vh; padding:120px 60px 80px;
-  display:grid; grid-template-columns:1fr 460px;
-  gap:60px; align-items:center;
+  display:flex; flex-direction:column; justify-content:center;
   position:relative; overflow:hidden;
 }
 .hero-video {
@@ -168,7 +167,7 @@ nav {
   position:absolute; inset:0; z-index:0; pointer-events:none;
   background:linear-gradient(180deg, rgba(3,3,13,0.75) 0%, rgba(3,3,13,0.55) 45%, rgba(3,3,13,0.85) 100%);
 }
-.hero-content { position:relative; z-index:1; }
+.hero-content { position:relative; z-index:1; max-width:760px; }
 .hero-badge {
   display:inline-flex; align-items:center; gap:8px;
   background:rgba(124,58,237,0.1); border:1px solid var(--bdr);
@@ -240,12 +239,14 @@ nav {
 }
 .stat-l { font-size:12px; color:var(--gray); margin-top:5px; font-weight:300; }
 
-/* HIVE PANEL — houses the terminal widget outside the hero video area */
-.hive-panel {
-  position:absolute; top:0; right:60px; height:100%; width:460px;
-  display:flex; align-items:center; pointer-events:none;
+/* COLONY PANEL — houses the terminal widget outside the hero video area */
+.colony-panel {
+  position:relative; z-index:1;
+  background:var(--bg2); border-top:1px solid var(--bdr); border-bottom:1px solid var(--bdr);
+  padding:40px 60px;
+  display:flex; justify-content:center;
 }
-.hive-panel .terminal { pointer-events:auto; width:100%; }
+.colony-panel .terminal { max-width:520px; width:100%; }
 
 /* TERMINAL WIDGET */
 .terminal {
@@ -679,13 +680,8 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
 
 /* ─── RESPONSIVE ─────────────────────────────────────────────── */
 @media(max-width:1024px) {
-  .hero { grid-template-columns:1fr; padding:120px 40px 80px; }
-  .hive-panel {
-    position:static; width:auto; height:auto; display:block; pointer-events:auto;
-    background:var(--bg2); border-top:1px solid var(--bdr); border-bottom:1px solid var(--bdr);
-    padding:40px 40px;
-  }
-  .hive-panel .terminal { max-width:520px; margin:0 auto; }
+  .hero { padding:120px 40px 80px; }
+  .colony-panel { padding:40px 40px; }
   .desafio-grid { grid-template-columns:1fr; }
   .demo-grid { grid-template-columns:1fr; }
   .planos-grid { grid-template-columns:1fr; }
@@ -705,7 +701,7 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
   body { cursor:auto; }
   .cur,.cur-ring { display:none; }
   .hero-stats { gap:28px; flex-wrap:wrap; }
-  .hive-panel { padding:32px 24px; }
+  .colony-panel { padding:32px 24px; }
 
   /* Testimonials — stack on mobile */
   .depo-grid { grid-template-columns:1fr !important; }
@@ -744,7 +740,7 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
   </div>
   
   <div class="nav-links">
-    <a href="#como">Operação Enxame</a>
+    <a href="#como">Operação Colônia</a>
     <a href="#planos">Níveis de Colônia</a>
   </div>
 
@@ -759,7 +755,7 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
   <div class="hero-content">
     <div class="hero-badge">
       <div class="bdot"></div>
-      Enxame Ativo &nbsp;·&nbsp; Escaneando Leads
+      Colônia Ativa &nbsp;·&nbsp; Escaneando Leads
     </div>
 
     <h1>
@@ -777,7 +773,7 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
         Agendar Reunião Estratégica →
       </a>
       <a href="#demo" class="btn-ghost magnetic">
-        ▶ Ver Enxame em Ação
+        ▶ Ver Colônia em Ação
       </a>
     </div>
 
@@ -792,22 +788,22 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
       </div>
       <div>
         <div class="stat-n">∞</div>
-        <div class="stat-l">chips em enxame</div>
+        <div class="stat-l">chips na colônia</div>
       </div>
     </div>
   </div>
 </section>
 
-<div class="hive-panel">
+<div class="colony-panel">
   <div class="terminal">
     <div class="term-bar">
       <div class="term-dots">
         <span></span><span></span><span></span>
       </div>
-      <div class="term-title">antix-sdr — hive control</div>
+      <div class="term-title">antix-sdr — colony control</div>
       <div class="term-live">
         <div class="term-live-dot"></div>
-        HIVE LIVE
+        COLONY LIVE
       </div>
     </div>
     <div class="term-body">
@@ -968,7 +964,7 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
         <div class="dc-bar"><div class="dc-fill" id="dc-fill"></div></div>
         <div class="dc-rows">
           <div class="dc-row">
-            <span>Enxame SDR — 2 chips</span>
+            <span>Colônia SDR — 2 chips</span>
             <span style="color: var(--vl)">160+ leads/dia</span>
           </div>
           <div class="dc-row">
@@ -1047,7 +1043,7 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
 
 <!-- RESULTADOS -->
 <section class="resultados">
-  <div class="sec-tag">Métricas de Enxame</div>
+  <div class="sec-tag">Métricas da Colônia</div>
   <h2 class="sec-title reveal">Escala linear.<br>Custo fixo.</h2>
   <p class="sec-sub reveal" style="margin-bottom:48px;">Cada soldado novo adiciona dezenas de incursões diárias ao pipeline. Sem contratar, sem treinar, sem esperar.</p>
 
@@ -1063,7 +1059,7 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
       <div class="m-n" data-target="17" data-suffix="h">17<sup>h</sup></div>
       <div class="m-label">
         <strong>Cobertura diária</strong>
-        Das 5h30 às 22h45. Seu enxame trabalha enquanto a concorrência dorme.
+        Das 5h30 às 22h45. Sua colônia trabalha enquanto a concorrência dorme.
       </div>
     </div>
     <div class="metrica reveal">
@@ -1081,7 +1077,7 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;margin-bottom:36px;">
       <div>
         <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gray);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Simulador de Força Operacional</div>
-        <div style="font-family:'Unbounded',sans-serif;font-size:20px;font-weight:800;letter-spacing:-1px;">Qual o tamanho do seu enxame?</div>
+        <div style="font-family:'Unbounded',sans-serif;font-size:20px;font-weight:800;letter-spacing:-1px;">Qual o tamanho da sua colônia?</div>
       </div>
       <div style="display:flex;align-items:center;gap:16px;">
         <button id="chip-minus" style="width:40px;height:40px;border-radius:8px;background:var(--g2);border:1px solid var(--bdr);color:var(--w);font-size:20px;cursor:pointer;font-family:'Unbounded',sans-serif;transition:all .2s;" onmouseover="this.style.borderColor='var(--vl)'" onmouseout="this.style.borderColor='var(--bdr)'">−</button>
@@ -1221,7 +1217,7 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
 <!-- PLANOS -->
 <section class="planos" id="planos">
   <div class="sec-tag">Níveis de Operação</div>
-  <h2 class="sec-title reveal">Escolha a força<br>do seu enxame.</h2>
+  <h2 class="sec-title reveal">Escolha a força<br>da sua colônia.</h2>
 
   <div class="planos-grid">
     <div class="plano reveal">
