@@ -153,6 +153,7 @@ nav {
 .nav-cta:hover { background:transparent; color:var(--vl); border-color:var(--vl); }
 
 /* ─── HERO ───────────────────────────────────────────────────── */
+.hero-wrap { position:relative; }
 .hero {
   min-height:100vh; padding:120px 60px 80px;
   display:grid; grid-template-columns:1fr 460px;
@@ -238,6 +239,13 @@ nav {
   color:var(--cy); letter-spacing:-2px; line-height:1;
 }
 .stat-l { font-size:12px; color:var(--gray); margin-top:5px; font-weight:300; }
+
+/* HIVE PANEL — houses the terminal widget outside the hero video area */
+.hive-panel {
+  position:absolute; top:0; right:60px; height:100%; width:460px;
+  display:flex; align-items:center; pointer-events:none;
+}
+.hive-panel .terminal { pointer-events:auto; width:100%; }
 
 /* TERMINAL WIDGET */
 .terminal {
@@ -672,7 +680,12 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
 /* ─── RESPONSIVE ─────────────────────────────────────────────── */
 @media(max-width:1024px) {
   .hero { grid-template-columns:1fr; padding:120px 40px 80px; }
-  .terminal { margin-top:16px; max-width:520px; }
+  .hive-panel {
+    position:static; width:auto; height:auto; display:block; pointer-events:auto;
+    background:var(--bg2); border-top:1px solid var(--bdr); border-bottom:1px solid var(--bdr);
+    padding:40px 40px;
+  }
+  .hive-panel .terminal { max-width:520px; margin:0 auto; }
   .desafio-grid { grid-template-columns:1fr; }
   .demo-grid { grid-template-columns:1fr; }
   .planos-grid { grid-template-columns:1fr; }
@@ -692,6 +705,7 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
   body { cursor:auto; }
   .cur,.cur-ring { display:none; }
   .hero-stats { gap:28px; flex-wrap:wrap; }
+  .hive-panel { padding:32px 24px; }
 
   /* Testimonials — stack on mobile */
   .depo-grid { grid-template-columns:1fr !important; }
@@ -737,6 +751,7 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
   <a href="#agendar" class="nav-cta">Agendar Reunião →</a>
 </nav>
 
+<div class="hero-wrap">
 <section class="hero">
   <video class="hero-video" src="hero-formigas.mp4" autoplay muted loop playsinline preload="auto"></video>
   <div class="hero-video-overlay"></div>
@@ -781,7 +796,9 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
       </div>
     </div>
   </div>
+</section>
 
+<div class="hive-panel">
   <div class="terminal">
     <div class="term-bar">
       <div class="term-dots">
@@ -821,9 +838,8 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
         </div>
     </div>
   </div>
-</section>
-  
-</section>
+</div>
+</div>
 
 <!-- TICKER -->
 <div class="ticker-wrap">
