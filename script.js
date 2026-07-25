@@ -10,7 +10,6 @@
  *  6. Smooth Scroll with nav offset
  *  7. Scroll Reveal with stagger
  *  8. Scramble Counters (hero stats + metrics)
- *  9. Terminal Widget (live data simulation)
  * 10. WhatsApp Chat Loop with Typing Indicator
  * 11. Magnetic Buttons
  * 12. Exit Intent Toast
@@ -299,88 +298,6 @@ function initCounters() {
     }, { threshold: 0.4 });
     obs.observe(metricas);
   }
-}
-
-// ─── 9. TERMINAL WIDGET ──────────────────────────────────────
-
-function initTerminal() {
-  const timerEl   = document.getElementById('term-timer');
-  const dispEl    = document.getElementById('term-dispatches');
-  const respEl    = document.getElementById('term-resp');
-  const schedEl   = document.getElementById('term-sched');
-  const feedEl    = document.getElementById('term-feed');
-  if (!timerEl) return;
-
-  // Countdown timer loops 0–179 (3 min max)
-  let secs = 134;
-  const timerInterval = setInterval(() => {
-    if (document.hidden) return;
-    secs = (secs - 1 + 180) % 180;
-    const m = String(Math.floor(secs / 60)).padStart(2, '0');
-    const s = String(secs % 60).padStart(2, '0');
-    timerEl.textContent = `${m}:${s}`;
-  }, 1000);
-
-  // Gently increment dispatch counter
-  let dispatches = 94, resp = 17, sched = 4;
-  const incInterval = setInterval(() => {
-    if (document.hidden) return;
-    if (dispatches < 114) {
-      dispatches++;
-      dispEl.textContent = dispatches;
-    }
-    if (Math.random() > 0.7 && resp < 22) {
-      resp++;
-      if (respEl) respEl.textContent = resp;
-    }
-    if (Math.random() > 0.92 && sched < 7) {
-      sched++;
-      if (schedEl) schedEl.textContent = sched;
-    }
-    if (dispatches >= 114) clearInterval(incInterval);
-  }, 800);
-
-  
-  // Activity feed - Linguagem de Operação Antix
-  const activities = [
-    ['Bar do Gugu',        'alvo localizado ◎', 'v'],
-    ['Auto Peças Lima',    'incursão enviada ↗', 'c'],
-    ['Padaria Bela Vista', 'agendamento ✓',   'g'],
-    ['Clínica São Luís',   'sem resposta —',  'x'],
-    ['Academia FitBody',   'SPIN ativado ⚡', 'am'], // Nova cor (ambar)
-    ['Restaurante Dom',    'objeção superada ↩', 'c'],
-    ['Farmácia Saúde+',    'alvo localizado ◎', 'v'],
-    ['Supermercado Rex',   'incursão enviada ↗', 'c'],
-    ['Loja Roupas M',      'lead descartado —', 'x'],
-    ['Oficina Master',     'agendamento ✓',   'g'],
-  ];
-  let feedIdx = activities.length; // Start at end so we don't repeat initial items
-
-  function addFeedItem() {
-    const [name, status, cls] = activities[feedIdx % activities.length];
-    feedIdx++;
-
-    // Remove excess BEFORE adding (synchronous — no setTimeout race)
-    while (feedEl.children.length >= 4) {
-      feedEl.removeChild(feedEl.lastChild);
-    }
-
-    const item = document.createElement('div');
-    item.className = 'feed-item';
-    item.style.cssText = 'opacity:0; transform:translateX(-6px); transition:all .3s ease;';
-    item.innerHTML = `<span class="feed-name">${name}</span><span class="feed-status ${cls}">${status}</span>`;
-    feedEl.insertBefore(item, feedEl.firstChild);
-
-    requestAnimationFrame(() => {
-      item.style.opacity   = '1';
-      item.style.transform = 'translateX(0)';
-    });
-  }
-
-  setInterval(() => {
-    if (document.hidden) return;
-    addFeedItem();
-  }, 3200);
 }
 
 // ─── 10. WHATSAPP CHAT LOOP ───────────────────────────────────
@@ -678,7 +595,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   initReveal();
   initCounters();
-  initTerminal();
   initChat();
   initMagnetic();
   initDcFill();

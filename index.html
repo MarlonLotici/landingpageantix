@@ -153,7 +153,6 @@ nav {
 .nav-cta:hover { background:transparent; color:var(--vl); border-color:var(--vl); }
 
 /* ─── HERO ───────────────────────────────────────────────────── */
-.hero-wrap { position:relative; }
 .hero {
   min-height:100vh; padding:120px 60px 80px;
   display:flex; flex-direction:column; justify-content:center;
@@ -238,89 +237,6 @@ nav {
   color:var(--cy); letter-spacing:-2px; line-height:1;
 }
 .stat-l { font-size:12px; color:var(--gray); margin-top:5px; font-weight:300; }
-
-/* COLONY PANEL — houses the terminal widget outside the hero video area */
-.colony-panel {
-  position:relative; z-index:1;
-  background:var(--bg2); border-top:1px solid var(--bdr); border-bottom:1px solid var(--bdr);
-  padding:40px 60px;
-  display:flex; justify-content:center;
-}
-.colony-panel .terminal { max-width:520px; width:100%; }
-
-/* TERMINAL WIDGET */
-.terminal {
-  position:relative; z-index:1;
-  background:rgba(8,8,30,0.85); border:1px solid var(--bdr);
-  border-radius:12px; overflow:hidden;
-  box-shadow:0 0 0 1px rgba(124,58,237,.04), 0 40px 80px rgba(0,0,0,.6),
-             inset 0 1px 0 rgba(167,139,250,.08);
-  animation:fadeUp .7s .3s ease both;
-  backdrop-filter:blur(20px);
-}
-.term-bar {
-  background:rgba(13,13,40,.9); border-bottom:1px solid var(--bdr);
-  padding:12px 16px; display:flex; align-items:center; gap:8px;
-}
-.term-dots span {
-  display:inline-block; width:10px; height:10px; border-radius:50%;
-}
-.term-dots span:nth-child(1){background:#FF5F57}
-.term-dots span:nth-child(2){background:#FEBC2E}
-.term-dots span:nth-child(3){background:#28C840}
-.term-title {
-  font-family:'DM Mono',monospace; font-size:11px; color:var(--gray);
-  letter-spacing:.5px; margin-left:4px; flex:1; text-align:center;
-}
-.term-live {
-  display:flex; align-items:center; gap:5px;
-  font-family:'DM Mono',monospace; font-size:10px; color:var(--gr); letter-spacing:.8px;
-}
-.term-live-dot { width:5px; height:5px; border-radius:50%; background:var(--gr); animation:blink .8s infinite; }
-
-.term-body { padding:20px; display:flex; flex-direction:column; gap:0; }
-.term-rows { display:grid; grid-template-columns:1fr 1fr; gap:1px; margin-bottom:16px; }
-.term-row {
-  background:rgba(13,13,40,.6); padding:14px 16px;
-}
-.term-row:nth-child(1){ border-radius:6px 0 0 0; }
-.term-row:nth-child(2){ border-radius:0 6px 0 0; }
-.term-row:nth-child(3){ border-radius:0 0 0 6px; }
-.term-row:nth-child(4){ border-radius:0 0 6px 0; }
-.term-row-label { font-family:'DM Mono',monospace; font-size:9px; color:var(--gray); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px; }
-.term-row-val { font-family:'DM Mono',monospace; font-size:22px; font-weight:500; color:var(--w); letter-spacing:-1px; }
-.term-row-val.cyan  { color:var(--cy); }
-.term-row-val.violet{ color:var(--vl); }
-.term-row-val.green { color:var(--gr); }
-.term-row-val.amber { color:var(--am); }
-
-.term-divider { height:1px; background:var(--bdr); margin:0 0 16px; }
-.term-timer-row {
-  display:flex; justify-content:space-between; align-items:center;
-  font-family:'DM Mono',monospace; font-size:11px;
-  color:var(--gray); padding:0 2px; margin-bottom:14px;
-}
-.term-timer-val { color:var(--vl); font-size:13px; }
-
-.term-feed {
-  display:flex; flex-direction:column; gap:0;
-  overflow:hidden;
-  max-height:128px; /* exactly 4 items × 32px — never grows */
-  height:128px;
-}
-.feed-item {
-  display:flex; justify-content:space-between; align-items:center;
-  padding:7px 2px; border-bottom:1px solid rgba(124,58,237,0.06);
-  transition:opacity .3s, transform .3s;
-  flex-shrink:0; height:32px;
-}
-.feed-item:last-child { border-bottom:none; }
-.feed-name { font-family:'DM Mono',monospace; font-size:10px; color:rgba(238,242,255,.5); }
-.feed-status { font-family:'DM Mono',monospace; font-size:10px; }
-.feed-status.c { color:var(--cy); }
-.feed-status.g { color:var(--gr); }
-.feed-status.v { color:var(--vl); }
-.feed-status.x { color:var(--gray); }
 
 @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
 
@@ -681,7 +597,6 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
 /* ─── RESPONSIVE ─────────────────────────────────────────────── */
 @media(max-width:1024px) {
   .hero { padding:120px 40px 80px; }
-  .colony-panel { padding:40px 40px; }
   .desafio-grid { grid-template-columns:1fr; }
   .demo-grid { grid-template-columns:1fr; }
   .planos-grid { grid-template-columns:1fr; }
@@ -701,7 +616,6 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
   body { cursor:auto; }
   .cur,.cur-ring { display:none; }
   .hero-stats { gap:28px; flex-wrap:wrap; }
-  .colony-panel { padding:32px 24px; }
 
   /* Testimonials — stack on mobile */
   .depo-grid { grid-template-columns:1fr !important; }
@@ -747,7 +661,6 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
   <a href="#agendar" class="nav-cta">Agendar Reunião →</a>
 </nav>
 
-<div class="hero-wrap">
 <section class="hero">
   <video class="hero-video" src="hero-formigas.mp4" autoplay muted loop playsinline preload="auto"></video>
   <div class="hero-video-overlay"></div>
@@ -793,49 +706,6 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
     </div>
   </div>
 </section>
-
-<div class="colony-panel">
-  <div class="terminal">
-    <div class="term-bar">
-      <div class="term-dots">
-        <span></span><span></span><span></span>
-      </div>
-      <div class="term-title">antix-sdr — colony control</div>
-      <div class="term-live">
-        <div class="term-live-dot"></div>
-        COLONY LIVE
-      </div>
-    </div>
-    <div class="term-body">
-      <div class="term-rows">
-        <div class="term-row">
-          <div class="term-row-label">Unidades Ativas</div>
-          <div class="term-row-val orange">46 / 48</div>
-        </div>
-        <div class="term-row">
-          <div class="term-row-label">Ataques Hoje</div>
-          <div class="term-row-val orange" id="term-dispatches">1.240</div>
-        </div>
-        <div class="term-row">
-          <div class="term-row-label">Capturas</div>
-          <div class="term-row-val orange" id="term-resp">214</div>
-        </div>
-        <div class="term-row">
-          <div class="term-row-label">Agendamentos</div>
-          <div class="term-row-val orange" id="term-sched">12</div>
-        </div>
-      </div>
-      <div class="term-divider"></div>
-      <div class="term-timer-row">
-        <span>próxima incursão em</span>
-        <span class="term-timer-val" id="term-timer">01:45</span>
-      </div>
-      <div class="term-feed" id="term-feed">
-        </div>
-    </div>
-  </div>
-</div>
-</div>
 
 <!-- TICKER -->
 <div class="ticker-wrap">
