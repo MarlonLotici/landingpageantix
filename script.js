@@ -4,7 +4,6 @@
  *
  * Modules:
  *  1. Utils
- *  2. Canvas Particle Network (hero)
  *  3. Mini Particle Canvas (CTA section)
  *  4. Custom Cursor (touch-aware)
  *  5. Nav — Progress Bar + Active Section
@@ -26,152 +25,6 @@ function lerp(a, b, t) { return a + (b - a) * t; }
 function clamp(v, lo, hi) { return Math.min(Math.max(v, lo), hi); }
 function easeOutQuart(t) { return 1 - Math.pow(1 - t, 4); }
 function rand(lo, hi) { return lo + Math.random() * (hi - lo); }
-
-// ─── 2. HERO CANVAS — PARTICLE NEURAL NETWORK ────────────────
-
-// ─── 2. HERO CANVAS — ENXAME NEURAL (ANTix) ────────────────
-
-function initHeroCanvas() {
-  const canvas = document.getElementById('hero-canvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  let W, H;
-
-  function resize() {
-    const parent = canvas.parentElement;
-    W = canvas.width  = parent.clientWidth;
-    H = canvas.height = parent.clientHeight;
-  }
-  resize();
-
-  let resizeTimer;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(resize, 200);
-  }, { passive: true });
-
-  // Paleta de Cores Laranja/Âmbar da Antix
-  const C = {
-    orange: [255, 69, 0],  // Laranja Agressivo
-    amber:  [245, 158, 11] // Âmbar Premium
-  };
-
-  class Ant {
-    constructor() { this.reset(true); }
-
-    reset(initial) {
-      this.x = rand(0, W);
-      this.y = initial ? rand(0, H) : rand(0, H);
-      this.angle = rand(0, Math.PI * 2);
-      this.speed = rand(0.5, 1.0); // Passeio calmo
-      this.wander = 0;
-      this.type = Math.random() > 0.7 ? 'amber' : 'orange';
-    }
-
-    update(mx, my) {
-      this.wander += rand(-0.15, 0.15); // Viradas suaves
-      this.angle += this.wander * 0.05;
-      this.wander *= 0.92;
-
-      const dx = mx - this.x;
-      const dy = my - this.y;
-      const dist = Math.sqrt(dx*dx + dy*dy);
-      
-      // Curiosidade tecnológica (interação mais calma)
-      if(dist < 180 && dist > 0) {
-        const targetAngle = Math.atan2(dy, dx);
-        const diff = targetAngle - this.angle;
-        this.angle += Math.sin(diff) * 0.02; // Virada elegante
-        this.speed = lerp(this.speed, 1.4, 0.015); // Aceleração suave
-      } else {
-        this.speed = lerp(this.speed, 0.7, 0.015); // Velocidade de cruzeiro
-      }
-
-      this.x += Math.cos(this.angle) * this.speed;
-      this.y += Math.sin(this.angle) * this.speed;
-
-      if(this.x < -20) this.x = W+20;
-      if(this.x > W+20) this.x = -20;
-      if(this.y < -20) this.y = H+20;
-      if(this.y > H+20) this.y = -20;
-    }
-
-    draw(ctx) {
-      ctx.save();
-      ctx.translate(this.x, this.y);
-      ctx.rotate(this.angle);
-      
-      const [r, g, b] = this.type === 'orange' ? C.orange : C.amber;
-      const alpha = this.speed > 1.0 ? 0.9 : 0.5;
-
-      ctx.fillStyle = `rgba(${r},${g},${b}, ${alpha})`;
-      ctx.strokeStyle = `rgba(${r},${g},${b}, ${alpha * 0.7})`;
-      ctx.lineWidth = 1.2; // Pernas mais grossas e visíveis
-      
-      // 1. Abdômen (segmento traseiro maior)
-      ctx.beginPath(); ctx.ellipse(-9, 0, 7.5, 5.7, 0, 0, Math.PI*2); ctx.fill(); 
-
-      // 2. Tórax (segmento central onde saem as patas)
-      ctx.beginPath(); ctx.ellipse(0, 0, 4.5, 3.7, 0, 0, Math.PI*2); ctx.fill();
-
-      // 3. Cabeça (segmento dianteiro)
-      ctx.beginPath(); ctx.ellipse(7.5, 0, 4.5, 4.8, 0, 0, Math.PI*2); ctx.fill(); 
-
-      // 4. As Pernas Táticas (6 patas articuladas)
-      ctx.beginPath();
-      // Patas direitas
-      ctx.moveTo(0, 0); ctx.lineTo(-6, 9);  ctx.lineTo(-9, 13.5);
-      ctx.moveTo(0, 0); ctx.lineTo(0, 10.5); ctx.lineTo(-1.5, 15);
-      ctx.moveTo(0, 0); ctx.lineTo(6, 9);   ctx.lineTo(9, 12);
-      // Patas esquerdas
-      ctx.moveTo(0, 0); ctx.lineTo(-6, -9); ctx.lineTo(-9, -13.5);
-      ctx.moveTo(0, 0); ctx.lineTo(0, -10.5); ctx.lineTo(-1.5, -15);
-      ctx.moveTo(0, 0); ctx.lineTo(6, -9);  ctx.lineTo(9, -12);
-      ctx.stroke();
-
-      // 5. As Antenas (visíveis e imponentes)
-      ctx.beginPath();
-      ctx.lineWidth = 0.9;
-      ctx.strokeStyle = `rgba(${r},${g},${b}, ${alpha * 0.9})`;
-      // Esquerda
-      ctx.moveTo(9, -2.2); ctx.quadraticCurveTo(16.5, -7.5, 24, -4.5);
-      // Direita
-      ctx.moveTo(9, 2.2);  ctx.quadraticCurveTo(16.5, 7.5, 24, 4.5);
-      ctx.stroke();
-
-      ctx.restore();
-    }
-  }
-
-  // Quantidade de formigas proporcional à tela
-  const COUNT = Math.min(100, Math.floor((W * H) / 9000));
-  const ants = Array.from({ length: COUNT }, () => new Ant());
-  let mx = -999, my = -999;
-
-  document.addEventListener('mousemove', e => {
-    const rect = canvas.getBoundingClientRect();
-    mx = e.clientX - rect.left;
-    my = e.clientY - rect.top;
-  });
-
-  let raf;
-  let paused = false;
-  function frame() {
-    if (paused) return;
-    ctx.clearRect(0, 0, W, H);
-    ants.forEach(a => {
-      a.update(mx, my);
-      a.draw(ctx);
-    });
-    raf = requestAnimationFrame(frame);
-  }
-  frame();
-
-  document.addEventListener('visibilitychange', () => {
-    paused = document.hidden;
-    if (!paused) frame();
-  });
-}
 
 // ─── 3. CTA MINI CANVAS ──────────────────────────────────────
 
@@ -821,7 +674,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Prevent browser from auto-restoring scroll position
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
-  initHeroCanvas();      // enxame de formigas — a animação que É a marca
   initNav();
   initSmoothScroll();
   initReveal();
