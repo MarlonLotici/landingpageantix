@@ -5,7 +5,7 @@
  * ==========================================================================*/
 (function () {
   // 🔧 URL do backend (Railway) que expõe POST /api/web-chat.
-  const ANTIX_API = 'https://enerzee-sdr-automation-production.up.railway.app';
+  const ANTIX_API = 'https://antix.up.railway.app';
   // 🔧 WhatsApp da Kauana (só dígitos, com DDI 55). Se o chat não abrir certo, pode ser o 9º
   // dígito — nesse caso troque por 5548998204961.
   const ANTIX_WHATSAPP = '554898204961';
