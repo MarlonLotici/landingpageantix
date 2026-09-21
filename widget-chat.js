@@ -100,12 +100,14 @@
 
   let aberto = false, enviando = false, saudou = false;
 
-  // 📱 Mantém o painel do tamanho da área visível (acima do teclado) no mobile.
+  // 📱 Mantém o painel do tamanho da área VISÍVEL (acima do teclado) no mobile — assim a
+  // linha de digitar nunca fica escondida atrás do teclado.
   function ajustarViewport() {
     const vv = window.visualViewport;
     if (aberto && vv && window.innerWidth <= 480) {
       panel.style.height = vv.height + 'px';
-      panel.style.top = vv.offsetTop + 'px';
+      panel.style.top = (vv.offsetTop || 0) + 'px';
+      body.scrollTop = body.scrollHeight;
     } else {
       panel.style.top = ''; panel.style.height = '';
     }
@@ -114,6 +116,9 @@
     window.visualViewport.addEventListener('resize', ajustarViewport);
     window.visualViewport.addEventListener('scroll', ajustarViewport);
   }
+  window.addEventListener('resize', ajustarViewport);
+  // iOS às vezes só reporta o teclado alguns ms depois do focus — reajusta em rajada.
+  input.addEventListener('focus', () => [120, 320, 650].forEach(ms => setTimeout(ajustarViewport, ms)));
 
   function addMsg(txt, who) {
     const el = document.createElement('div');
