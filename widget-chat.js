@@ -102,14 +102,17 @@
 
   // 📱 Mantém o painel do tamanho da área VISÍVEL (acima do teclado) no mobile — assim a
   // linha de digitar nunca fica escondida atrás do teclado.
+  const ehMobile = () => window.innerWidth <= 480;
   function ajustarViewport() {
     const vv = window.visualViewport;
-    if (aberto && vv && window.innerWidth <= 480) {
+    if (aberto && vv && ehMobile()) {
+      // Ancora o painel EXATAMENTE na área visível (acima do teclado). translateY compensa
+      // o deslocamento que o iOS aplica ao empurrar a página quando o teclado sobe.
       panel.style.height = vv.height + 'px';
-      panel.style.top = (vv.offsetTop || 0) + 'px';
+      panel.style.transform = 'translateY(' + (vv.offsetTop || 0) + 'px)';
       body.scrollTop = body.scrollHeight;
     } else {
-      panel.style.top = ''; panel.style.height = '';
+      panel.style.transform = ''; panel.style.height = '';
     }
   }
   if (window.visualViewport) {
@@ -117,8 +120,10 @@
     window.visualViewport.addEventListener('scroll', ajustarViewport);
   }
   window.addEventListener('resize', ajustarViewport);
+  window.addEventListener('orientationchange', () => setTimeout(ajustarViewport, 300));
   // iOS às vezes só reporta o teclado alguns ms depois do focus — reajusta em rajada.
-  input.addEventListener('focus', () => [120, 320, 650].forEach(ms => setTimeout(ajustarViewport, ms)));
+  input.addEventListener('focus', () => [0, 120, 320, 650, 1000].forEach(ms => setTimeout(ajustarViewport, ms)));
+  input.addEventListener('blur', () => setTimeout(ajustarViewport, 120));
 
   function addMsg(txt, who) {
     const el = document.createElement('div');
@@ -136,6 +141,9 @@
   function abrir() {
     if (aberto) return;
     aberto = true;
+    // 🔒 Trava o scroll da página no mobile: sem isso o iOS "empurra" o painel fixo pra trás
+    // do teclado. Com a página travada, o painel fica colado na área visível.
+    if (ehMobile()) { document.documentElement.style.overflow = 'hidden'; document.body.style.overflow = 'hidden'; }
     panel.classList.add('open'); btn.classList.add('aberto'); btn.querySelector('span').textContent = '×';
     ajustarViewport();
     if (!saudou) {
@@ -147,7 +155,8 @@
   function fechar() {
     aberto = false;
     panel.classList.remove('open'); btn.classList.remove('aberto'); btn.querySelector('span').textContent = '🤖';
-    panel.style.top = ''; panel.style.height = '';
+    panel.style.transform = ''; panel.style.height = '';
+    document.documentElement.style.overflow = ''; document.body.style.overflow = '';
   }
   function toggle() { aberto ? fechar() : abrir(); }
 
