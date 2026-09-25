@@ -56,6 +56,8 @@
   .acp-foot input:focus{border-color:${AMBAR}}
   .acp-send{background:${AMBAR};border:none;border-radius:12px;width:44px;cursor:pointer;font-size:18px;color:#111;font-weight:900;flex-shrink:0}
   .acp-send:disabled{opacity:.5;cursor:default}
+  .acp-privacy{padding:6px 12px 10px;text-align:center;font-size:10px;color:rgba(255,255,255,.3);flex-shrink:0;background:#0d0d0f}
+  .acp-privacy a{color:rgba(255,255,255,.45);text-decoration:underline}
   /* 📱 Mobile: tela cheia + acompanha o teclado (visualViewport) pra o input nunca ficar escondido */
   @media (max-width:480px){
     #antix-chat-panel{right:0;left:0;top:0;bottom:auto;width:100%;max-width:100%;height:100dvh;max-height:none;border-radius:0}
@@ -85,7 +87,8 @@
     <div class="acp-foot">
       <input id="acp-input" type="text" placeholder="Escreva sua mensagem..." maxlength="800" autocomplete="off" />
       <button class="acp-send" id="acp-send">➤</button>
-    </div>`;
+    </div>
+    <div class="acp-privacy">Você está conversando com uma IA. <a href="privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a></div>`;
   document.body.appendChild(panel);
 
   const body = panel.querySelector('#acp-body');
