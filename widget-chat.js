@@ -101,22 +101,29 @@
   const msgHandoff = `Oi! Continuando nossa conversa do site 🐜 (cód: ANTIX-${sessionId})`;
   waLink.href = `https://wa.me/${ANTIX_WHATSAPP}?text=${encodeURIComponent(msgHandoff)}`;
 
-  let aberto = false, enviando = false, saudou = false, scrollLockY = 0;
+  let aberto = false, enviando = false, saudou = false, scrollLockY = 0, vpInterval = null, _lastVpH = -1;
 
   // 📱 Mantém o painel do tamanho da área VISÍVEL (acima do teclado) no mobile — assim a
   // linha de digitar nunca fica escondida atrás do teclado.
-  const ehMobile = () => window.innerWidth <= 480;
+  const ehMobile = () => window.matchMedia('(max-width: 480px)').matches;
+  // Ancora o painel na área REALMENTE visível (acima do teclado). Só escreve quando a altura muda,
+  // pra o polling (ver abrir()) não causar flicker.
   function ajustarViewport() {
     const vv = window.visualViewport;
     if (aberto && vv && ehMobile()) {
-      // Ancora o painel EXATAMENTE na área visível (acima do teclado): altura = viewport visível,
-      // top = deslocamento do topo. Com o body travado (ver abrir()), não há scroll pra atrapalhar.
-      panel.style.height = vv.height + 'px';
-      panel.style.top = (vv.offsetTop || 0) + 'px';
+      const h = Math.round(vv.height);
+      if (h === _lastVpH) return;
+      _lastVpH = h;
+      panel.style.height = h + 'px';
+      panel.style.width  = Math.round(vv.width) + 'px';
+      panel.style.top    = (vv.offsetTop || 0) + 'px';
+      panel.style.left   = (vv.offsetLeft || 0) + 'px';
+      panel.style.right  = 'auto';
       panel.style.bottom = 'auto';
       body.scrollTop = body.scrollHeight;
     } else {
-      panel.style.height = ''; panel.style.top = ''; panel.style.bottom = '';
+      _lastVpH = -1;
+      panel.style.height = ''; panel.style.width = ''; panel.style.top = ''; panel.style.left = ''; panel.style.right = ''; panel.style.bottom = '';
     }
   }
   if (window.visualViewport) {
@@ -158,6 +165,9 @@
       const b = document.body;
       b.style.position = 'fixed'; b.style.top = -scrollLockY + 'px';
       b.style.left = '0'; b.style.right = '0'; b.style.width = '100%'; b.style.overflow = 'hidden';
+      // 🔁 À prova de evento: reancora em loop curto enquanto o chat está aberto — cobre navegadores
+      // que não disparam o resize do visualViewport de forma confiável quando o teclado sobe.
+      if (!vpInterval) vpInterval = setInterval(ajustarViewport, 250);
     }
     panel.classList.add('open'); btn.classList.add('aberto'); btn.querySelector('span').textContent = '×';
     ajustarViewport();
@@ -169,8 +179,10 @@
   }
   function fechar() {
     aberto = false;
+    if (vpInterval) { clearInterval(vpInterval); vpInterval = null; }
+    _lastVpH = -1;
     panel.classList.remove('open'); btn.classList.remove('aberto'); btn.querySelector('span').textContent = '🤖';
-    panel.style.height = ''; panel.style.top = ''; panel.style.bottom = '';
+    panel.style.height = ''; panel.style.width = ''; panel.style.top = ''; panel.style.left = ''; panel.style.right = ''; panel.style.bottom = '';
     // Destrava o body e devolve o scroll pra onde estava.
     const b = document.body;
     b.style.position = ''; b.style.top = ''; b.style.left = ''; b.style.right = ''; b.style.width = ''; b.style.overflow = '';
