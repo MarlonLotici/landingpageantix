@@ -526,12 +526,12 @@ function initExitToast() {
         20 min: montamos o simulador com os números do seu negócio, ao vivo.
       </div>
     </div>
-    <a href="https://calendly.com/marlonlotici6/30min" target="_blank"
+    <a href="#" id="toast-cta"
        style="background:linear-gradient(135deg,#FF4500,#A32800);color:#fff;
               font-family:'Unbounded',sans-serif;font-weight:700;font-size:11px;
               padding:11px 18px;border-radius:7px;text-decoration:none;
               white-space:nowrap;flex-shrink:0;letter-spacing:.5px;transition:transform .2s;">
-      Agendar →
+      Testar a IA →
     </a>
     <button id="toast-x" aria-label="Fechar" style="background:none;border:none;color:#6B7280;font-size:17px;
       cursor:pointer;padding:0 2px;line-height:1;flex-shrink:0;transition:color .2s;">✕</button>
@@ -568,7 +568,12 @@ function initExitToast() {
   };
 
   x.addEventListener('click', () => hide(true));
-  btn.addEventListener('click', () => hide(true));
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    hide(true);
+    // Abre o chat da Sofia (mesma conversão do resto do site) em vez de link externo.
+    if (typeof window.antixAbrirChat === 'function') window.antixAbrirChat();
+  });
 
   // Exit-intent (desktop): mouse sobe pra fora do topo
   document.addEventListener('mouseleave', e => {

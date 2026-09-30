@@ -101,7 +101,7 @@
   const msgHandoff = `Oi! Continuando nossa conversa do site 🐜 (cód: ANTIX-${sessionId})`;
   waLink.href = `https://wa.me/${ANTIX_WHATSAPP}?text=${encodeURIComponent(msgHandoff)}`;
 
-  let aberto = false, enviando = false, saudou = false;
+  let aberto = false, enviando = false, saudou = false, scrollLockY = 0;
 
   // 📱 Mantém o painel do tamanho da área VISÍVEL (acima do teclado) no mobile — assim a
   // linha de digitar nunca fica escondida atrás do teclado.
@@ -109,13 +109,14 @@
   function ajustarViewport() {
     const vv = window.visualViewport;
     if (aberto && vv && ehMobile()) {
-      // Ancora o painel EXATAMENTE na área visível (acima do teclado). translateY compensa
-      // o deslocamento que o iOS aplica ao empurrar a página quando o teclado sobe.
+      // Ancora o painel EXATAMENTE na área visível (acima do teclado): altura = viewport visível,
+      // top = deslocamento do topo. Com o body travado (ver abrir()), não há scroll pra atrapalhar.
       panel.style.height = vv.height + 'px';
-      panel.style.transform = 'translateY(' + (vv.offsetTop || 0) + 'px)';
+      panel.style.top = (vv.offsetTop || 0) + 'px';
+      panel.style.bottom = 'auto';
       body.scrollTop = body.scrollHeight;
     } else {
-      panel.style.transform = ''; panel.style.height = '';
+      panel.style.height = ''; panel.style.top = ''; panel.style.bottom = '';
     }
   }
   if (window.visualViewport) {
@@ -144,9 +145,20 @@
   function abrir() {
     if (aberto) return;
     aberto = true;
-    // 🔒 Trava o scroll da página no mobile: sem isso o iOS "empurra" o painel fixo pra trás
-    // do teclado. Com a página travada, o painel fica colado na área visível.
-    if (ehMobile()) { document.documentElement.style.overflow = 'hidden'; document.body.style.overflow = 'hidden'; }
+    // 📊 Conversão: registra a abertura do chat (o CTA-chave "Testar a IA") no GA4/Pixel, se ativos.
+    try {
+      if (typeof window.gtag === 'function') window.gtag('event', 'testar_ia_aberto', { event_category: 'engajamento' });
+      if (typeof window.fbq === 'function') window.fbq('trackCustom', 'TestarIA');
+    } catch (e) {}
+    // 🔒 Scroll-lock REAL no mobile: overflow:hidden não impede o iOS de rolar a página quando o
+    // input recebe foco (é isso que empurra a barra pra trás do teclado). Travar o body com
+    // position:fixed impede esse scroll — o painel fica colado na área visível acima do teclado.
+    if (ehMobile()) {
+      scrollLockY = window.scrollY || window.pageYOffset || 0;
+      const b = document.body;
+      b.style.position = 'fixed'; b.style.top = -scrollLockY + 'px';
+      b.style.left = '0'; b.style.right = '0'; b.style.width = '100%'; b.style.overflow = 'hidden';
+    }
     panel.classList.add('open'); btn.classList.add('aberto'); btn.querySelector('span').textContent = '×';
     ajustarViewport();
     if (!saudou) {
@@ -158,8 +170,12 @@
   function fechar() {
     aberto = false;
     panel.classList.remove('open'); btn.classList.remove('aberto'); btn.querySelector('span').textContent = '🤖';
-    panel.style.transform = ''; panel.style.height = '';
-    document.documentElement.style.overflow = ''; document.body.style.overflow = '';
+    panel.style.height = ''; panel.style.top = ''; panel.style.bottom = '';
+    // Destrava o body e devolve o scroll pra onde estava.
+    const b = document.body;
+    b.style.position = ''; b.style.top = ''; b.style.left = ''; b.style.right = ''; b.style.width = ''; b.style.overflow = '';
+    document.documentElement.style.overflow = '';
+    if (scrollLockY) { window.scrollTo(0, scrollLockY); scrollLockY = 0; }
   }
   function toggle() { aberto ? fechar() : abrir(); }
 

@@ -3,6 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
+
+<!-- ===================== ANALYTICS =====================
+     COLE SEUS 2 IDs ABAIXO. Enquanto tiver "XXXX", fica inerte (não carrega, sem erro).
+     GA4:   crie em analytics.google.com → Admin → Fluxo de dados → copie o "ID de métrica" (G-XXXX).
+     Pixel: crie em business.facebook.com/events_manager → copie o ID (só números).
+================================================================ -->
+<script>
+  window.ANTIX_GA_ID    = 'G-XXXXXXXXXX';       /* ← troque pelo seu ID do Google Analytics 4 */
+  window.ANTIX_PIXEL_ID = 'XXXXXXXXXXXXXXX';    /* ← troque pelo seu ID do Meta Pixel */
+</script>
+<script>
+  /* Google Analytics 4 — só ativa com ID real */
+  if (window.ANTIX_GA_ID && !/X{4}/.test(window.ANTIX_GA_ID)) {
+    var _ga = document.createElement('script'); _ga.async = true;
+    _ga.src = 'https://www.googletagmanager.com/gtag/js?id=' + window.ANTIX_GA_ID;
+    document.head.appendChild(_ga);
+    window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} window.gtag = gtag;
+    gtag('js', new Date()); gtag('config', window.ANTIX_GA_ID);
+  }
+  /* Meta Pixel — só ativa com ID real */
+  if (window.ANTIX_PIXEL_ID && !/X{4}/.test(window.ANTIX_PIXEL_ID)) {
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', window.ANTIX_PIXEL_ID); fbq('track', 'PageView');
+  }
+</script>
+
 <title>Antix IA — IA que qualifica e agenda reuniões no WhatsApp 24h por dia</title>
 <meta name="description" content="A Antix é uma IA que qualifica leads e agenda reuniões pelo WhatsApp 24h por dia, para qualquer nicho B2B. Conversa humanizada e agendamento automático.">
 
@@ -1172,7 +1198,7 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
 </footer>
 
 
-<script src="script.js"></script>
-<script src="widget-chat.js?v=6" defer></script>
+<script src="script.js?v=2"></script>
+<script src="widget-chat.js?v=8" defer></script>
 </body>
 </html>
