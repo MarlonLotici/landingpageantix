@@ -332,7 +332,7 @@ section { padding:120px 60px; }
 .dc-sub { font-size:13px; color:var(--gray); margin-bottom:28px; }
 .dc-bar { height:4px; background:var(--g2); border-radius:2px; margin-bottom:24px; }
 .dc-fill { height:100%; border-radius:2px; background:linear-gradient(90deg,var(--v),var(--cy)); width:0%; transition:width 1.5s 1s ease; }
-.dc-rows { display:flex; flex-direction:column; gap:10px; }
+.dc-rows { display:flex; flex-direction:column; gap:10px; margin-bottom:78px; /* espaço reservado p/ o .desafio-badge não cobrir os valores */ }
 .dc-row { display:flex; justify-content:space-between; font-size:12px; }
 .dc-row span:last-child { color:var(--cy); font-family:'DM Mono',monospace; }
 .desafio-badge {
@@ -869,9 +869,9 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
 
     <div class="reveal" style="position:relative">
    <div class="desafio-card">
-        <div class="dc-label">Cobertura de Atendimento Humano</div>
+        <div class="dc-label">Limite da equipe humana</div>
         <div class="dc-val">8h</div>
-        <div class="dc-sub">Janela diária de resposta com equipe própria</div>
+        <div class="dc-sub">Janela diária de resposta sem apoio de IA — fora disso, ninguém atende</div>
         <div class="dc-bar"><div class="dc-fill" id="dc-fill"></div></div>
         <div class="dc-rows">
           <div class="dc-row">
@@ -889,7 +889,7 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
         </div>
       </div>   <div class="desafio-badge">
         <div class="db-n">3x</div>
-        <div class="db-l">mais cobertura<br>horária por dia</div>
+        <div class="db-l">mais horas<br>de cobertura</div>
       </div>
     </div>
   </div>
@@ -1230,7 +1230,7 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
 </footer>
 
 
-<script src="script.js?v=2"></script>
+<script src="script.js?v=3"></script>
 <script src="widget-chat.js?v=9" defer></script>
 </body>
 </html>
