@@ -31,19 +31,19 @@
   }
 </script>
 
-<title>Antix IA — IA que qualifica e agenda reuniões no WhatsApp 24h por dia</title>
-<meta name="description" content="A Antix é uma IA que qualifica leads e agenda reuniões pelo WhatsApp 24h por dia — para empresas (B2B) e pessoas físicas. Conversa humanizada e agendamento automático.">
+<title>Antix IA — Atendimento e Agendamento no WhatsApp Oficial, 24h por dia</title>
+<meta name="description" content="A Antix é uma IA de atendimento que recebe, tira dúvidas e agenda horários pelo WhatsApp 24h por dia — para clínicas, consultórios, salões e qualquer negócio que atende gente. Canal oficial da Meta, com selo verificado.">
 
 <!-- Open Graph / compartilhamento em WhatsApp e LinkedIn -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Antix IA">
-<meta property="og:title" content="Antix IA — IA que qualifica e agenda reuniões no WhatsApp">
-<meta property="og:description" content="Qualifica leads e agenda reuniões pelo WhatsApp 24h por dia. Conversa humanizada com IA e agendamento no timing certo.">
+<meta property="og:title" content="Antix IA — Atendimento no WhatsApp Oficial, 24h por dia">
+<meta property="og:description" content="Recebe, tira dúvidas e agenda horários pelo WhatsApp 24h por dia. Conversa humanizada, canal oficial da Meta e selo verificado.">
 <meta property="og:url" content="https://antix-ia.com/">
 <meta property="og:image" content="https://antix-ia.com/og-cover.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Antix IA — IA que qualifica e agenda reuniões no WhatsApp">
-<meta name="twitter:description" content="Qualifica leads e agenda reuniões pelo WhatsApp 24h por dia. IA humanizada e agendamento automático.">
+<meta name="twitter:title" content="Antix IA — Atendimento no WhatsApp Oficial, 24h por dia">
+<meta name="twitter:description" content="Recebe, tira dúvidas e agenda horários pelo WhatsApp 24h por dia. IA humanizada, canal oficial da Meta.">
 <meta name="twitter:image" content="https://antix-ia.com/og-cover.png">
 
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" sizes="any">
@@ -206,6 +206,12 @@ nav {
 }
 .bdot { width:6px; height:6px; border-radius:50%; background:var(--gr); animation:blink 1.4s ease-in-out infinite; }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+
+/* ─── SELO VERIFICADO (API Oficial Meta) ─────────────────────── */
+.vbadge { display:inline-flex; flex-shrink:0; vertical-align:middle; }
+.hero-badge-row { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:28px; animation:fadeUp .7s ease both; }
+.hero-badge-row .hero-badge { margin-bottom:0; }
+.hero-badge.alt { color:var(--w); background:rgba(24,119,242,.1); border-color:rgba(24,119,242,.3); }
 
 .hero h1 {
   font-family:'Unbounded',sans-serif;
@@ -683,8 +689,8 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
   </div>
   
   <div class="nav-links">
-    <a href="#como">Operação Colônia</a>
-    <a href="#planos">Níveis de Colônia</a>
+    <a href="#como">Como Funciona</a>
+    <a href="#planos">Planos</a>
   </div>
 
   <a href="#" onclick="antixAbrirChat();return false;" class="nav-cta">Testar a IA →</a>
@@ -695,19 +701,25 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
   <div class="hero-video-overlay"></div>
 
   <div class="hero-content">
-    <div class="hero-badge">
-      <div class="bdot"></div>
-      Colônia Ativa &nbsp;·&nbsp; Escaneando Leads
+    <div class="hero-badge-row">
+      <div class="hero-badge">
+        <div class="bdot"></div>
+        Colônia Ativa &nbsp;·&nbsp; Atendendo agora
+      </div>
+      <div class="hero-badge alt">
+        <svg class="vbadge" viewBox="0 0 22 22" width="14" height="14" aria-hidden="true"><circle cx="11" cy="11" r="11" fill="#1877F2"/><path d="M6.5 11.3l3 3 6-6.4" stroke="#fff" stroke-width="2.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        API Oficial da Meta &nbsp;·&nbsp; Selo Verificado
+      </div>
     </div>
 
     <h1>
-      <span class="h1-line1">Seu time fecha vendas</span>
+      <span class="h1-line1">Seu time atende clientes</span>
       <span class="h1-line2">enquanto uma colônia toda</span>
-      <span class="h1-line3">trabalha pra você.</span>
+      <span class="h1-line3">cuida de cada conversa.</span>
     </h1>
 
     <p class="hero-sub">
-      IA que qualifica seus leads e agenda reuniões pelo WhatsApp 24h por dia, para qualquer nicho B2B. Precisa de mais volume? Adiciona um chip.
+      IA que recebe, tira dúvidas e agenda horários pelo WhatsApp 24h por dia — para clínicas, consultórios, salões e qualquer negócio que vive de atendimento ao cliente. Direto pelo canal oficial da Meta, com selo verificado.
     </p>
 
     <div class="hero-actions">
@@ -715,22 +727,22 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
         🤖 Testar a IA agora →
       </a>
       <a href="#demo" class="btn-ghost magnetic">
-        ▶ Ver Colônia em Ação
+        ▶ Ver a Colônia em Ação
       </a>
     </div>
 
     <div class="hero-stats">
       <div>
-        <div class="stat-n" data-target="80" data-suffix="+">80+</div>
-        <div class="stat-l">disparos/chip (Alta Performance)</div>
-      </div>
-      <div>
         <div class="stat-n" data-target="24" data-suffix="h">24h</div>
-        <div class="stat-l">operação diária</div>
+        <div class="stat-l">atendimento sem pausa</div>
       </div>
       <div>
-        <div class="stat-n">∞</div>
-        <div class="stat-l">chips na colônia</div>
+        <div class="stat-n" data-target="0" data-suffix="s">0s</div>
+        <div class="stat-l">tempo de espera</div>
+      </div>
+      <div>
+        <div class="stat-n">100%</div>
+        <div class="stat-l">canal oficial verificado</div>
       </div>
     </div>
   </div>
@@ -739,41 +751,41 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
 <!-- TICKER -->
 <div class="ticker-wrap">
   <div class="ticker-track">
-    <span class="ticker-item hi">Antix SDR</span>
+    <span class="ticker-item hi">Antix Concierge</span>
     <span class="ticker-item">·</span>
-    <span class="ticker-item">SDR Autônomo</span>
+    <span class="ticker-item">Atendimento Autônomo</span>
     <span class="ticker-item">·</span>
     <span class="ticker-item hi">IA Antix</span>
     <span class="ticker-item">·</span>
     <span class="ticker-item">API Oficial do WhatsApp</span>
     <span class="ticker-item">·</span>
-    <span class="ticker-item hi">SPIN Selling IA</span>
+    <span class="ticker-item hi">Selo Verificado Meta</span>
     <span class="ticker-item">·</span>
-    <span class="ticker-item">Anti-ban Ativo</span>
+    <span class="ticker-item">Agendamento Automático</span>
     <span class="ticker-item">·</span>
-    <span class="ticker-item hi">Qualquer Nicho B2B</span>
+    <span class="ticker-item hi">Clínicas e Consultórios</span>
     <span class="ticker-item">·</span>
-    <span class="ticker-item">Multi-Tenancy</span>
+    <span class="ticker-item">Concierge Pós-venda</span>
     <span class="ticker-item">·</span>
     <span class="ticker-item hi">24h / Dia</span>
     <span class="ticker-item">·</span>
     <span class="ticker-item">Supabase CRM</span>
     <span class="ticker-item">·</span>
-    <span class="ticker-item hi">Antix SDR</span>
+    <span class="ticker-item hi">Antix Concierge</span>
     <span class="ticker-item">·</span>
-    <span class="ticker-item">SDR Autônomo</span>
+    <span class="ticker-item">Atendimento Autônomo</span>
     <span class="ticker-item">·</span>
     <span class="ticker-item hi">IA Antix</span>
     <span class="ticker-item">·</span>
     <span class="ticker-item">API Oficial do WhatsApp</span>
     <span class="ticker-item">·</span>
-    <span class="ticker-item hi">SPIN Selling IA</span>
+    <span class="ticker-item hi">Selo Verificado Meta</span>
     <span class="ticker-item">·</span>
-    <span class="ticker-item">Anti-ban Ativo</span>
+    <span class="ticker-item">Agendamento Automático</span>
     <span class="ticker-item">·</span>
-    <span class="ticker-item hi">Qualquer Nicho B2B</span>
+    <span class="ticker-item hi">Clínicas e Consultórios</span>
     <span class="ticker-item">·</span>
-    <span class="ticker-item">Multi-Tenancy</span>
+    <span class="ticker-item">Concierge Pós-venda</span>
     <span class="ticker-item">·</span>
     <span class="ticker-item hi">24h / Dia</span>
     <span class="ticker-item">·</span>
@@ -789,95 +801,95 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
   </div>
   <div class="nicho-bar" style="display:flex;justify-content:center;align-items:center;gap:48px;flex-wrap:wrap;">
     <div style="display:flex;align-items:center;gap:10px;opacity:.55;transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.55">
+      <span style="font-size:22px">🏥</span>
+      <span style="font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;color:var(--w)">Clínicas</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;opacity:.55;transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.55">
+      <span style="font-size:22px">🩺</span>
+      <span style="font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;color:var(--w)">Consultórios</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;opacity:.55;transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.55">
+      <span style="font-size:22px">💈</span>
+      <span style="font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;color:var(--w)">Salões e Studios</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;opacity:.55;transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.55">
       <span style="font-size:22px">⚡</span>
       <span style="font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;color:var(--w)">Energia</span>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px;opacity:.55;transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.55">
-      <span style="font-size:22px">🏥</span>
-      <span style="font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;color:var(--w)">Saúde</span>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px;opacity:.55;transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.55">
-      <span style="font-size:22px">🏗️</span>
-      <span style="font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;color:var(--w)">Construção</span>
     </div>
     <div style="display:flex;align-items:center;gap:10px;opacity:.55;transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.55">
       <span style="font-size:22px">🛒</span>
       <span style="font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;color:var(--w)">Varejo</span>
     </div>
     <div style="display:flex;align-items:center;gap:10px;opacity:.55;transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.55">
-      <span style="font-size:22px">📦</span>
-      <span style="font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;color:var(--w)">Logística</span>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px;opacity:.55;transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.55">
-      <span style="font-size:22px">💈</span>
+      <span style="font-size:22px">🏗️</span>
       <span style="font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;color:var(--w)">Serviços</span>
     </div>
     <div style="display:flex;align-items:center;gap:10px;background:rgba(124,58,237,.1);border:1px solid var(--bdr);padding:6px 14px;border-radius:100px;">
       <span style="font-size:16px">+</span>
-      <span style="font-family:'DM Mono',sans-serif;font-size:11px;color:var(--vl)">qualquer nicho B2B</span>
+      <span style="font-family:'DM Mono',sans-serif;font-size:11px;color:var(--vl)">qualquer negócio que atende gente</span>
     </div>
   </div>
 </section>
 <section class="desafio" id="desafio">
   <div class="sec-tag">O desafio</div>
-  <h2 class="sec-title reveal">Qualificar em escala<br>sem explodir o custo.</h2>
-  <p class="sec-sub reveal">Todo mês você paga o custo visível: o salário. Poucos fazem a conta real — encargos, benefícios, ferramentas e o lead que chegou fora do horário e não foi respondido. A Antix não substitui seu time: assume o trabalho repetitivo que ele não deveria estar fazendo.</p>
+  <h2 class="sec-title reveal">Atender bem em escala<br>sem explodir o custo.</h2>
+  <p class="sec-sub reveal">Todo mês você paga o custo visível: o salário. Poucos fazem a conta real — encargos, benefícios, ferramentas e o cliente que chamou fora do horário e não foi respondido. A Antix não substitui seu time: assume o atendimento repetitivo que ele não deveria estar fazendo.</p>
 
   <div class="desafio-grid">
     <div class="pain-list reveal">
       <div class="pain-item">
         <div class="pain-num">01</div>
         <div class="pain-text">
-          <h4>Leads respondem fora do horário</h4>
-          <p>A maioria das respostas chega à noite ou no fim de semana. Sem cobertura, o lead esfria.</p>
+          <h4>Clientes chamam fora do horário</h4>
+          <p>A maioria das mensagens chega à noite ou no fim de semana. Sem cobertura, o atendimento vira concorrente perdendo cliente pra quem responde primeiro.</p>
         </div>
       </div>
       <div class="pain-item">
         <div class="pain-num">02</div>
         <div class="pain-text">
-          <h4>Volume limitado por operador</h4>
-          <p>Um time de qualificação tem teto natural. Dobrar o volume significa dobrar o custo fixo.</p>
+          <h4>Volume limitado por atendente</h4>
+          <p>Uma recepção tem teto natural. Um pico de mensagens significa fila de espera e gente desistindo.</p>
         </div>
       </div>
       <div class="pain-item">
         <div class="pain-num">03</div>
         <div class="pain-text">
-          <h4>Personalização impossível em escala</h4>
-          <p>O mesmo script pra padaria e pra indústria. Cada lead pede uma abordagem diferente.</p>
+          <h4>Inconsistência no atendimento</h4>
+          <p>Cada atendente responde de um jeito, em um ritmo diferente. O cliente nunca sabe o que vai encontrar.</p>
         </div>
       </div>
       <div class="pain-item">
         <div class="pain-num">04</div>
         <div class="pain-text">
-          <h4>Custo fixo cresce antes da receita</h4>
-          <p>Contratar antes de converter é o gargalo mais comum de quem escala vendas com time próprio.</p>
+          <h4>Agendamento perdido é receita perdida</h4>
+          <p>Toda consulta ou horário que não foi confirmado a tempo é uma cadeira vazia na agenda do dia.</p>
         </div>
       </div>
     </div>
 
     <div class="reveal" style="position:relative">
    <div class="desafio-card">
-        <div class="dc-label">Teto de Qualificação SDR Humano</div>
-        <div class="dc-val">40</div>
-        <div class="dc-sub">Leads trabalhados por dia com qualidade</div>
+        <div class="dc-label">Cobertura de Atendimento Humano</div>
+        <div class="dc-val">8h</div>
+        <div class="dc-sub">Janela diária de resposta com equipe própria</div>
         <div class="dc-bar"><div class="dc-fill" id="dc-fill"></div></div>
         <div class="dc-rows">
           <div class="dc-row">
-            <span>Colônia SDR — 2 chips</span>
-            <span style="color: var(--vl)">160+ leads/dia</span>
+            <span>Antix — Atendimento Oficial</span>
+            <span style="color: var(--vl)">24h por dia</span>
           </div>
           <div class="dc-row">
             <span>Taxa de Esquecimento (Follow-up)</span>
             <span style="color: var(--gr)">0%</span>
           </div>
           <div class="dc-row">
-            <span>Custo Marginal por Nova Abordagem</span>
+            <span>Custo Marginal por Nova Conversa</span>
             <span style="color: var(--gr)">R$ 0,00</span>
           </div>
         </div>
       </div>   <div class="desafio-badge">
-        <div class="db-n">4x</div>
-        <div class="db-l">mais leads/dia<br>com 2 chips</div>
+        <div class="db-n">3x</div>
+        <div class="db-l">mais cobertura<br>horária por dia</div>
       </div>
     </div>
   </div>
@@ -886,33 +898,33 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
 <!-- COMO FUNCIONA -->
 <section class="como" id="como">
   <div class="sec-tag">Fluxo</div>
-  <h2 class="sec-title reveal">Do radar ao<br>agendamento.</h2>
-  <p class="sec-sub reveal">Quatro etapas automatizadas. Você entra só pra fechar.</p>
+  <h2 class="sec-title reveal">Do primeiro "oi"<br>ao agendamento.</h2>
+  <p class="sec-sub reveal">Quatro etapas automatizadas. Você entra só quando quiser.</p>
 
   <div class="steps-line">
     <div class="step reveal">
       <div class="step-circle">01</div>
-      <div class="step-ico">🎯</div>
-      <h3>Radar de leads</h3>
-      <p>Coleta empresas no Google Maps por região e nicho — nome, telefone e endereço de cada negócio.</p>
+      <div class="step-ico">💬</div>
+      <h3>Cliente chama no WhatsApp</h3>
+      <p>Pelo número oficial da sua empresa — qualquer horário, qualquer dia da semana.</p>
     </div>
     <div class="step reveal">
       <div class="step-circle">02</div>
-      <div class="step-ico">🧹</div>
-      <h3>Enriquecimento</h3>
-      <p>Limpeza e validação dos dados: números normalizados e conferidos antes do primeiro contato.</p>
+      <div class="step-ico">🧠</div>
+      <h3>IA entende a intenção</h3>
+      <p>Dúvida, orçamento, remarcação ou urgência — a conversa é direcionada certo desde a primeira resposta.</p>
     </div>
     <div class="step reveal">
       <div class="step-circle">03</div>
-      <div class="step-ico">💬</div>
+      <div class="step-ico">🗣️</div>
       <h3>Conversa humanizada</h3>
-      <p>A nossa IA conduz a qualificação com "ouvido paciente": espera o lead terminar de escrever e responde com ritmo humano — raramente corta no meio de uma frase.</p>
+      <p>A nossa IA atende com "ouvido paciente": espera o cliente terminar de escrever e responde com ritmo humano — raramente corta no meio de uma frase.</p>
     </div>
     <div class="step reveal">
       <div class="step-circle">04</div>
       <div class="step-ico">📅</div>
-      <h3>Agendamento</h3>
-      <p>Quando o interesse é real, o link de agendamento vai no timing certo — nunca cedo demais.</p>
+      <h3>Agendamento ou encaminhamento</h3>
+      <p>Marca o horário direto na sua agenda ou encaminha pra equipe certa, sem fila de espera.</p>
     </div>
   </div>
 
@@ -922,19 +934,19 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
     <div class="td-grid">
       <div class="td-item">
         <h4>🗄️ Ouvido paciente</h4>
-        <p>Se o lead manda três mensagens seguidas, a IA espera e responde a todas de uma vez — não atropela a conversa como um chatbot comum.</p>
+        <p>Se o cliente manda três mensagens seguidas, a IA espera e responde a todas de uma vez — não atropela a conversa como um chatbot comum.</p>
       </div>
       <div class="td-item">
         <h4>⏱️ Jitter em camadas</h4>
-        <p>Tempo de "digitação" proporcional ao texto, pausas de cold-start e intervalos de 3 a 6 minutos entre follow-ups. Nada acontece em ritmo robótico.</p>
+        <p>Tempo de "digitação" proporcional ao texto e pausas naturais entre mensagens. Nada acontece em ritmo robótico.</p>
       </div>
       <div class="td-item">
-        <h4>🛡️ Anti-ban ativo</h4>
-        <p>Prioridade tática entre chips, micro-pausas programadas e descarte de números inexistentes sem penalizar a operação.</p>
+        <h4><svg class="vbadge" viewBox="0 0 22 22" width="15" height="15" aria-hidden="true" style="margin-right:4px;vertical-align:-2px"><circle cx="11" cy="11" r="11" fill="#1877F2"/><path d="M6.5 11.3l3 3 6-6.4" stroke="#fff" stroke-width="2.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Canal oficial da Meta</h4>
+        <p>Número com selo verificado, direto na API oficial do WhatsApp Business — o cliente vê que está falando com um canal legítimo da sua empresa.</p>
       </div>
       <div class="td-item">
         <h4>🎙️ Áudio humanizado</h4>
-        <p>Para objeções críticas ("é seguro?", "como funciona?"), a IA responde com áudio em voz natural quando faz sentido.</p>
+        <p>Para dúvidas críticas ("é seguro?", "como funciona?"), a IA responde com áudio em voz natural quando faz sentido.</p>
       </div>
     </div>
   </div>
@@ -942,30 +954,30 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
 
 <!-- RESULTADOS -->
 <section class="resultados">
-  <div class="sec-tag">Métricas da Colônia</div>
-  <h2 class="sec-title reveal">Escala linear.<br>Custo fixo.</h2>
-  <p class="sec-sub reveal" style="margin-bottom:48px;">Cada soldado novo adiciona dezenas de conversas qualificadas por dia ao seu pipeline. Sem contratar, sem treinar, sem esperar.</p>
+  <div class="sec-tag">Métricas de Atendimento</div>
+  <h2 class="sec-title reveal">Atendimento constante.<br>Custo fixo.</h2>
+  <p class="sec-sub reveal" style="margin-bottom:48px;">Cada cliente que chama é atendido na hora, sem fila e sem depender de plantão. Sem contratar, sem treinar, sem esperar.</p>
 
   <div class="metricas">
     <div class="metrica reveal">
-      <div class="m-n" data-target="80" data-suffix="+">80<sup>+</sup></div>
+      <div class="m-n" data-target="100" data-suffix="%">100<sup>%</sup></div>
       <div class="m-label">
-        <strong>Conversas por chip/dia</strong>
-        Cadência com jitter humano. 2 chips = 160+, 5 chips = 400+ — segurança total contra ban.
+        <strong>Conversas respondidas na hora</strong>
+        Nenhum cliente espera em fila. A IA responde no mesmo instante, 24h por dia.
       </div>
     </div>
     <div class="metrica reveal">
       <div class="m-n" data-target="24" data-suffix="h">24<sup>h</sup></div>
       <div class="m-label">
         <strong>Cobertura diária</strong>
-        24 horas por dia. Sua colônia trabalha enquanto a concorrência dorme.
+        24 horas por dia. Sua recepção atende enquanto a concorrência está fechada.
       </div>
     </div>
     <div class="metrica reveal">
       <div class="m-n" data-prefix="" data-target="0">0</div>
       <div class="m-label">
-        <strong>Custo Marginal por Escala</strong>
-        O volume cresce, a força da colônia cresce, mas seu custo base permanece travado.
+        <strong>Custo Marginal por Nova Conversa</strong>
+        O volume de atendimento cresce, mas seu custo base permanece travado.
       </div>
     </div>
   </div>
@@ -975,12 +987,12 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
 
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;margin-bottom:36px;">
       <div>
-        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gray);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Simulador de Força Operacional</div>
-        <div style="font-family:'Unbounded',sans-serif;font-size:20px;font-weight:800;letter-spacing:-1px;">Qual o tamanho da sua colônia?</div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gray);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Simulador de Atendimento</div>
+        <div style="font-family:'Unbounded',sans-serif;font-size:20px;font-weight:800;letter-spacing:-1px;">Quantas conversas sua recepção recebe por dia?</div>
       </div>
       <div style="display:flex;align-items:center;gap:16px;">
         <button id="chip-minus" style="width:40px;height:40px;border-radius:8px;background:var(--g2);border:1px solid var(--bdr);color:var(--w);font-size:20px;cursor:pointer;font-family:'Unbounded',sans-serif;transition:all .2s;" onmouseover="this.style.borderColor='var(--vl)'" onmouseout="this.style.borderColor='var(--bdr)'">−</button>
-        <div id="chip-count" style="font-family:'DM Mono',monospace;font-size:48px;font-weight:500;color:var(--cy);letter-spacing:-3px;min-width:60px;text-align:center;">2</div>
+        <div id="chip-count" style="font-family:'DM Mono',monospace;font-size:48px;font-weight:500;color:var(--cy);letter-spacing:-3px;min-width:80px;text-align:center;">50</div>
         <button id="chip-plus" style="width:40px;height:40px;border-radius:8px;background:var(--g2);border:1px solid var(--bdr);color:var(--w);font-size:20px;cursor:pointer;font-family:'Unbounded',sans-serif;transition:all .2s;" onmouseover="this.style.borderColor='var(--vl)'" onmouseout="this.style.borderColor='var(--bdr)'">+</button>
       </div>
     </div>
@@ -988,15 +1000,15 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2px;border-radius:8px;overflow:hidden;">
       <div style="background:rgba(13,13,40,.7);padding:20px 18px;">
         <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--gray);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;">Conversas/dia</div>
-        <div id="sc-disparos" style="font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--cy);letter-spacing:-2px;">160+</div>
+        <div id="sc-disparos" style="font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--cy);letter-spacing:-2px;">50</div>
       </div>
       <div style="background:rgba(13,13,40,.7);padding:20px 18px;">
         <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--gray);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;">Conversas/mês</div>
-        <div id="sc-mes" style="font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--vl);letter-spacing:-2px;">4.800+</div>
+        <div id="sc-mes" style="font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--vl);letter-spacing:-2px;">1.500</div>
       </div>
       <div style="background:rgba(13,13,40,.7);padding:20px 18px;">
-        <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--gray);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;">Horas-chip / dia</div>
-        <div id="sc-horas" style="font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--gr);letter-spacing:-2px;">34h</div>
+        <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--gray);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;">Horas economizadas/mês</div>
+        <div id="sc-horas" style="font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--gr);letter-spacing:-2px;">100h</div>
       </div>
       <div style="background:rgba(255,140,0,.08);padding:20px 18px;border:1px solid var(--bdr);">
         <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--vl);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;">Novas Contratações</div>
@@ -1004,15 +1016,15 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
       </div>
     </div>
 
-    <div id="sc-msg" style="margin-top:20px;font-size:13px;color:rgba(238,242,255,.5);font-style:italic;padding:0 2px;">O crescimento operacional não exige recrutamento. A IA herda as habilidades no instante da ativação.</div>
+    <div id="sc-msg" style="margin-top:20px;font-size:13px;color:rgba(238,242,255,.5);font-style:italic;padding:0 2px;">O crescimento do atendimento não exige recrutamento. A IA responde no mesmo padrão, da primeira à milésima conversa do mês.</div>
   </div>
 </section>
 
 <!-- DEMO -->
 <section class="demo" id="demo">
   <div class="sec-tag">Exemplo de conversa</div>
-  <h2 class="sec-title reveal">Veja a IA<br>conduzindo o lead.</h2>
-  <p class="sec-sub reveal">Simulação baseada em conversas reais de qualificação. Repare no ritmo: a IA lê, espera e responde como gente.</p>
+  <h2 class="sec-title reveal">Veja a IA<br>atendendo o cliente.</h2>
+  <p class="sec-sub reveal">Simulação baseada em conversas reais de atendimento. Repare no ritmo: a IA lê, espera e responde como gente.</p>
 
   <div class="demo-grid">
     <div class="reveal">
@@ -1020,8 +1032,11 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
         <div class="phone-bar">
           <div class="ph-av">⚡</div>
           <div>
-            <div class="ph-name">Antix · Assistente</div>
-            <div class="ph-status">exemplo ilustrativo</div>
+            <div class="ph-name" style="display:flex;align-items:center;gap:5px;">
+              Antix · Assistente
+              <svg class="vbadge" viewBox="0 0 22 22" width="13" height="13" aria-hidden="true"><circle cx="11" cy="11" r="11" fill="#1877F2"/><path d="M6.5 11.3l3 3 6-6.4" stroke="#fff" stroke-width="2.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="ph-status">exemplo ilustrativo · canal oficial verificado</div>
           </div>
         </div>
         <div class="chat-area" id="chat-area">
@@ -1034,29 +1049,29 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
       <div class="dp">
         <div class="dp-ico">🎯</div>
         <div>
-          <h4>Isca que qualifica antes de vender</h4>
-          <p>A primeira pergunta detecta se o lead tem o problema. Nenhuma apresentação antes do diagnóstico.</p>
+          <h4>Entende a intenção na primeira mensagem</h4>
+          <p>Agendamento, dúvida ou remarcação — a IA direciona a conversa certa desde a primeira resposta, sem fazer o cliente repetir.</p>
         </div>
       </div>
       <div class="dp">
         <div class="dp-ico">🧮</div>
         <div>
-          <h4>Cálculo de perda personalizado</h4>
-          <p>A IA usa o valor que o lead informou para mostrar a perda exata — não uma estimativa genérica.</p>
+          <h4>Contexto real do seu negócio</h4>
+          <p>A IA já sabe seus horários, preços e regras — responde com informação exata, não uma estimativa genérica.</p>
         </div>
       </div>
       <div class="dp">
         <div class="dp-ico">⏱️</div>
         <div>
-          <h4>Timing cirúrgico do Calendly</h4>
-          <p>O link de agendamento só aparece quando o lead demonstra interesse real. Nunca cedo demais.</p>
+          <h4>Agendamento direto na sua agenda</h4>
+          <p>Quando o cliente confirma, o horário já entra na sua agenda real — sem link externo, sem fricção.</p>
         </div>
       </div>
       <div class="dp">
         <div class="dp-ico">🎤</div>
         <div>
-          <h4>Áudios para objeções críticas</h4>
-          <p>"É seguro?", "tem obra?", "como funciona?" — a IA responde com PTT humanizado.</p>
+          <h4>Áudios para dúvidas críticas</h4>
+          <p>"É seguro?", "vocês atendem convênio?", "como funciona?" — a IA responde com PTT humanizado.</p>
         </div>
       </div>
     </div>
@@ -1071,13 +1086,8 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
   <div class="comp-table reveal">
     <div class="comp-head">
       <div class="comp-head-cell">Métrica</div>
-      <div class="comp-head-cell">Operação tradicional</div>
-      <div class="comp-head-cell active">Antix SDR</div>
-    </div>
-    <div class="comp-row">
-      <div class="comp-cell metric">Leads / dia</div>
-      <div class="comp-cell old">40 leads</div>
-      <div class="comp-cell new cy">160+ leads (2 chips)</div>
+      <div class="comp-head-cell">Atendimento tradicional</div>
+      <div class="comp-head-cell active">Antix Atendimento</div>
     </div>
     <div class="comp-row">
       <div class="comp-cell metric">Cobertura diária</div>
@@ -1085,19 +1095,29 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
       <div class="comp-cell new cy">24h / dia</div>
     </div>
     <div class="comp-row">
+      <div class="comp-cell metric">Tempo de 1ª resposta</div>
+      <div class="comp-cell old">Minutos a horas (fila)</div>
+      <div class="comp-cell new cy">Imediato</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell metric">Canal</div>
+      <div class="comp-cell old">WhatsApp pessoal / não verificado</div>
+      <div class="comp-cell new cy">API Oficial Meta + Selo Verificado</div>
+    </div>
+    <div class="comp-row">
       <div class="comp-cell metric">Custo base da operação</div>
       <div class="comp-cell old">Sobe a cada contratação</div>
       <div class="comp-cell new">Travado (Independente do volume)</div>
     </div>
     <div class="comp-row">
-      <div class="comp-cell metric">Personalização</div>
-      <div class="comp-cell old">Manual, lenta</div>
-      <div class="comp-cell new">Automática por lead</div>
+      <div class="comp-cell metric">Consistência no atendimento</div>
+      <div class="comp-cell old">Varia por atendente e por turno</div>
+      <div class="comp-cell new">Mesmo padrão, 24h por dia</div>
     </div>
     <div class="comp-row">
       <div class="comp-cell metric">Para dobrar o volume</div>
       <div class="comp-cell old">Contrata, treina, espera 30 dias</div>
-      <div class="comp-cell new cy">Adiciona um chip — ativo em 24h</div>
+      <div class="comp-cell new cy">A IA já está pronta — sem fila nova</div>
     </div>
   </div>
 </section>
@@ -1106,65 +1126,74 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
 <div class="trust-strip">
   <div class="trust-item"><span class="trust-ico">⚙️</span> Onboarding em 48h</div>
   <span class="trust-sep">·</span>
-  <div class="trust-item"><span class="trust-ico">🔓</span> Sem fidelidade</div>
+  <div class="trust-item">
+    <svg class="vbadge" viewBox="0 0 22 22" width="15" height="15" aria-hidden="true"><circle cx="11" cy="11" r="11" fill="#1877F2"/><path d="M6.5 11.3l3 3 6-6.4" stroke="#fff" stroke-width="2.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    API Oficial Meta + Selo Verificado
+  </div>
   <span class="trust-sep">·</span>
-  <div class="trust-item"><span class="trust-ico">✋</span> Cancela quando quiser</div>
+  <div class="trust-item"><span class="trust-ico">📅</span> Planos a partir de 3 meses</div>
   <span class="trust-sep">·</span>
   <div class="trust-item"><span class="trust-ico">🛡️</span> Dados tratados conforme a LGPD</div>
 </div>
 
 <!-- PLANOS -->
 <section class="planos" id="planos">
-  <div class="sec-tag">Níveis de Operação</div>
-  <h2 class="sec-title reveal">Escolha a força<br>da sua colônia.</h2>
+  <div class="sec-tag">Planos de Atendimento</div>
+  <h2 class="sec-title reveal">A mesma IA.<br>Você escolhe o prazo.</h2>
+  <p class="sec-sub reveal" style="margin-bottom:0;">Atendimento 24h, canal oficial da Meta e agendamento automático — igual nos três planos. O que muda é o prazo de contrato: quanto maior o compromisso, menor a parcela mensal.</p>
 
   <div class="planos-grid">
     <div class="plano reveal">
       <div class="plano-name">Formiga Operária</div>
-      <div class="plano-desc">IA de atendimento receptivo para WhatsApp. Recebe, qualifica e encaminha os leads que chegam até você.</div>
+      <div class="plano-desc">O ponto de entrada pra colocar a IA de atendimento no ar e sentir a operação funcionando.</div>
       <div class="plano-price">
-        <div class="plano-val">Receptivo</div>
-        <div class="plano-per">Foco em triagem e suporte</div>
+        <div class="plano-val"><span class="rs">R$</span>750<span style="font-size:14px;color:var(--gray);font-weight:400;letter-spacing:0;">/mês</span></div>
+        <div class="plano-per">3x de R$750 · contrato de 3 meses</div>
       </div>
       <div class="plano-feats">
         <div class="pf"><span class="pf-ck">✓</span>Atendimento 24h no WhatsApp</div>
-        <div class="pf"><span class="pf-ck">✓</span>Qualificação automática de inbound</div>
-        <div class="pf"><span class="pf-ck">✓</span>Transferência inteligente para humanos</div>
-        <div class="pf"><span class="pf-ck">✓</span>CRM e histórico integrado</div>
+        <div class="pf"><span class="pf-ck">✓</span>API Oficial da Meta + Selo Verificado</div>
+        <div class="pf"><span class="pf-ck">✓</span>Agendamento automático na sua agenda</div>
+        <div class="pf"><span class="pf-ck">✓</span>Concierge pós-venda (não vende pra quem já é cliente)</div>
+        <div class="pf"><span class="pf-ck">✓</span>CRM e histórico de conversas integrado</div>
+      </div>
+      <a href="#" onclick="antixAbrirChat();return false;" class="btn-plano">Testar a IA →</a>
+    </div>
+
+    <div class="plano reveal">
+      <div class="plano-name">Formiga Soldado</div>
+      <div class="plano-desc">Compromisso de meio ano, parcela menor — pra quem já decidiu que atendimento 24h é parte fixa da operação.</div>
+      <div class="plano-price">
+        <div class="plano-val"><span class="rs">R$</span>650<span style="font-size:14px;color:var(--gray);font-weight:400;letter-spacing:0;">/mês</span></div>
+        <div class="plano-per">6x de R$650 · contrato de 6 meses</div>
+      </div>
+      <div class="plano-feats">
+        <div class="pf"><span class="pf-ck">✓</span>Atendimento 24h no WhatsApp</div>
+        <div class="pf"><span class="pf-ck">✓</span>API Oficial da Meta + Selo Verificado</div>
+        <div class="pf"><span class="pf-ck">✓</span>Agendamento automático na sua agenda</div>
+        <div class="pf"><span class="pf-ck">✓</span>Concierge pós-venda (não vende pra quem já é cliente)</div>
+        <div class="pf"><span class="pf-ck">✓</span>CRM e histórico de conversas integrado</div>
       </div>
       <a href="#" onclick="antixAbrirChat();return false;" class="btn-plano">Testar a IA →</a>
     </div>
 
     <div class="plano feat reveal">
-      <div class="plano-badge">Motor Principal</div>
-      <div class="plano-name">Formiga Soldado</div>
-      <div class="plano-desc">SDR Autônomo de qualificação ativa. Radar de contatos, abordagem estratégica, SPIN Selling e agendamento automático.</div>
+      <div class="plano-badge">Melhor Investimento</div>
+      <div class="plano-name">Formiga Rainha</div>
+      <div class="plano-desc">Compromisso de 12 meses, a menor parcela mensal — e sua empresa ganha presença própria na web, de brinde.</div>
       <div class="plano-price">
-        <div class="plano-val">Ativo</div>
-        <div class="plano-per">Foco em caça e agendamento</div>
+        <div class="plano-val"><span class="rs">R$</span>450<span style="font-size:14px;color:var(--gray);font-weight:400;letter-spacing:0;">/mês</span></div>
+        <div class="plano-per">12x de R$450 · contrato de 12 meses</div>
       </div>
       <div class="plano-feats">
-        <div class="pf"><span class="pf-ck">✓</span>Radar de leads por cidade e nicho</div>
-        <div class="pf"><span class="pf-ck">✓</span>Disparo multi-chip com Jitter humano</div>
-        <div class="pf"><span class="pf-ck">✓</span>SPIN Selling com IA de Elite</div>
-        <div class="pf"><span class="pf-ck">✓</span>Áudios gerados para objeções críticas</div>
-        <div class="pf"><span class="pf-ck">✓</span>Anti-ban e aquecimento integrados</div>
+        <div class="pf"><span class="pf-ck">✓</span>Atendimento 24h no WhatsApp</div>
+        <div class="pf"><span class="pf-ck">✓</span>API Oficial da Meta + Selo Verificado</div>
+        <div class="pf"><span class="pf-ck">✓</span>Agendamento automático na sua agenda</div>
+        <div class="pf"><span class="pf-ck">✓</span>Concierge pós-venda (não vende pra quem já é cliente)</div>
+        <div class="pf"><span class="pf-ck">✓</span>CRM e histórico de conversas integrado</div>
       </div>
-      <a href="#" onclick="antixAbrirChat();return false;" class="btn-plano">Testar a IA →</a>
-    </div>
-
-    <div class="plano reveal">
-      <div class="plano-name">Formiga-Rainha</div>
-      <div class="plano-desc">Operação Absoluta. Qualificação, atendimento e controle central de todo o ecossistema de vendas da empresa.</div>
-      <div class="plano-price">
-        <div class="plano-val">Ecossistema</div>
-        <div class="plano-per">Comando central da operação</div>
-      </div>
-      <div class="plano-feats">
-        <div class="pf"><span class="pf-ck">✓</span>Operária + Soldado trabalhando juntos</div>
-        <div class="pf"><span class="pf-ck">✓</span>Farm IA — retenção e upsell da base</div>
-        <div class="pf"><span class="pf-ck">✓</span>Onboarding técnico dedicado</div>
-        <div class="pf"><span class="pf-ck">✓</span>Acompanhamento de métricas avançado</div>
+      <div style="margin:-6px 0 20px;padding:13px 14px;background:rgba(255,140,0,.1);border:1px solid var(--bdr);border-radius:8px;font-size:12px;line-height:1.55;color:var(--w);">
+        🎁 <strong>Bônus de fechamento:</strong> site institucional personalizado da sua empresa, com a IA de atendimento já integrada.
       </div>
       <a href="#" onclick="antixAbrirChat();return false;" class="btn-plano">Testar a IA →</a>
     </div>
@@ -1174,8 +1203,8 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
 <!-- CTA FINAL -->
 <section class="cta-final" id="agendar">
   <div class="sec-tag" style="justify-content:center">Próximo passo</div>
-  <h2>Sua operação pronta<br>para <span>escalar</span>.</h2>
-  <p>Consultoria gratuita de 20 minutos. Abrimos o simulador com os dados da sua operação em tempo real.</p>
+  <h2>Seu atendimento pronto<br>para <span>nunca parar</span>.</h2>
+  <p>Consultoria gratuita de 20 minutos. Abrimos o simulador com os dados do seu negócio em tempo real.</p>
   <div class="cta-actions">
     <a href="#" onclick="antixAbrirChat();return false;" class="btn-primary magnetic" style="font-size:13px;padding:17px 36px">
       🤖 Testar a IA agora →
@@ -1196,7 +1225,7 @@ footer p { font-size:12px; color:var(--gray); font-family:'DM Mono',monospace; }
     <a href="https://wa.me/554898204961" target="_blank" rel="noopener">WhatsApp</a>
     <a href="privacidade.html">Privacidade</a>
   </div>
-  <p>© 2026 Antix IA — Automação de Vendas B2B</p>
+  <p>© 2026 Antix IA — Atendimento Inteligente no WhatsApp Oficial</p>
   <p>Antix IA é operada por Marlon Lotici, CNPJ 53.565.212/0001-82</p>
 </footer>
 

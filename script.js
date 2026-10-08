@@ -311,13 +311,12 @@ function initChat() {
   const LOOP_PAUSE = 3800;
 
   const messages = [
-    { text: 'Opa João! Sou o Marlon, consultor de energia. Pergunta direta: o <b>Bar do João</b> já tem algum desconto fixo na conta de luz todo mês?', type: 'in',  delay: 400  },
-    { text: 'Não, pago normal pela Energisa mesmo',                                                                                                     type: 'out', delay: 2100 },
-    { text: 'É exatamente esse caso que a gente resolve. Até 25% de desconto fixo todo mês — zero obra, zero investimento.',                            type: 'in',  delay: 3600 },
-    { text: 'Quanto sai a conta de luz aí por mês em média?',                                                                                           type: 'in',  delay: 5300 },
-    { text: 'uns R$ 1.200',                                                                                                                              type: 'out', delay: 6700 },
-    { text: 'São R$300 que poderiam ficar no caixa todo mês. Em um ano, quase R$3.600 — sem mudar nada na operação.',                                   type: 'in',  delay: 8200 },
-    { text: 'São só 20 min de consultoria pra mostrar o gráfico exato com os dados do Bar do João. Fica melhor amanhã de manhã ou à tarde? ☀️',         type: 'in',  delay: 10400 },
+    { text: 'Oi! Vocês têm horário disponível essa semana?',                                                                        type: 'out', delay: 400   },
+    { text: 'Oi, tudo bem? 😊 Essa semana eu tenho quinta às 14h ou sexta às 10h — qual fica melhor pra você?',                     type: 'in',  delay: 2000  },
+    { text: 'quinta às 14h fica bom pra mim',                                                                                        type: 'out', delay: 4200  },
+    { text: 'Perfeito! Só confirmando: é a sua primeira vez aqui ou já é cliente?',                                                  type: 'in',  delay: 5600  },
+    { text: 'primeira vez',                                                                                                          type: 'out', delay: 7600  },
+    { text: 'Anotado ✅ Já reservei quinta às 14h pra você. Vou te mandar um lembrete 1h antes do horário. Precisa de mais alguma coisa?', type: 'in', delay: 8900 },
   ];
 
   let timeouts = [];
@@ -603,44 +602,44 @@ document.addEventListener('DOMContentLoaded', () => {
   initChat();
   initMagnetic();
   initDcFill();
-  initChipScaler();
+  initAttendanceScaler();
   initExitToast();
 });
 
-// ─── 14. SIMULADOR DE FORÇA OPERACIONAL ──────────────────────
-function initChipScaler() {
+// ─── 14. SIMULADOR DE ATENDIMENTO ─────────────────────────────
+function initAttendanceScaler() {
   const btnMinus = document.getElementById('chip-minus');
   const btnPlus = document.getElementById('chip-plus');
   const countEl = document.getElementById('chip-count');
-  
-  const dispDia = document.getElementById('sc-disparos');
-  const dispMes = document.getElementById('sc-mes');
-  const horasCont = document.getElementById('sc-horas'); // Novo ID que colocamos no HTML
+
+  const diaEl   = document.getElementById('sc-disparos');
+  const mesEl   = document.getElementById('sc-mes');
+  const horasEl = document.getElementById('sc-horas');
 
   if (!btnMinus || !btnPlus) return;
 
-  let chips = 2;
-  const disparosPorChip = 80; // A sua meta de alta performance
+  const STEP = 10, MIN = 10, MAX = 500;
+  const MIN_POUPADOS_POR_CONVERSA = 4; // minutos de atendimento humano economizados por conversa automatizada
+  let conversas = 50;
 
   function update() {
-    countEl.textContent = chips;
-    dispDia.textContent = (chips * disparosPorChip) + '+';
-    // 30 dias no mês
-    dispMes.textContent = (chips * disparosPorChip * 30).toLocaleString('pt-BR') + '+';
-    // Cada chip equivale a 17h de trabalho de um SDR humano (horas-chip)
-    if(horasCont) horasCont.textContent = (chips * 17) + 'h';
+    countEl.textContent = conversas;
+    diaEl.textContent   = conversas;
+    mesEl.textContent    = (conversas * 30).toLocaleString('pt-BR');
+    const horasMes = Math.round((conversas * 30 * MIN_POUPADOS_POR_CONVERSA) / 60);
+    if (horasEl) horasEl.textContent = horasMes + 'h';
   }
 
   btnMinus.addEventListener('click', () => {
-    if (chips > 1) {
-      chips--;
+    if (conversas > MIN) {
+      conversas -= STEP;
       update();
     }
   });
 
   btnPlus.addEventListener('click', () => {
-    if (chips < 50) { // Limite de segurança do simulador
-      chips++;
+    if (conversas < MAX) {
+      conversas += STEP;
       update();
     }
   });
