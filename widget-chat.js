@@ -6,9 +6,9 @@
 (function () {
   // 🔧 URL do backend (Railway) que expõe POST /api/web-chat.
   const ANTIX_API = 'https://antix.up.railway.app';
-  // 🔧 WhatsApp da Sofia (só dígitos, com DDI 55). Se o chat não abrir certo, pode ser o 9º
-  // dígito — nesse caso troque por 5548998204961.
-  const ANTIX_WHATSAPP = '554898204961';
+  // 🔧 WhatsApp da Sofia / Chip Kau (só dígitos, com DDI 55). +55 48 9820-3038 — confirmado
+  // como o número real da Cloud API oficial da Meta (2026-10-09).
+  const ANTIX_WHATSAPP = '554898203038';
 
   // sessão persistente por visitante (mantém o histórico entre mensagens)
   let sessionId = localStorage.getItem('antix_chat_sid');
@@ -19,7 +19,9 @@
 
   const AMBAR = '#F59E0B';
   const css = `
-  #antix-chat-btn{position:fixed;right:20px;bottom:20px;z-index:99998;height:56px;padding:0 20px;border-radius:999px;
+  /* Botão flutuante removido a pedido — os 3 CTAs do hero/CTA-final + o teaser proativo já
+     cobrem a entrada no chat; o launcher fixo ficava redundante/"poluído" ao lado do teaser. */
+  #antix-chat-btn{display:none !important;position:fixed;right:20px;bottom:20px;z-index:99998;height:56px;padding:0 20px;border-radius:999px;
     background:linear-gradient(135deg,#D97706,${AMBAR});border:none;cursor:pointer;box-shadow:0 8px 28px rgba(245,158,11,.45);
     display:flex;align-items:center;gap:9px;font-size:14px;font-weight:900;color:#111;font-family:'DM Sans',system-ui,sans-serif;
     text-transform:uppercase;letter-spacing:.03em;transition:transform .15s;animation:antixPulse 2.6s infinite}
@@ -28,7 +30,7 @@
   #antix-chat-btn .acp-btn-label{white-space:nowrap}
   #antix-chat-btn.aberto .acp-btn-label{display:none}
   @keyframes antixPulse{0%,100%{box-shadow:0 8px 28px rgba(245,158,11,.45)}50%{box-shadow:0 8px 34px rgba(245,158,11,.75)}}
-  #antix-chat-panel{position:fixed;right:20px;bottom:88px;z-index:99999;width:370px;max-width:calc(100vw - 32px);
+  #antix-chat-panel{position:fixed;right:20px;bottom:20px;z-index:99999;width:370px;max-width:calc(100vw - 32px);
     height:540px;max-height:calc(100vh - 120px);background:#0d0d0f;border:1px solid rgba(255,255,255,.1);
     border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.5);display:none;flex-direction:column;overflow:hidden;
     font-family:'DM Sans',system-ui,sans-serif}
@@ -65,7 +67,7 @@
   #antix-chat-btn.tem-badge .acp-badge{display:flex}
   #antix-chat-btn.aberto .acp-badge{display:none}
   /* 💬 Teaser proativo (notificação da Sofia) */
-  #antix-teaser{position:fixed;right:20px;bottom:88px;z-index:99997;width:272px;max-width:calc(100vw - 40px);
+  #antix-teaser{position:fixed;right:20px;bottom:20px;z-index:99997;width:272px;max-width:calc(100vw - 40px);
     background:#0d0d0f;border:1px solid rgba(255,255,255,.1);border-radius:16px 16px 4px 16px;
     box-shadow:0 14px 42px rgba(0,0,0,.55);display:none;overflow:hidden;cursor:pointer;
     font-family:'DM Sans',system-ui,sans-serif}
@@ -85,7 +87,7 @@
   @media (max-width:480px){
     #antix-chat-panel{right:0;left:0;top:0;bottom:auto;width:100%;max-width:100%;height:100dvh;max-height:none;border-radius:0}
     #antix-chat-btn{right:14px;bottom:14px;height:50px;padding:0 16px;font-size:13px}
-    #antix-teaser{right:14px;bottom:74px;width:248px}
+    #antix-teaser{right:14px;bottom:14px;width:248px}
   }
   `;
   const style = document.createElement('style'); style.textContent = css; document.head.appendChild(style);
@@ -306,8 +308,9 @@
     if (e.target.closest('.act-x')) { e.stopPropagation(); esconderTeaser(true); return; }
     esconderTeaser(true); abrir();
   });
-  // Dispara o teaser ~7s após carregar (tempo de ler o hero), só se ainda não viu nesta sessão.
+  // Dispara o teaser ~14s após carregar (dá tempo de olhar o site antes do convite), só se ainda
+  // não viu nesta sessão.
   if (!sessionStorage.getItem('antix_teaser_visto')) {
-    setTimeout(mostrarTeaser, 7000);
+    setTimeout(mostrarTeaser, 14000);
   }
 })();
