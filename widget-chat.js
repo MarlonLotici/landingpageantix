@@ -58,19 +58,58 @@
   .acp-send:disabled{opacity:.5;cursor:default}
   .acp-privacy{padding:6px 12px 10px;text-align:center;font-size:10px;color:rgba(255,255,255,.3);flex-shrink:0;background:#0d0d0f}
   .acp-privacy a{color:rgba(255,255,255,.45);text-decoration:underline}
+  /* 🔴 Badge "1" de notificação no launcher (some quando o chat abre) */
+  #antix-chat-btn .acp-badge{position:absolute;top:-5px;right:-3px;min-width:19px;height:19px;padding:0 5px;border-radius:999px;
+    background:#25D366;color:#fff;font-size:11px;font-weight:900;display:none;align-items:center;justify-content:center;
+    box-shadow:0 2px 8px rgba(0,0,0,.45);border:2px solid #0a0a0b}
+  #antix-chat-btn.tem-badge .acp-badge{display:flex}
+  #antix-chat-btn.aberto .acp-badge{display:none}
+  /* 💬 Teaser proativo (notificação da Sofia) */
+  #antix-teaser{position:fixed;right:20px;bottom:88px;z-index:99997;width:272px;max-width:calc(100vw - 40px);
+    background:#0d0d0f;border:1px solid rgba(255,255,255,.1);border-radius:16px 16px 4px 16px;
+    box-shadow:0 14px 42px rgba(0,0,0,.55);display:none;overflow:hidden;cursor:pointer;
+    font-family:'DM Sans',system-ui,sans-serif}
+  #antix-teaser.show{display:block;animation:antixTeaserIn .45s cubic-bezier(.16,1,.3,1)}
+  @keyframes antixTeaserIn{from{opacity:0;transform:translateY(16px) scale(.96)}to{opacity:1;transform:none}}
+  #antix-teaser .act-top{display:flex;align-items:center;gap:8px;padding:10px 12px;
+    background:linear-gradient(135deg,#1a1305,#0d0d0f);border-bottom:1px solid rgba(255,255,255,.06)}
+  #antix-teaser .act-ava{width:30px;height:30px;border-radius:50%;background:rgba(245,158,11,.15);
+    border:1px solid rgba(245,158,11,.3);display:flex;align-items:center;justify-content:center;font-weight:900;color:${AMBAR};font-size:13px;flex-shrink:0}
+  #antix-teaser .act-name{font-size:12px;font-weight:800;color:#fff;line-height:1.15}
+  #antix-teaser .act-on{font-size:9px;color:#25D366;font-weight:700}
+  #antix-teaser .act-x{margin-left:auto;background:none;border:none;color:rgba(255,255,255,.35);font-size:18px;line-height:1;cursor:pointer;padding:2px 6px}
+  #antix-teaser .act-body{padding:11px 13px;font-size:13px;line-height:1.45;color:#eaeaea}
+  #antix-teaser .act-body b{color:#fff}
+  #antix-teaser .act-cta{margin:0 13px 12px;text-align:center;background:#25D366;color:#062e12;font-weight:800;font-size:12px;padding:9px;border-radius:10px}
   /* 📱 Mobile: tela cheia + acompanha o teclado (visualViewport) pra o input nunca ficar escondido */
   @media (max-width:480px){
     #antix-chat-panel{right:0;left:0;top:0;bottom:auto;width:100%;max-width:100%;height:100dvh;max-height:none;border-radius:0}
     #antix-chat-btn{right:14px;bottom:14px;height:50px;padding:0 16px;font-size:13px}
+    #antix-teaser{right:14px;bottom:74px;width:248px}
   }
   `;
   const style = document.createElement('style'); style.textContent = css; document.head.appendChild(style);
 
   const btn = document.createElement('button');
   btn.id = 'antix-chat-btn';
-  btn.innerHTML = '<span>🤖</span><span class="acp-btn-label">Testar a IA</span>';
-  btn.setAttribute('aria-label', 'Testar a IA');
+  btn.innerHTML = '<span>💬</span><span class="acp-btn-label">Falar com a Sofia</span><span class="acp-badge" id="acp-badge">1</span>';
+  btn.setAttribute('aria-label', 'Falar com a Sofia');
   document.body.appendChild(btn);
+
+  // 💬 Teaser proativo: aparece sozinho poucos segundos após a carga pra CONVIDAR a conversa.
+  // É a diferença entre "visitante passa batido" e "visitante começa a falar com a Sofia".
+  // Cara de notificação de WhatsApp (verde, "online agora") pra dar familiaridade/confiança.
+  const teaser = document.createElement('div');
+  teaser.id = 'antix-teaser';
+  teaser.innerHTML = `
+    <div class="act-top">
+      <div class="act-ava">S</div>
+      <div><div class="act-name">Sofia · Antix</div><div class="act-on">● online agora</div></div>
+      <button class="act-x" aria-label="Fechar">×</button>
+    </div>
+    <div class="act-body">Oi! 👋 Posso te mostrar como funciona ou já te ajudar a <b>agendar</b> — leva 1 minutinho 😊</div>
+    <div class="act-cta">💬 Conversar agora</div>`;
+  document.body.appendChild(teaser);
 
   const panel = document.createElement('div');
   panel.id = 'antix-chat-panel';
@@ -152,6 +191,7 @@
   function abrir() {
     if (aberto) return;
     aberto = true;
+    esconderTeaser(true); // abriu o chat → tira o teaser e marca como visto
     // 📊 Conversão: registra a abertura do chat (o CTA-chave "Testar a IA") no GA4/Pixel, se ativos.
     try {
       if (typeof window.gtag === 'function') window.gtag('event', 'testar_ia_aberto', { event_category: 'engajamento' });
@@ -181,7 +221,7 @@
     aberto = false;
     if (vpInterval) { clearInterval(vpInterval); vpInterval = null; }
     _lastVpH = -1;
-    panel.classList.remove('open'); btn.classList.remove('aberto'); btn.querySelector('span').textContent = '🤖';
+    panel.classList.remove('open'); btn.classList.remove('aberto'); btn.querySelector('span').textContent = '💬';
     panel.style.height = ''; panel.style.width = ''; panel.style.top = ''; panel.style.left = ''; panel.style.right = ''; panel.style.bottom = '';
     // Destrava o body e devolve o scroll pra onde estava.
     const b = document.body;
@@ -221,4 +261,53 @@
   }
   sendBtn.addEventListener('click', enviar);
   input.addEventListener('keydown', (e) => { if (e.key === 'Enter') enviar(); });
+
+  // ── 🔔 SOM DE NOTIFICAÇÃO (WebAudio, sem arquivo externo) ──────────────────────────────
+  // ⚠️ IMPORTANTE: navegadores BLOQUEIAM áudio automático até o visitante interagir com a página
+  // (política de autoplay — vale pra quase todo mobile). Por isso só "armamos" o som depois do
+  // 1º gesto (toque/scroll/clique). Em alguns celulares ele ainda não toca — por isso o BADGE e a
+  // animação do teaser são o convite principal; o som é um reforço, não a aposta.
+  let _audioArmado = false, _ac = null;
+  ['pointerdown', 'keydown', 'scroll', 'touchstart'].forEach(ev =>
+    window.addEventListener(ev, () => { _audioArmado = true; }, { once: true, passive: true }));
+  function tocarPop() {
+    if (!_audioArmado) return;
+    try {
+      _ac = _ac || new (window.AudioContext || window.webkitAudioContext)();
+      if (_ac.state === 'suspended') _ac.resume();
+      [880, 1245].forEach((f, i) => {
+        const o = _ac.createOscillator(), g = _ac.createGain();
+        o.type = 'sine'; o.frequency.value = f;
+        o.connect(g); g.connect(_ac.destination);
+        const t = _ac.currentTime + i * 0.12;
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.exponentialRampToValueAtTime(0.17, t + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + 0.2);
+        o.start(t); o.stop(t + 0.22);
+      });
+    } catch (e) { /* som é opcional — nunca pode quebrar o widget */ }
+  }
+
+  // ── 💬 TEASER PROATIVO ─────────────────────────────────────────────────────────────────
+  // Aparece 1x por sessão, alguns segundos depois da carga. É o maior gatilho de conversão:
+  // convida sem sequestrar (não abre o chat inteiro à força, que no mobile afugenta).
+  function mostrarTeaser() {
+    if (aberto || sessionStorage.getItem('antix_teaser_visto')) return;
+    teaser.classList.add('show');
+    btn.classList.add('tem-badge');
+    tocarPop();
+  }
+  function esconderTeaser(marcar) {
+    teaser.classList.remove('show');
+    btn.classList.remove('tem-badge');
+    if (marcar) { try { sessionStorage.setItem('antix_teaser_visto', '1'); } catch (e) {} }
+  }
+  teaser.addEventListener('click', (e) => {
+    if (e.target.closest('.act-x')) { e.stopPropagation(); esconderTeaser(true); return; }
+    esconderTeaser(true); abrir();
+  });
+  // Dispara o teaser ~7s após carregar (tempo de ler o hero), só se ainda não viu nesta sessão.
+  if (!sessionStorage.getItem('antix_teaser_visto')) {
+    setTimeout(mostrarTeaser, 7000);
+  }
 })();

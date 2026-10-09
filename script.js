@@ -519,10 +519,10 @@ function initExitToast() {
     <div style="width:40px;height:40px;min-width:40px;border-radius:10px;background:rgba(255,69,0,.12);border:1px solid rgba(255,140,0,.25);display:flex;align-items:center;justify-content:center;font-size:20px">🎯</div>
     <div style="flex:1">
       <div style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:13px;margin-bottom:4px;color:#fff;line-height:1.35">
-        A colônia não para. E a sua operação?
+        Já vai? 👋 A Sofia tá online agora.
       </div>
       <div style="font-size:12px;color:#9CA3AF;line-height:1.5">
-        20 min: montamos o simulador com os números do seu negócio, ao vivo.
+        Fala rapidinho com ela — tira suas dúvidas ou já agenda, em 1 minuto.
       </div>
     </div>
     <a href="#" id="toast-cta"
@@ -530,7 +530,7 @@ function initExitToast() {
               font-family:'Unbounded',sans-serif;font-weight:700;font-size:11px;
               padding:11px 18px;border-radius:7px;text-decoration:none;
               white-space:nowrap;flex-shrink:0;letter-spacing:.5px;transition:transform .2s;">
-      Testar a IA →
+      Falar com a Sofia →
     </a>
     <button id="toast-x" aria-label="Fechar" style="background:none;border:none;color:#6B7280;font-size:17px;
       cursor:pointer;padding:0 2px;line-height:1;flex-shrink:0;transition:color .2s;">✕</button>
