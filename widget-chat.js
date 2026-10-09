@@ -308,9 +308,9 @@
     if (e.target.closest('.act-x')) { e.stopPropagation(); esconderTeaser(true); return; }
     esconderTeaser(true); abrir();
   });
-  // Dispara o teaser ~14s após carregar (dá tempo de olhar o site antes do convite), só se ainda
+  // Dispara o teaser ~12s após carregar (dá tempo de olhar o site antes do convite), só se ainda
   // não viu nesta sessão.
   if (!sessionStorage.getItem('antix_teaser_visto')) {
-    setTimeout(mostrarTeaser, 14000);
+    setTimeout(mostrarTeaser, 12000);
   }
 })();
