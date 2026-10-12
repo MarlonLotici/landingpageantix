@@ -312,7 +312,7 @@ function initChat() {
 
   const messages = [
     { text: 'Oi! Vocês têm horário disponível essa semana?',                                                                        type: 'out', delay: 400   },
-    { text: 'Oi, tudo bem? 😊 Essa semana eu tenho quinta às 14h ou sexta às 10h — qual fica melhor pra você?',                     type: 'in',  delay: 2000  },
+    { text: 'Oi, tudo bem? 😊 Essa semana eu tenho quinta às 14h ou sexta às 10h, qual fica melhor pra você?',                     type: 'in',  delay: 2000  },
     { text: 'quinta às 14h fica bom pra mim',                                                                                        type: 'out', delay: 4200  },
     { text: 'Perfeito! Só confirmando: é a sua primeira vez aqui ou já é cliente?',                                                  type: 'in',  delay: 5600  },
     { text: 'primeira vez',                                                                                                          type: 'out', delay: 7600  },
@@ -522,7 +522,7 @@ function initExitToast() {
         Já vai? 👋 A Sofia tá online agora.
       </div>
       <div style="font-size:12px;color:#9CA3AF;line-height:1.5">
-        Fala rapidinho com ela — tira suas dúvidas ou já agenda, em 1 minuto.
+        Fala rapidinho com ela, tira suas dúvidas ou já agenda, em 1 minuto.
       </div>
     </div>
     <a href="#" id="toast-cta"

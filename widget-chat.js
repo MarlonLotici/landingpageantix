@@ -109,7 +109,7 @@
       <div><div class="act-name">Sofia · Antix</div><div class="act-on">● online agora</div></div>
       <button class="act-x" aria-label="Fechar">×</button>
     </div>
-    <div class="act-body">Oi! 👋 Posso te mostrar como funciona ou já te ajudar a <b>agendar</b> — leva 1 minutinho 😊</div>
+    <div class="act-body">Oi! 👋 Posso te mostrar como funciona ou já te ajudar a <b>agendar</b>, leva 1 minutinho 😊</div>
     <div class="act-cta">💬 Conversar agora</div>`;
   document.body.appendChild(teaser);
 
@@ -215,7 +215,7 @@
     ajustarViewport();
     if (!saudou) {
       saudou = true;
-      addMsg('Oi! Eu sou a Sofia, a IA da Antix 🤖 Pode testar comigo à vontade — inclusive é ela que agenda sua conversa com o time. O que você quer resolver hoje?', 'ia');
+      addMsg('Oi! Eu sou a Sofia, a IA da Antix 🤖 Pode testar comigo à vontade, inclusive é ela que agenda sua conversa com o time. O que você quer resolver hoje?', 'ia');
     }
     setTimeout(() => { input.focus(); body.scrollTop = body.scrollHeight; }, 120);
   }
@@ -251,7 +251,7 @@
       const data = await resp.json().catch(() => ({}));
       typing(false);
       if (data.reply) addMsg(data.reply, 'ia');
-      else addMsg('Opa, tive uma instabilidade aqui — pode tentar de novo? Ou fala comigo no WhatsApp 👇', 'ia');
+      else addMsg('Opa, tive uma instabilidade aqui, pode tentar de novo? Ou fala comigo no WhatsApp 👇', 'ia');
       if (data.handoff) waBox.classList.add('show');
     } catch (e) {
       typing(false);
