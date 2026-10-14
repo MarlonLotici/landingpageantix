@@ -17,6 +17,27 @@
     localStorage.setItem('antix_chat_sid', sessionId);
   }
 
+  // 📊 FUNIL PRÓPRIO: manda eventos pro backend (/api/track) pra sabermos ONDE o lead some —
+  // o topo do funil (chegou → abriu chat → 1ª msg) cruzado com a conversa no nosso painel.
+  // Complementa GA4/Pixel (que são do Meta/Google); este é o nosso, dentro do dashboard.
+  const _qs = new URLSearchParams(location.search);
+  function track(event, meta) {
+    try {
+      fetch(ANTIX_API + '/api/track', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        keepalive: true,  // garante o envio mesmo se a aba fechar logo depois
+        body: JSON.stringify({
+          sessionId, event, path: location.pathname,
+          referrer: document.referrer || null,
+          utm_source: _qs.get('utm_source'), utm_campaign: _qs.get('utm_campaign'),
+          meta: meta || {},
+        }),
+      }).catch(() => {});
+    } catch (e) {}
+  }
+  track('pageview');  // toda visita (separa anúncio de orgânico pelo utm_source/referrer)
+  let _jaMandouMsg = false;
+
   const AMBAR = '#F59E0B';
   const css = `
   /* Botão flutuante removido a pedido — os 3 CTAs do hero/CTA-final + o teaser proativo já
@@ -199,6 +220,7 @@
       if (typeof window.gtag === 'function') window.gtag('event', 'testar_ia_aberto', { event_category: 'engajamento' });
       if (typeof window.fbq === 'function') window.fbq('trackCustom', 'TestarIA');
     } catch (e) {}
+    track('chat_aberto');  // funil próprio: abriu o widget
     // 🔒 Scroll-lock REAL no mobile: overflow:hidden não impede o iOS de rolar a página quando o
     // input recebe foco (é isso que empurra a barra pra trás do teclado). Travar o body com
     // position:fixed impede esse scroll — o painel fica colado na área visível acima do teclado.
@@ -243,6 +265,7 @@
     if (!texto || enviando) return;
     enviando = true; sendBtn.disabled = true;
     addMsg(texto, 'user'); input.value = ''; typing(true);
+    if (!_jaMandouMsg) { _jaMandouMsg = true; track('primeira_msg'); }  // funil: engajou de verdade
     try {
       const resp = await fetch(ANTIX_API + '/api/web-chat', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
