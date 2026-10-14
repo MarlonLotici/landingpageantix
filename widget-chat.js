@@ -38,6 +38,16 @@
   track('pageview');  // toda visita (separa anúncio de orgânico pelo utm_source/referrer)
   let _jaMandouMsg = false;
 
+  // 🎯 ATRIBUIÇÃO META (CAPI): captura as chaves que ligam a conversa ao clique no anúncio.
+  // _fbc vem do cookie do pixel OU é construído do fbclid da URL (funciona mesmo com o pixel
+  // ainda inerte). Guardado na sessão pra sobreviver às próximas páginas. _fbp vem do pixel.
+  function _cookie(n) { const m = document.cookie.match(new RegExp('(?:^|; )' + n + '=([^;]*)')); return m ? decodeURIComponent(m[1]) : null; }
+  let _fbc = _cookie('_fbc') || localStorage.getItem('antix_fbc');
+  const _fbclid = _qs.get('fbclid');
+  if (!_fbc && _fbclid) _fbc = 'fb.1.' + Date.now() + '.' + _fbclid;
+  if (_fbc) localStorage.setItem('antix_fbc', _fbc);
+  function matchKeys() { return { fbp: _cookie('_fbp'), fbc: _fbc }; }
+
   const AMBAR = '#F59E0B';
   const css = `
   /* Botão flutuante removido a pedido — os 3 CTAs do hero/CTA-final + o teaser proativo já
@@ -267,9 +277,10 @@
     addMsg(texto, 'user'); input.value = ''; typing(true);
     if (!_jaMandouMsg) { _jaMandouMsg = true; track('primeira_msg'); }  // funil: engajou de verdade
     try {
+      const mk = matchKeys();  // 📈 manda as chaves de atribuição do anúncio junto (CAPI server-side)
       const resp = await fetch(ANTIX_API + '/api/web-chat', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sessionId, message: texto }),
+        body: JSON.stringify({ sessionId, message: texto, fbp: mk.fbp, fbc: mk.fbc }),
       });
       const data = await resp.json().catch(() => ({}));
       typing(false);
